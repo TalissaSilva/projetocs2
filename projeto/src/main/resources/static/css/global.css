@@ -1,0 +1,114 @@
+:root {
+    --primary: #75019E;
+    --text-color: #707070;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+select {
+    display: inline;
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+label input[type=checkbox] ~ span {
+    color: var(--text-color);
+}
+
+
+
+
+.flex {
+    display: flex;
+}
+
+.flex.row {
+    flex-direction: row;
+}
+
+.flex.align-center {
+    align-items: center;
+}
+
+.flex.wrap {
+    flex-wrap: wrap;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+/* HEADER */
+
+header {
+    margin-top: 20px;
+}
+
+header img {
+    height: 35px;
+}
+
+header .user-actions a:nth-child(1){
+    margin-right: 20px;
+}
+
+/* CUSTOM-IMPUT */
+
+.custom-input {
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+
+.custom-input:last-child {
+    margin-bottom: 0;
+}
+
+.custom-input label {
+    display: none;
+}
+
+.custom-input input {
+    border-radius: 50px;
+    border: 1px solid #CCCCCC;
+    padding: .8ch 2ch;
+    width: 100%;
+}
+
+.custom-input input::placeholder {
+    color: var(--text-color);
+}
+
+.custom-input input:focus,
+.custom-input select:checked {
+    border: 1px solid purple;
+    outline: none;
+}
+
+.custom-input.posppend {
+    display: flex;
+    flex-direction: row;
+}
+
+.custom-input.posppend input {
+    border-radius: 50px 0 0 50px;
+}
+
+.custom-input.posppend .posppend {
+    width: 30%;
+}
+
+.custom-input.posppend .posppend select {
+    border-radius: 0 50px 50px 0;
+    padding: 0;
+    height: 100%;
+    min-width: unset;
+    text-align: center;
+    border: 1px solid #CCCCCC;
+    border-left: unset;
+}
