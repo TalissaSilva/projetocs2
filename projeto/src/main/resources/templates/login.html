@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<title>Login with spring security</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<body>
+	<form th:action="@{/cadastro}" method="post">
+		<button class="btn btn-md btn-warning btn-block" type="Submit">Go
+			To Registration Page</button>
+	</form>
+
+	<div th:if="${param.error}">Invalid username and password.</div>
+	<div th:if="${param.logout}">You have been logged out.</div>
+	<form th:action="@{/login}" method="post">
+		<div>
+			<label> User Name : <input type="text" name="username" />
+			</label>
+		</div>
+		<div>
+			<label> Password: <input type="password" name="password" />
+			</label>
+		</div>
+		<div align="center" th:if="${param.error}">
+			<p style="font-size: 20; color: #FF1C19;">Email or Password
+				invalid, please verify</p>
+		</div>
+		<button class="btn btn-lg btn-primary btn-block" name="Submit"
+			value="Login" type="Submit" th:text="Login"></button>
+
+		<div>
+			<input type="submit" value="Sign In" />
+		</div>
+	</form>
+</body>
+</html>
