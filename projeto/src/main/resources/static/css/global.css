@@ -112,3 +112,14 @@ header .user-actions a:nth-child(1){
     border: 1px solid #CCCCCC;
     border-left: unset;
 }
+
+.content-center {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+}
+
+.h-100vh {
+    height: 100vh;
+}

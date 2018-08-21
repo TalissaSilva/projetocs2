@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/login.css">
+
+<head>
+	<link rel="stylesheet" href="/vendor/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	<title>Login - morabem</title>
+</head>
+<body>
+<div class="content-center h-100vh">
+	<div class="form-wapper">
+		<img class="logo" src="/logo-vertical.png" />
+		<h1>Login</h1>
+		<form th:action="@{/login}" method="post">
+			
+			<div class="custom-input">
+				<label for="email">E-mail</label>
+				<input name="email" id="email" type="email" placeholder="E-mail">
+			</div>
+			<div class="custom-input">
+				<label for="senha">E-mail</label>
+				<input name="senha" id="senha" type="password" placeholder="Senha">
+			</div>
+			
+			<button class="btn waves-effect waves-light deep-purple darken-1" type="submit">
+				ENTRAR
+			</button>
+		</form>
+	</div>
+</div>
+
+</body>
+</html>
