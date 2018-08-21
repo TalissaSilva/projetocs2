@@ -16,7 +16,7 @@ public class Imovel implements Serializable {
 	private Double areaTotal;
 
     @OneToMany(mappedBy = "atributo")
-	private Set<AtributoImovel> atributos = new HashSet<>();
+	private Set<AtributoImovel> atributos = new HashSet();
 
     @ManyToOne
     private Endereco endereco;
@@ -25,7 +25,7 @@ public class Imovel implements Serializable {
     private Usuario dono;
 
     @OneToMany()
-    private List<Foto> fotos = new ArrayList<>();
+    private List<Foto> fotos = new ArrayList();
 
     public Imovel() { }
 

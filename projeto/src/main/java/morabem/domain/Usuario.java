@@ -23,14 +23,14 @@ public abstract class Usuario implements Serializable {
     private Endereco endereco;
 
     @OneToMany(mappedBy = "dono")
-    private List<Imovel> imoveis = new ArrayList<>();
+    private List<Imovel> imoveis = new ArrayList();
 
     @OneToOne
     private Foto fotoPerfil;
 
     @OneToMany(mappedBy = "anunciante")
     @Column(nullable = true)
-    private List<Anuncio> anuncios = new ArrayList<>();
+    private List<Anuncio> anuncios = new ArrayList();
 
 
     public Usuario() { }

@@ -26,7 +26,7 @@ public class UsuarioController {
     @GetMapping(path = "/cadastro/pessoa-fisica")
     public String cadastroPessoaFisicaForm(Model model) {
         model.addAttribute("pessoaFisica", new PessoaFisica());
-        return "cadastrar-pessoa-fisica";
+        return "cadastroFisica";
     }
 
     @PostMapping(path = "/cadastro/pessoa-fisica")
