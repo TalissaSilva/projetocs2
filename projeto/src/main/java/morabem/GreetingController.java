@@ -1,4 +1,4 @@
-package imoveis;
+package morabem;
 
 
 import org.springframework.stereotype.Controller;

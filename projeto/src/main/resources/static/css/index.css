@@ -96,3 +96,8 @@ h1 {
 .anuncio .footer .infos .preco {
     margin-top: 1ch;
 }
+
+.dropdown-content {
+    width: fit-content;
+
+}

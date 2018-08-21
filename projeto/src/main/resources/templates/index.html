@@ -24,7 +24,11 @@
 			</div>
 			<div class="flex row user-actions">
 				<a class="waves-effect waves-teal btn-flat">LOGIN</a>
-				<a class="waves-effect waves-light btn deep-purple darken-1">CADASTRA</a>
+				<a data-target="dropdown1" class="waves-effect waves-light btn deep-purple darken-1 dropdown-trigger">CADASTRA</a>
+				<ul id="dropdown1" class="dropdown-content">
+					<li><a href="/cadastro/pessoa-fisica">Pessoa Fisica</a></li>
+					<li><a href="/cadastro/pessoa-juridica">Pessoa Jurudica</a></li>
+				</ul>
 			</div>
 		</header>
 		<main>
@@ -115,5 +119,9 @@
 	<script src="/vendor/js/jquery.mim.js"></script>
 	<script src="/vendor/js/hammer.js"></script>
 	<script src="/vendor/js/materialize.js"></script>
+	
+	<script>
+		$('.dropdown-trigger').dropdown();
+	</script>
 </body>
 </html>
