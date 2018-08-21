@@ -1,0 +1,23 @@
+
+.logo {
+    height: 100px;
+    margin: auto;
+    display: block;
+}
+
+.form-wapper {
+    width: 350px;
+}
+
+.form-wapper h1 {
+    text-align: center;
+    font-size: 16px;
+    font-weight: lighter;
+}
+
+.form-wapper button[type=submit] {
+    display: block;
+    margin: auto;
+    margin-top: 4ch;
+    margin-bottom: 6ch;
+}
