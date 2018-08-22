@@ -1,5 +1,6 @@
 package morabem.controllers;
 
+import morabem.domain.Anuncio;
 import morabem.domain.PessoaFisica;
 import morabem.domain.Usuario;
 import morabem.exceptions.UsuarioException;
@@ -41,12 +42,23 @@ public class UsuarioController {
     @GetMapping(path = "/cadastro/pessoa-fisica")
     public String cadastroPessoaFisicaForm(Model model) {
         model.addAttribute("pessoaFisica", new PessoaFisica());
-        return "cadastrar-pessoa-fisica";
+        return "cadastroFisica";
     }
 
     @PostMapping(path = "/cadastro/pessoa-fisica")
     public String cadastroPessoaFisicaSubmit(Model model) {
         model.addAttribute("pessoaFisica", new PessoaFisica());
+        return "cadastrar";
+    }
+    @GetMapping(path = "/cadastro/anuncio")
+    public String cadastroAnuncioForm(Model model) {
+        model.addAttribute("anuncio", new Anuncio());
+        return "cadastroAnuncio";
+    }
+
+    @PostMapping(path = "/cadastro/anuncio")
+    public String cadastroAnuncioSubmit(Model model) {
+        model.addAttribute("anuncio", new Anuncio());
         return "cadastrar";
     }
 }

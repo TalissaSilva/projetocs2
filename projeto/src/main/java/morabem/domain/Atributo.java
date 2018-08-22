@@ -21,7 +21,7 @@ public class Atributo implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "imovel")
-	private Set<AtributoImovel> imoveis = new HashSet<>();
+	private Set<AtributoImovel> imoveis = new HashSet();
 
 	public Atributo() {
 	}
