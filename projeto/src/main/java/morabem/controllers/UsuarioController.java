@@ -1,9 +1,14 @@
 package morabem.controllers;
 
 import morabem.domain.PessoaFisica;
+import morabem.domain.Usuario;
+import morabem.exceptions.UsuarioException;
+import morabem.services.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import utils.LoginData;
 
 
 /**
@@ -12,14 +17,24 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UsuarioController {
 
+    @Autowired
+    public UsuarioService usuarioService;
+
     @PostMapping(path = "/login")
-    public @ResponseBody String loginSubmit(@RequestBody String body) {
-        return body;
+    public String loginSubmit(@ModelAttribute LoginData data, Model model) {
+        try {
+            Usuario us = usuarioService.login(data.getEmail(), data.getSenha());
+            return us.toString();
+        } catch (UsuarioException.UsuarioNaoEncontrado ex) {
+            model.addAttribute("error", "Usuário não encontrado.");
+            return "login";
+
+        }
     }
 
     @GetMapping(path = "/login")
     public String loginForm(Model model) {
-        model.addAttribute("loginData", new Object() { String email; String senha;});
+        model.addAttribute("loginData", new LoginData());
         return "login";
     }
 

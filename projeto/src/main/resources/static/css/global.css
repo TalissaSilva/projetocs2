@@ -123,3 +123,13 @@ header .user-actions a:nth-child(1){
 .h-100vh {
     height: 100vh;
 }
+
+.alert {
+    display: block;
+    width: 100%;
+    padding: 1.3ch;
+    border-radius: 5px;
+    margin: 2ch 0;
+    background-color: tomato;
+    color: white;
+}
