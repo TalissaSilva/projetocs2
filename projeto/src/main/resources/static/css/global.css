@@ -85,6 +85,7 @@ header .user-actions a:nth-child(1){
 }
 
 .custom-input input:focus,
+.custom-input.posppend .posppend input:focus,
 .custom-input select:checked {
     border: 1px solid purple;
     outline: none;
@@ -132,4 +133,22 @@ header .user-actions a:nth-child(1){
     margin: 2ch 0;
     background-color: tomato;
     color: white;
+}
+
+form fieldset {
+    border: 0;
+}
+
+form fieldset > legend {
+    font-weight: lighter;
+    font-size: 14px;
+    margin-bottom: .8ch;
+}
+
+.usuario-logado {
+    width: 20%;
+}
+
+.usuario-logado a img {
+    margin-right: 2ch;
 }

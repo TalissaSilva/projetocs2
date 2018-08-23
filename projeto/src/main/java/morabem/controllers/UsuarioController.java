@@ -1,6 +1,5 @@
 package morabem.controllers;
 
-import morabem.domain.Anuncio;
 import morabem.domain.PessoaFisica;
 import morabem.domain.Usuario;
 import morabem.exceptions.UsuarioException;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import utils.LoginData;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -22,14 +22,14 @@ public class UsuarioController {
     public UsuarioService usuarioService;
 
     @PostMapping(path = "/login")
-    public String loginSubmit(@ModelAttribute LoginData data, Model model) {
+    public String loginSubmit(@ModelAttribute LoginData data, Model model, HttpSession session) {
         try {
             Usuario us = usuarioService.login(data.getEmail(), data.getSenha());
-            return us.toString();
+            session.setAttribute("usuarioLogado", us);
+            return "index";
         } catch (UsuarioException.UsuarioNaoEncontrado ex) {
             model.addAttribute("error", "Usuário não encontrado.");
             return "login";
-
         }
     }
 
@@ -46,19 +46,13 @@ public class UsuarioController {
     }
 
     @PostMapping(path = "/cadastro/pessoa-fisica")
-    public String cadastroPessoaFisicaSubmit(Model model) {
-        model.addAttribute("pessoaFisica", new PessoaFisica());
-        return "cadastrar";
-    }
-    @GetMapping(path = "/cadastro/anuncio")
-    public String cadastroAnuncioForm(Model model) {
-        model.addAttribute("anuncio", new Anuncio());
-        return "cadastroAnuncio";
+    public @ResponseBody  String cadastroPessoaFisicaSubmit(@ModelAttribute PessoaFisica model) {
+        return model.toString();
     }
 
-    @PostMapping(path = "/cadastro/anuncio")
-    public String cadastroAnuncioSubmit(Model model) {
-        model.addAttribute("anuncio", new Anuncio());
-        return "cadastrar";
+    @GetMapping(path = "/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("usuarioLogado");
+        return "index";
     }
 }
