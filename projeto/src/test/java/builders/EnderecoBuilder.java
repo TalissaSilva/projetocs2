@@ -10,7 +10,7 @@ public class EnderecoBuilder {
 
     public static EnderecoBuilder obterUm() {
         EnderecoBuilder builder = new EnderecoBuilder();
-        builder.endereco = new Endereco(1, "Rua", "Bairro", "79011000", "Cidade", "UF");
+        builder.endereco = new Endereco("Rua", "Bairro", "79011000", "Cidade", "UF");
         return builder;
     }
 

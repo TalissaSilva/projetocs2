@@ -14,7 +14,7 @@ public class ImovelBuilder {
 
     public static ImovelBuilder obterUm() {
         ImovelBuilder imovelBuilder = new ImovelBuilder();
-        imovelBuilder.imovel = new Imovel(Imovel.Tipo.CASA,200D, 400D, null);
+        imovelBuilder.imovel = new Imovel(Imovel.Tipo.CASA,200D, 400D, null, 1);
         imovelBuilder.imovel.setEndereco(EnderecoBuilder.obterUm().agora());
         imovelBuilder.imovel.setDono(UsuarioBuilder.PessoaFisica.obterUm().agora());
         /*imovelBuilder.imovel.getFotos().addAll(Arrays.asList(

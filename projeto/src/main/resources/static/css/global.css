@@ -22,8 +22,6 @@ label input[type=checkbox] ~ span {
 }
 
 
-
-
 .flex {
     display: flex;
 }
@@ -36,6 +34,10 @@ label input[type=checkbox] ~ span {
     align-items: center;
 }
 
+.flex.justify-content-end {
+    justify-content: flex-end;
+}
+
 .flex.wrap {
     flex-wrap: wrap;
 }
@@ -44,7 +46,12 @@ label input[type=checkbox] ~ span {
     width: 100%;
 }
 
-/* HEADER */
+.content-center {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+}
 
 header {
     margin-top: 20px;
@@ -57,8 +64,6 @@ header img {
 header .user-actions a:nth-child(1){
     margin-right: 20px;
 }
-
-/* CUSTOM-IMPUT */
 
 .custom-input {
     font-size: 16px;
@@ -114,11 +119,14 @@ header .user-actions a:nth-child(1){
     border-left: unset;
 }
 
-.content-center {
-    display: flex;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
+.custom-input.icon {
+    position: relative;
+}
+.custom-input.icon .icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 2ch;
 }
 
 .h-100vh {
@@ -145,10 +153,31 @@ form fieldset > legend {
     margin-bottom: .8ch;
 }
 
-.usuario-logado {
-    width: 20%;
-}
-
 .usuario-logado a img {
     margin-right: 2ch;
+    width: 45px;
+    height: 45px;
+    object-fit: scale-down;
+    border-radius: 50px;
+}
+
+form .image-preview {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    flex-direction: column;
+}
+
+form .image-preview div:first-child {
+    height: 100%;
+}
+
+form .image-preview img {
+    width: 85px;
+    height: 85px;
+    object-fit: scale-down;
+}
+
+form .image-preview button {
+    margin: auto;
 }

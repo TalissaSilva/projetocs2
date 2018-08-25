@@ -13,8 +13,8 @@ public class PessoaJuridica extends Usuario {
 
     public PessoaJuridica() { }
 
-    public PessoaJuridica(String nome, String telefone01, String telefone02, String email, String senha, String cnpj, String creci, String descricao) {
-        super(nome, telefone01, telefone02, email, senha);
+    public PessoaJuridica(String nome, String telefone01, String telefone02, String email, String senha, String cnpj, String creci, String descricao, Integer numero) {
+        super(nome, telefone01, telefone02, email, senha, numero);
         this.cnpj = cnpj;
         this.creci = creci;
         this.descricao = descricao;

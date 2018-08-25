@@ -12,4 +12,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface UsuarioRepository<T> extends JpaRepository<T, Long>  {
 
     T findFirstByEmailEqualsAndSenhaEquals(String email, String senha);
+
+    T findFirstByEmailEquals(String email);
 }

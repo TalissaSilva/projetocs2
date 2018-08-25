@@ -1,13 +1,16 @@
 package morabem.controllers;
 
+import morabem.domain.Foto;
 import morabem.domain.PessoaFisica;
 import morabem.domain.Usuario;
 import morabem.exceptions.UsuarioException;
 import morabem.services.UsuarioService;
+import morabem.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import utils.LoginData;
 import javax.servlet.http.HttpSession;
 
@@ -21,12 +24,15 @@ public class UsuarioController {
     @Autowired
     public UsuarioService usuarioService;
 
+    @Autowired
+    public StorageService storageService;
+
     @PostMapping(path = "/login")
     public String loginSubmit(@ModelAttribute LoginData data, Model model, HttpSession session) {
         try {
             Usuario us = usuarioService.login(data.getEmail(), data.getSenha());
             session.setAttribute("usuarioLogado", us);
-            return "index";
+            return "redirect:/";
         } catch (UsuarioException.UsuarioNaoEncontrado ex) {
             model.addAttribute("error", "Usuário não encontrado.");
             return "login";
@@ -46,8 +52,18 @@ public class UsuarioController {
     }
 
     @PostMapping(path = "/cadastro/pessoa-fisica")
-    public @ResponseBody  String cadastroPessoaFisicaSubmit(@ModelAttribute PessoaFisica model) {
-        return model.toString();
+    public String cadastroPessoaFisicaSubmit(@ModelAttribute PessoaFisica pessoaFisica, Model model, @RequestPart(required = false) MultipartFile foto) {
+        if (usuarioService.verificarSeOEmailEstaSendoUsado(pessoaFisica.getEmail())) {
+            model.addAttribute("error", "O E-mail já está em uso");
+            model.addAttribute("pessoaFisica", pessoaFisica);
+            return "cadastroFisica";
+        }
+        if (foto != null) {
+            String url = storageService.store(foto);
+            pessoaFisica.setFotoPerfil(new Foto(null, url));
+        }
+        usuarioService.cadastrar(pessoaFisica);
+        return "redirect:/login";
     }
 
     @GetMapping(path = "/logout")
@@ -55,4 +71,6 @@ public class UsuarioController {
         session.removeAttribute("usuarioLogado");
         return "index";
     }
+
+
 }

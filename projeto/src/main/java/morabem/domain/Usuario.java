@@ -18,9 +18,10 @@ public abstract class Usuario implements Serializable {
     private String telefone02;
     private String email;
     private String senha;
+    private Integer numero;
 
     @ManyToOne
-    private Endereco endereco;
+    private Endereco endereco = new Endereco();
 
     @OneToMany(mappedBy = "dono")
     private List<Imovel> imoveis = new ArrayList();
@@ -35,12 +36,13 @@ public abstract class Usuario implements Serializable {
 
     public Usuario() { }
 
-    public Usuario(String nome, String telefone01, String telefone02, String email, String senha) {
+    public Usuario(String nome, String telefone01, String telefone02, String email, String senha, Integer numero) {
         this.nome = nome;
         this.telefone01 = telefone01;
         this.telefone02 = telefone02;
         this.email = email;
         this.senha = senha;
+        this.numero = numero;
     }
 
     public Long getId() {
@@ -124,6 +126,7 @@ public abstract class Usuario implements Serializable {
                 ", telefone02='" + telefone02 + '\'' +
                 ", email='" + email + '\'' +
                 ", senha='" + senha + '\'' +
+                ", numero=" + numero +
                 ", endereco=" + endereco +
                 ", imoveis=" + imoveis +
                 ", fotoPerfil=" + fotoPerfil +
@@ -134,5 +137,16 @@ public abstract class Usuario implements Serializable {
 
     public void setFotoPerfil(Foto fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
+    }
+
+    public Foto getFotoPerfil() {
+        return this.fotoPerfil;
+    }
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 }

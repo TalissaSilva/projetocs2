@@ -6,15 +6,16 @@ INSERT INTO atributo VALUES (1, 'Quantos'),
 (6, 'Andares');
 
 INSERT INTO endereco
-(bairro, cidade, logradouro, numero, uf, cep) values
-('bairro', 'cidade', 'logradouro', 1, 'ms', '70911000');
+(bairro, cidade, logradouro, uf, cep) values
+('bairro', 'cidade', 'logradouro', 'ms', '70911000');
 
 INSERT INTO foto VALUES (1, 'foo url');
 
 INSERT INTO usuario
-(id, email, endereco_cep, foto_perfil_id, nome, senha, telefone01, telefone02) values
-(1, 'user@email', '70911000', 1, 'nome', '123456', '', '');
+(id, email, endereco_cep, foto_perfil_id, nome, senha, telefone01, telefone02, numero) values
+(1, 'user@email', '70911000', 1, 'nome', '123456', '', '', 1);
 
  INSERT INTO pessoa_fisica
  (cpf, id) values
  ('00000000000', 1);
+

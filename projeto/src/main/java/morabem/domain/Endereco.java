@@ -10,7 +10,6 @@ import java.io.Serializable;
 @Entity
 public class Endereco implements Serializable {
 
-    private Integer numero;
 	private String logradouro;
 	private String bairro;
 	@Id
@@ -21,8 +20,7 @@ public class Endereco implements Serializable {
 	public Endereco() {
 	}
 
-	public Endereco(int numero, String logradouro, String bairro, String cep, String cidade, String uf) {
-		this.numero = numero;
+	public Endereco(String logradouro, String bairro, String cep, String cidade, String uf) {
 		this.logradouro = logradouro;
 		this.bairro = bairro;
 		this.cep = cep;
@@ -33,22 +31,13 @@ public class Endereco implements Serializable {
     @Override
     public String toString() {
         return "Endereco{" +
-                "numero=" + numero +
-                ", logradouro='" + logradouro + '\'' +
+                "logradouro='" + logradouro + '\'' +
                 ", bairro='" + bairro + '\'' +
                 ", cep='" + cep + '\'' +
                 ", cidade='" + cidade + '\'' +
                 ", uf='" + uf + '\'' +
                 '}';
     }
-
-    public int getNumero() {
-		return numero;
-	}
-
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
 
 	public String getLogradouro() {
 		return logradouro;

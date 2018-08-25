@@ -14,12 +14,13 @@ public class Imovel implements Serializable {
 	private Tipo tipo;
 	private Double areaConstruida;
 	private Double areaTotal;
+	private Integer numero;
 
     @OneToMany(mappedBy = "atributo")
 	private Set<AtributoImovel> atributos = new HashSet();
 
     @ManyToOne
-    private Endereco endereco;
+    private Endereco endereco = new Endereco();
 
     @ManyToOne()
     private Usuario dono;
@@ -29,11 +30,12 @@ public class Imovel implements Serializable {
 
     public Imovel() { }
 
-    public Imovel(Tipo tipo, Double areaConstruida, Double areaTotal, Usuario dono) {
+    public Imovel(Tipo tipo, Double areaConstruida, Double areaTotal, Usuario dono, Integer numero) {
         this.tipo = tipo;
         this.areaConstruida = areaConstruida;
         this.areaTotal = areaTotal;
         this.dono = dono;
+        this.numero = numero;
     }
 
     public Integer getId() {
@@ -127,6 +129,14 @@ public class Imovel implements Serializable {
                 ", dono=" + dono +
                 ", fotos=" + fotos +
                 '}';
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 
     public static enum Tipo {

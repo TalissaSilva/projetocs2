@@ -1,0 +1,38 @@
+
+<!--
+
+SOBRE FRAGMENTOS -> https://www.thymeleaf.org/doc/articles/layouts.html
+
+-->
+
+<!doctype html>
+<html lang="pr-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	<div th:fragment="sem-usuario" class="user-actions">
+		<a class="waves-effect waves-teal btn-flat" href="/login">ENTRAR</a>
+		<a data-target="dropdown1" class="waves-effect waves-light btn deep-purple darken-1 dropdown-trigger">CADASTRA</a>
+		<ul id="dropdown1" class="dropdown-content">
+			<li><a href="/cadastro/pessoa-fisica">Pessoa Fisica</a></li>
+			<li><a href="/cadastro/pessoa-juridica">Pessoa Jurudica</a></li>
+		</ul>
+	</div>
+	<div th:fragment="com-usuario" class="usuario-logado">
+			<a class="btn-flat dropdown-trigger flex row align-center" data-target="op-user" >
+				<img th:src="'/fotos/' + ${session.usuarioLogado.getFotoPerfil().getUrl()}" alt="">
+				<span th:text="${'Olá, ' + session.usuarioLogado.getNome().split(' ')[0]}"></span>
+			</a>
+			<ul id="op-user" class="dropdown-content">
+				<li><a href="#!">Anunciar</a></li>
+				<li><a href="#!">Meus Imoveis</a></li>
+				<li><a href="#!">Meus Anúncios</a></li>
+				<li class="divider" tabindex="-1"></li>
+				<li><a href="#!">Favoritos</a></li>
+				<li><a href="#!">Meu Perfil</a></li>
+				<li class="divider" tabindex="-1"></li>
+				<li><a href="/logout">Sair</a></li>
+			</ul>
+		</div>
+</body>
+</html>
