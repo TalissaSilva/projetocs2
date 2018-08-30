@@ -7,4 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public interface PessoaFisicaRepository extends UsuarioRepository<PessoaFisica> {
+
+    PessoaFisica findFirstByEmailEqualsOrAndCpfEquals(String email, String cpf);
 }

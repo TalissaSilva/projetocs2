@@ -1,5 +1,9 @@
 package morabem.domain;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
@@ -9,23 +13,25 @@ import java.util.*;
 public class Imovel implements Serializable {
 
 	@Id
+    @Column(name = "imovel_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	private Tipo tipo;
 	private Double areaConstruida;
 	private Double areaTotal;
 	private Integer numero;
 
-    @OneToMany(mappedBy = "atributo")
-	private Set<AtributoImovel> atributos = new HashSet();
-
-    @ManyToOne
-    private Endereco endereco = new Endereco();
+	@ElementCollection
+    private List<String> caracteristicas = new LinkedList<>();
 
     @ManyToOne()
+    private Endereco endereco = new Endereco();
+
+    @ManyToOne(fetch = FetchType.EAGER)
     private Usuario dono;
 
-    @OneToMany()
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn()
     private List<Foto> fotos = new ArrayList();
 
     public Imovel() { }
@@ -37,15 +43,6 @@ public class Imovel implements Serializable {
         this.dono = dono;
         this.numero = numero;
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
 
     public Double getAreaConstruida() {
         return areaConstruida;
@@ -61,14 +58,6 @@ public class Imovel implements Serializable {
 
     public void setAreaTotal(Double areaTotal) {
         this.areaTotal = areaTotal;
-    }
-
-    public Set<AtributoImovel> getAtributos() {
-        return atributos;
-    }
-
-    public void setAtributos(Set<AtributoImovel> atributos) {
-        this.atributos = atributos;
     }
 
     public Endereco getEndereco() {
@@ -117,20 +106,6 @@ public class Imovel implements Serializable {
         return Objects.hash(getId());
     }
 
-    @Override
-    public String toString() {
-        return "Imovel{" +
-                "id=" + id +
-                ", tipo=" + tipo +
-                ", areaConstruida=" + areaConstruida +
-                ", areaTotal=" + areaTotal +
-                ", atributos=" + atributos +
-                ", endereco=" + endereco +
-                ", dono=" + dono +
-                ", fotos=" + fotos +
-                '}';
-    }
-
     public Integer getNumero() {
         return numero;
     }
@@ -139,10 +114,32 @@ public class Imovel implements Serializable {
         this.numero = numero;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<String> getCaracteristicas() {
+        return caracteristicas;
+    }
+
+    public void setCaracteristicas(List<String> caracteristicas) {
+        this.caracteristicas = caracteristicas;
+    }
+
     public static enum Tipo {
         CASA,
         APARTAMENTO,
         TERRENO,
         FAZENDA
+    }
+
+    public String printEndereco() {
+        return this.endereco.getLogradouro() + ", " + this.numero +
+                " - " + this.endereco.getBairro() + ", " + this.endereco.getCidade() +
+                " - " + this.endereco.getCidade() + ", " + this.endereco.getUf();
     }
 }

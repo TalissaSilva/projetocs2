@@ -1,13 +1,24 @@
 package morabem.domain;
 
+import org.hibernate.Hibernate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "usuario")
 @Inheritance(strategy = InheritanceType.JOINED)
+@NamedEntityGraph(
+        name="Usuario.imoveis",
+        attributeNodes = @NamedAttributeNode(value = "id"))
 public abstract class Usuario implements Serializable {
 
     @Id
@@ -24,14 +35,14 @@ public abstract class Usuario implements Serializable {
     private Endereco endereco = new Endereco();
 
     @OneToMany(mappedBy = "dono")
-    private List<Imovel> imoveis = new ArrayList();
+    private Set<Imovel> imoveis = new LinkedHashSet<>();
 
     @OneToOne
     private Foto fotoPerfil;
 
     @OneToMany(mappedBy = "anunciante")
     @Column(nullable = true)
-    private List<Anuncio> anuncios = new ArrayList();
+    private Set<Anuncio> anuncios = new LinkedHashSet<>();
 
 
     public Usuario() { }
@@ -101,23 +112,8 @@ public abstract class Usuario implements Serializable {
         this.endereco = endereco;
     }
 
-    public List<Imovel> getImoveis() {
-        return imoveis;
-    }
 
-    public void setImoveis(List<Imovel> imoveis) {
-        this.imoveis = imoveis;
-    }
-
-    public List<Anuncio> getAnuncios() {
-        return anuncios;
-    }
-
-    public void setAnuncios(List<Anuncio> anuncios) {
-        this.anuncios = anuncios;
-    }
-
-    @Override
+    /*@Override
     public String toString() {
         return "Usuario{" +
                 "id=" + id +
@@ -132,7 +128,7 @@ public abstract class Usuario implements Serializable {
                 ", fotoPerfil=" + fotoPerfil +
                 ", anuncios=" + anuncios +
                 '}';
-    }
+    }*/
 
 
     public void setFotoPerfil(Foto fotoPerfil) {
@@ -148,5 +144,21 @@ public abstract class Usuario implements Serializable {
 
     public void setNumero(Integer numero) {
         this.numero = numero;
+    }
+
+    public Set<Anuncio> getAnuncios() {
+        return anuncios;
+    }
+
+    public void setAnuncios(Set<Anuncio> anuncios) {
+        this.anuncios = anuncios;
+    }
+
+    public Set<Imovel> getImoveis() {
+        return imoveis;
+    }
+
+    public void setImoveis(Set<Imovel> imoveis) {
+        this.imoveis = imoveis;
     }
 }

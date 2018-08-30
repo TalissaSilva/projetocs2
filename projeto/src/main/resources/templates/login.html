@@ -17,7 +17,9 @@
 <body>
 <div class="content-center h-100vh">
 	<div class="form-wapper">
-		<img class="logo" src="/logo-vertical.png" />
+		<a href="/" style="display: block">
+			<img class="logo" src="/logo-vertical.png"/>
+		</a>
 		<h1>Login</h1>
 		<form th:action="@{/login}" th:object="${loginData}" method="post" id="form-login">
 			<!--/*@thymesVar id="error" type="java.lang.String"*/-->

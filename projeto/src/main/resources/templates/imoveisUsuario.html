@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pr-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	
+	<!-- Materialize: css -->
+	<link rel="stylesheet" href="/vendor/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	
+	<link rel="stylesheet" href="/css/global.css">
+	<link rel="stylesheet" href="/css/imoveisUsuario.css">
+	
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Morabem</title>
+</head>
+<body>
+<div class="container">
+	<header class="flex row">
+		<div>
+			<a href="/">
+				<img src="/logo-horizontal.png"/>
+			</a>
+		</div>
+		<div class="flex row w-100 justify-content-end">
+			<div th:replace="fragments/header :: 'com-usuario'"></div>
+		</div>
+	</header>
+	<main>
+		<h1>Meus Imoveis</h1>
+		<div class="imovel" th:each="imovel : ${imoveis}">
+			<div class="tumb">
+				<img th:src="'/fotos/' + ${imovel.getFotos().get(0).getUrl()}" alt=" ">
+			</div>
+			<div class="detalhes">
+				<div>
+					<p class="endereco" th:text="${imovel.printEndereco()}"></p>
+					<span class="chip" th:text="${imovel.tipo}"></span>
+					<span th:text="${'Area Total: ' + imovel.areaTotal + ', Area Construida: ' + imovel.areaConstruida}"></span>
+				</div>
+				<div class="qualidades">
+					<div class="chip teal lighten-2" th:each="carac : ${imovel.getCaracteristicas()}"
+						 th:text="${carac}">
+					</div>
+				</div>
+			</div>
+			<div class="action">
+				<a th:href="'/meus-imoveis/deletar?id=' + ${imovel.getId()}">
+					<i class="material-icons tooltipped" data-tooltip="Deletar">delete_forever</i>
+				</a>
+				<i class="material-icons tooltipped" data-tooltip="Editar">edit</i>
+				<i class="material-icons tooltipped" data-tooltip="Anunciar">whatshot</i>
+			</div>
+		</div>
+	</main>
+	
+	<div class="fixed-action-btn">
+		<a class="btn-floating btn-large deep-purple darken-1" href="/cadastro/imovel">
+			<i class="large material-icons tooltipped " data-position="left" data-tooltip="Novo Imovel">add</i>
+		</a>
+	</div>
+</div>
+
+<script src="/vendor/js/jquery.mim.js"></script>
+<script src="/vendor/js/hammer.js"></script>
+<script src="/vendor/js/materialize.js"></script>
+<script>
+	$('.dropdown-trigger').dropdown();
+	
+	$(document).ready(function(){
+		$('.tooltipped').tooltip();
+	});
+</script>
+</body>
+</html>

@@ -25,6 +25,7 @@ public class UsuarioService {
     @Autowired
     public FotoRepository fotoRepository;
 
+
     public Usuario login(String email, String senha) throws UsuarioException.UsuarioNaoEncontrado {
 
         Usuario usuario = pessoaFisicaRepository.findFirstByEmailEqualsAndSenhaEquals(email, senha);
@@ -61,6 +62,7 @@ public class UsuarioService {
         return usuario;
     }
 
+    @Deprecated
     public boolean verificarSeOEmailEstaSendoUsado(String email) {
         try {
             obterUsuarioPorEmail(email);
@@ -69,4 +71,16 @@ public class UsuarioService {
             return false;
         }
     }
+
+    public boolean verificarSeOUsuariojaNaoEstaCadastrado(Usuario u) {
+        if (u instanceof PessoaFisica) {
+            PessoaFisica p = pessoaFisicaRepository
+                    .findFirstByEmailEqualsOrAndCpfEquals(u.getEmail(), ((PessoaFisica) u).getCpf());
+
+            return p != null;
+        }
+
+        return false;
+    }
+
 }

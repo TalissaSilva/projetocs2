@@ -1,0 +1,130 @@
+h1 {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+
+.fotos {
+    position: relative;
+    overflow: auto hidden;
+    height: 170px;
+    margin: 0 2ch 4ch 2ch;
+}
+
+
+/* width */
+.fotos::-webkit-scrollbar {
+    width: 1ch;
+    height: 1ch;
+    transition: all 350ms ease-out;
+}
+
+.fotos::-webkit-scrollbar:hover {
+    width: 8px;
+    height: 8px;
+}
+
+/* Track */
+.fotos::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.fotos::-webkit-scrollbar-thumb {
+    background: #cfcfcf;
+}
+
+/* Handle on hover */
+.fotos::-webkit-scrollbar-thumb:hover {
+    background: #b6b6b6;
+}
+
+.fotos ul {
+    display: flex;
+    position: absolute;
+    height: 140px;
+
+}
+
+.fotos ul li{
+    display: inline-block;
+    position: relative;
+}
+.fotos ul li:first-child{
+    width: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    position: sticky;
+    left: -40px;
+    z-index: 99999999;
+}
+
+
+.fotos img{
+    object-fit: scale-down;
+    height: 120px;
+    margin: 0 1ch 0 1.5ch;
+}
+
+.fotos li span i {
+    margin: 0;
+    padding: 0;
+}
+
+.fotos li span{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    top: -1ch;
+    right: -1ch;
+    background-color: tomato;
+    padding: .1ch;
+    width: 26px;
+    height: 26px;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    transition: all 350ms ease-out;
+}
+.fotos li span:hover {
+    box-shadow: 0 1px 5px 0 black;
+}
+
+.atributos {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.atributos .add, .atributos .add a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    cursor: pointer;
+    transition: all 350ms ease-out;
+}
+.atributos .add:hover {
+    box-shadow: 0 1px 5px 0 black;
+}
+
+.atributos .add i {
+    padding: 0;
+    color: white;
+}
+
+.atributos .chip {
+    color: white;
+}
+
+.action {
+    width: 100%;
+}
+
+.action button{
+    display: block;
+    margin: 5ch auto 10ch auto;
+}

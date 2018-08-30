@@ -77,18 +77,19 @@ header .user-actions a:nth-child(1){
 .custom-input label {
     display: none;
 }
-
+.custom-input select,
 .custom-input input {
     border-radius: 50px;
     border: 1px solid #CCCCCC;
     padding: .8ch 2ch;
     width: 100%;
 }
-
+.custom-input select::placeholder,
 .custom-input input::placeholder {
     color: var(--text-color);
 }
 
+.custom-input select:focus,
 .custom-input input:focus,
 .custom-input.posppend .posppend input:focus,
 .custom-input select:checked {
@@ -101,6 +102,7 @@ header .user-actions a:nth-child(1){
     flex-direction: row;
 }
 
+.custom-input.posppend select,
 .custom-input.posppend input {
     border-radius: 50px 0 0 50px;
 }
@@ -138,7 +140,7 @@ header .user-actions a:nth-child(1){
     width: 100%;
     padding: 1.3ch;
     border-radius: 5px;
-    margin: 2ch 0;
+    margin: 2ch 1ch;
     background-color: tomato;
     color: white;
 }

@@ -34,6 +34,7 @@ public class UsuarioControllerTest {
 
     @MockBean
     private StorageService storageService;
+
     @Test
     public void submitCadastroDePessoaFisica_sucesso() throws Exception {
         Mockito.doReturn(false).when(usuarioService).verificarSeOEmailEstaSendoUsado(Mockito.any());
@@ -51,14 +52,14 @@ public class UsuarioControllerTest {
 
     @Test
     public void submitCadastroDePessoaFisica_erro() throws Exception {
-        Mockito.doReturn(true).when(usuarioService).verificarSeOEmailEstaSendoUsado(Mockito.any());
+        Mockito.doReturn(true).when(usuarioService).verificarSeOUsuariojaNaoEstaCadastrado(Mockito.any());
         Mockito.doNothing().when(usuarioService).cadastrar(Mockito.any());
 
         this.mockMvc.perform(
                 builders.RequestBuilder.postPara("/cadastro/pessoa-fisica")
                         .comOsParamentros(UsuarioBuilder.PessoaFisica.obterUm().comoParametros())
                         .agora().contentType(MediaType.MULTIPART_FORM_DATA))
-                .andExpect(model().attribute("error", is(equalTo("O E-mail já está em uso"))));
+                .andExpect(model().attribute("error", is(equalTo("O E-mail ou CPF já está em uso."))));
 
         Mockito.verify(usuarioService, Mockito.times(0)).cadastrar(Mockito.any());
     }

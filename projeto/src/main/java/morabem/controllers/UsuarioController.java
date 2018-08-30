@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import utils.LoginData;
+import morabem.utils.LoginData;
 import javax.servlet.http.HttpSession;
 
 
@@ -53,8 +53,8 @@ public class UsuarioController {
 
     @PostMapping(path = "/cadastro/pessoa-fisica")
     public String cadastroPessoaFisicaSubmit(@ModelAttribute PessoaFisica pessoaFisica, Model model, @RequestPart(required = false) MultipartFile foto) {
-        if (usuarioService.verificarSeOEmailEstaSendoUsado(pessoaFisica.getEmail())) {
-            model.addAttribute("error", "O E-mail já está em uso");
+        if (usuarioService.verificarSeOUsuariojaNaoEstaCadastrado(pessoaFisica)) {
+            model.addAttribute("O E-mail ou CPF já está em uso.");
             model.addAttribute("pessoaFisica", pessoaFisica);
             return "cadastroFisica";
         }
@@ -69,7 +69,7 @@ public class UsuarioController {
     @GetMapping(path = "/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("usuarioLogado");
-        return "index";
+        return "redirect:/";
     }
 
 

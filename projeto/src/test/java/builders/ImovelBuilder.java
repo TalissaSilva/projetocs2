@@ -1,9 +1,12 @@
 package builders;
 
 import morabem.domain.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 public class ImovelBuilder {
@@ -17,11 +20,6 @@ public class ImovelBuilder {
         imovelBuilder.imovel = new Imovel(Imovel.Tipo.CASA,200D, 400D, null, 1);
         imovelBuilder.imovel.setEndereco(EnderecoBuilder.obterUm().agora());
         imovelBuilder.imovel.setDono(UsuarioBuilder.PessoaFisica.obterUm().agora());
-        /*imovelBuilder.imovel.getFotos().addAll(Arrays.asList(
-                FotoBuilder.obterUma().deId(1L).agora(),
-                FotoBuilder.obterUma().deId(2L).agora(),
-                FotoBuilder.obterUma().deId(3L).agora()
-        ));*/
         return imovelBuilder;
     }
 
@@ -34,13 +32,27 @@ public class ImovelBuilder {
         return this;
     }
 
-    public ImovelBuilder comOsAtributos(Set<AtributoImovel> att) {
-        imovel.setAtributos(att);
+    public ImovelBuilder comAsCaracteristicas(List<String> att) {
+        imovel.setCaracteristicas(att);
         return this;
     }
 
     public ImovelBuilder comEndereco(Endereco end) {
         imovel.setEndereco(end);
         return this;
+    }
+
+    public MultiValueMap<String, String> comoParametros() {
+        MultiValueMap<String, String> values = new LinkedMultiValueMap<String, String>();
+        values.add("areaTotal", String.valueOf(imovel.getAreaTotal()));
+        values.add("areaConstruida", String.valueOf(imovel.getAreaConstruida()));
+        values.add("endereco.cep", imovel.getEndereco().getCep());
+        values.add("endereco.logradouro", imovel.getEndereco().getLogradouro());
+        values.add("endereco.bairro", imovel.getEndereco().getBairro());
+        values.add("endereco.cidade", imovel.getEndereco().getCidade());
+        values.add("endereco.uf", imovel.getEndereco().getUf());
+        values.add("numero", String.valueOf(imovel.getNumero()));
+        values.add("tipo", String.valueOf(imovel.getTipo()));
+        return values;
     }
 }

@@ -1,4 +1,4 @@
-package utils;
+package morabem.utils;
 
 public class LoginData {
 

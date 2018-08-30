@@ -2,7 +2,9 @@ package morabem.storage;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -109,4 +111,22 @@ public class FileSystemStorageService implements StorageService {
             throw new StorageException("Could not initialize storage", e);
         }
     }
+
+    @Override
+    public String saveBase64Image(String encoded) {
+        String[] metadata = encoded.split(",");
+
+        String fileExt = metadata[0].split("/")[1].split(";")[0];
+        String filename = Base64.getEncoder().encodeToString(String.valueOf(new Date().getTime()).getBytes()) + "." + fileExt;
+
+        byte[] data = Base64.getDecoder().decode(metadata[1].getBytes(StandardCharsets.UTF_8));
+
+        try (OutputStream stream = Files.newOutputStream(Paths.get("uploads/" + filename))) {
+            stream.write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return filename;
+    }
+
 }

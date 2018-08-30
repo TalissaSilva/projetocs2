@@ -1,7 +1,12 @@
 package morabem.repositories;
 
+import morabem.domain.Imovel;
+import morabem.domain.Usuario;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
+
+import java.util.List;
 
 /**
  * @link { https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation }
@@ -14,4 +19,6 @@ public interface UsuarioRepository<T> extends JpaRepository<T, Long>  {
     T findFirstByEmailEqualsAndSenhaEquals(String email, String senha);
 
     T findFirstByEmailEquals(String email);
+
+
 }

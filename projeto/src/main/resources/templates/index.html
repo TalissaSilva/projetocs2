@@ -20,7 +20,9 @@
 <div class="container">
 	<header class="flex row">
 		<div>
-			<img src="/logo-horizontal.png"/>
+			<a href="/">
+				<img src="/logo-horizontal.png"/>
+			</a>
 		</div>
 		<div class="flex row w-100 justify-content-end">
 			<div th:replace="fragments/header :: ${session.usuarioLogado == null} ? 'sem-usuario' : 'com-usuario'"></div>

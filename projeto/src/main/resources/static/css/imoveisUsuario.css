@@ -1,0 +1,84 @@
+.imovel {
+    display: flex;
+    flex-direction: row;
+    justify-items: flex-start;
+    transition: all 200ms ease-out;
+    border-radius: 5px;
+}
+.imovel .tumb {
+    display: flex;
+    justify-content: center;
+    height: 180px;
+}
+
+.imovel .tumb img{
+    width: 300px;
+    object-fit: cover;
+    border-radius: 5px 0 0 5px;
+}
+
+.imovel .detalhes {
+    margin: 2ch 2.2ch ;
+    margin-bottom: 0;
+}
+
+.imovel .detalhes {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    margin: 1ch 0 1ch 1ch;
+}
+
+.imovel .detalhes div:first-child {
+    margin-bottom: auto;
+}
+
+.imovel .detalhes .endereco {
+    margin: 2ch;
+    margin-top: 0;
+    font-size: 20px;
+    padding: 0;
+}
+
+.imovel .detalhes .qualidades .chip {
+    color: white;
+    cursor: default;
+}
+
+.imovel .action {
+    display: flex;
+    flex-direction: column;
+    color: gray;
+    justify-content: center;
+    opacity: 0;
+    margin: 1ch 1ch 0 auto;
+}
+
+.imovel .action i {
+    margin-bottom: .5ch;
+    padding: .2ch;
+    border-radius: 50px;
+}
+
+.imovel .action i:hover {
+    color: black;
+    cursor: pointer;
+    background-color: #e9e7ed;
+}
+
+.imovel .action i:active {
+    background-color: #98969c;
+
+}
+.imovel:hover {
+    box-shadow: 0 3px 6px 1px rgba(0, 0, 0, 0.53);
+    margin: 1ch 0 1ch 0;
+}
+
+.imovel:hover .action {
+    opacity: 1;
+}
+
+.imovel:hover .detalhes {
+    border-right: 1px #dddddd solid;
+}
