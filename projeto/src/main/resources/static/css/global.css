@@ -78,19 +78,27 @@ header .user-actions a:nth-child(1){
     display: none;
 }
 .custom-input select,
+.custom-input textarea,
 .custom-input input {
     border-radius: 50px;
     border: 1px solid #CCCCCC;
     padding: .8ch 2ch;
     width: 100%;
 }
+
+.custom-input textarea {
+    border-radius: 20px;
+}
+
 .custom-input select::placeholder,
+.custom-input textarea::placeholder,
 .custom-input input::placeholder {
     color: var(--text-color);
 }
 
 .custom-input select:focus,
 .custom-input input:focus,
+.custom-input textarea:focus,
 .custom-input.posppend .posppend input:focus,
 .custom-input select:checked {
     border: 1px solid purple;
@@ -111,7 +119,8 @@ header .user-actions a:nth-child(1){
     width: 30%;
 }
 
-.custom-input.posppend .posppend select, .custom-input.posppend .posppend input {
+.custom-input.posppend .posppend select,
+.custom-input.posppend .posppend input {
     border-radius: 0 50px 50px 0;
     padding: 0;
     height: 100%;

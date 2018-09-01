@@ -20,7 +20,8 @@ SOBRE FRAGMENTOS -> https://www.thymeleaf.org/doc/articles/layouts.html
 	</div>
 	<div th:fragment="com-usuario" class="usuario-logado">
 			<a class="btn-flat dropdown-trigger flex row align-center" data-target="op-user" >
-				<img th:src="'/fotos/' + ${session.usuarioLogado.getFotoPerfil().getUrl()}" alt="">
+				<img th:unless="${session.usuarioLogado.getFotoPerfil() == null}"
+						th:src="'/fotos/' + ${session.usuarioLogado.getFotoPerfil().getUrl()}" alt="">
 				<span th:text="${'Olá, ' + session.usuarioLogado.getNome().split(' ')[0]}"></span>
 			</a>
 			<ul id="op-user" class="dropdown-content">

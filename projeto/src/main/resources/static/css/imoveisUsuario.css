@@ -40,6 +40,13 @@
     padding: 0;
 }
 
+
+h1 {
+    font-size: 20px !important;
+    font-weight: lighter !important;
+    text-align: center;
+}
+
 .imovel .detalhes .qualidades .chip {
     color: white;
     cursor: default;
@@ -79,6 +86,6 @@
     opacity: 1;
 }
 
-.imovel:hover .detalhes {
-    border-right: 1px #dddddd solid;
+.imovel:hover .action {
+    border-left: 1px #dddddd solid;
 }

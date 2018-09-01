@@ -1,5 +1,7 @@
 package morabem.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -12,16 +14,31 @@ public class Anuncio implements Serializable {
 	private Integer id;
 	private String titulo;
 	private Tipo tipo;
-	private Date dataInicio;
-	private Date dataFinal;
+
+	@Temporal(value = TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date datadaPublicacao;
+
 	private Long valor;
 	private String descricao;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Usuario anunciante;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	private Imovel imovel;
+
 	public Anuncio() { }
 
-
+	public Anuncio(String titulo, Tipo tipo, Date dataInicio, Long valor, String descricao, Usuario anunciante, Imovel imovel) {
+		this.titulo = titulo;
+		this.tipo = tipo;
+		this.datadaPublicacao = dataInicio;
+		this.valor = valor;
+		this.descricao = descricao;
+		this.anunciante = anunciante;
+		this.imovel = imovel;
+	}
 
 	public String getTitulo() {
 		return titulo;
@@ -39,21 +56,6 @@ public class Anuncio implements Serializable {
 		this.tipo = tipo;
 	}
 
-	public Date getDataInicio() {
-		return dataInicio;
-	}
-
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
-	}
-
-	public Date getDataFinal() {
-		return dataFinal;
-	}
-
-	public void setDataFinal(Date dataFinal) {
-		this.dataFinal = dataFinal;
-	}
 
 	public Long getValor() {
 		return valor;
@@ -77,6 +79,30 @@ public class Anuncio implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Imovel getImovel() {
+		return imovel;
+	}
+
+	public void setImovel(Imovel imovel) {
+		this.imovel = imovel;
+	}
+
+	public Usuario getAnunciante() {
+		return anunciante;
+	}
+
+	public void setAnunciante(Usuario anunciante) {
+		this.anunciante = anunciante;
+	}
+
+	public Date getDatadaPublicacao() {
+		return datadaPublicacao;
+	}
+
+	public void setDatadaPublicacao(Date datadaPublicacao) {
+		this.datadaPublicacao = datadaPublicacao;
 	}
 
 	public static enum Tipo {

@@ -11,21 +11,88 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
 	
 	<link rel="stylesheet" href="/css/global.css">
-	<link rel="stylesheet" href="/css/index.css">
+	<link rel="stylesheet" href="/css/novoAnuncio.css">
 	
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Morabem - Nova publicação</title>
 </head>
 <body>
-<header class="flex row">
-	<div>
-		<a href="/">
-			<img src="/logo-horizontal.png"/>
-		</a>
-	</div>
-	<div class="flex row w-100 justify-content-end">
-		<div th:replace="fragments/header :: ${session.usuarioLogado == null} ? 'sem-usuario' : 'com-usuario'"></div>
-	</div>
-</header>
+<div class="container">
+	
+	<header class="flex row">
+		<div>
+			<a href="/">
+				<img src="/logo-horizontal.png"/>
+			</a>
+		</div>
+		<div class="flex row w-100 justify-content-end">
+			<div th:replace="fragments/header :: ${session.usuarioLogado == null} ? 'sem-usuario' : 'com-usuario'"></div>
+		</div>
+	</header>
+	
+	<main>
+		<h1>Anúnciar Imovel</h1>
+		<section class="imovel row">
+			<div class="col">
+				<p>Imovel selecionado:</p>
+				<p th:text="${anuncio.getImovel().printEndereco()}"></p>
+			</div>
+		</section>
+		<section class="confis">
+			<form th:object="${anuncio}" method="post" th:action="'/imoveis/' + ${anuncio.getImovel().getId()} + '/anunciar'">
+				<fieldset>
+					<legend>Sobre o anúncio</legend>
+					<div class="row tipo">
+						<div class="col s12">
+							<label th:for="*{tipo}">Tipo do anúncio</label><br>
+							<label th:each="tipo : ${tipos}" >
+								<input class="with-gap" th:field="*{tipo}" type="radio" th:value="${tipo}" required/>
+								<span th:text="${tipo}"></span>
+							</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="custom-input col s12">
+							<input th:field="*{titulo}" type="text"
+								   placeholder="Titulo" required/>
+						</div>
+					
+					</div>
+					<div class="row">
+						<div class="custom-input col s12">
+						<textarea th:field="*{descricao}" rows="5"
+								  placeholder="Descrição" required></textarea>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="custom-input col s6">
+							<input th:field="*{valor}" type="number"
+								   placeholder="Preço do Imovel" required min="1"/>
+						</div>
+					</div>
+				</fieldset>
+				
+				<div class="action">
+					<button class="btn waves-effect waves-light deep-purple darken-1" type="submit">
+						Anúnciar
+					</button>
+				</div>
+			</form>
+		</section>
+	</main>
+</div>
+
+
+<script src="/vendor/js/jquery.mim.js"></script>
+<script src="/vendor/js/hammer.js"></script>
+<script src="/vendor/js/materialize.js"></script>
+<script>
+	$('.dropdown-trigger').dropdown();
+	
+	$(document).ready(function(){
+		$('.tooltipped').tooltip();
+	});
+</script>
 </body>
 </html>

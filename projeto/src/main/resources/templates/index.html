@@ -90,15 +90,15 @@
 			<!-- fim busca -->
 			
 			<div class="col s8 anuncios flex collumn wrap">
-				<div class="anuncio" th:each="i : ${#numbers.sequence( 1, 10)}">
-					<img class="tumb" src="/foto.jpg"/>
+				<div class="anuncio" th:each="a : ${anuncios}">
+					<img class="tumb" th:src="'/fotos/' + ${a.getImovel().getFotos().get(0).url}"/>
 					<div class="footer flex row">
 						<div class="endereco w-100">
-							<p class="bairro">nova lima</p>
-							<p class="cidade">Campo grande, MS</p>
+							<p class="bairro" th:text="${a.getImovel().getEndereco().bairro}"></p>
+							<p class="cidade" th:text="${a.getImovel().getEndereco().cidade} + ', ' + ${a.getImovel().getEndereco().uf}"></p>
 						</div>
 						<div class="infos">
-							<p class="alugar">alugar</p>
+							<p class="alugar" th:text="${a.getTipo()}"></p>
 							<p class="preco">R$ 1.5M</p>
 						</div>
 					</div>

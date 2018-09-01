@@ -1,6 +1,7 @@
 package morabem.services;
 
 import morabem.domain.Imovel;
+import morabem.exceptions.ImovelException;
 import morabem.repositories.EnderecoRepository;
 import morabem.repositories.FotoRepository;
 import morabem.repositories.ImovelRepository;
@@ -36,11 +37,16 @@ public class ImovelService {
         return imovelRepository.findAllByDonoId(id);
     }
 
-    public void deletarImovelComOId(Long id) {
-        Imovel i = imovelRepository.getOne(id);
-        i.getCaracteristicas().clear();
-        imovelRepository.saveAndFlush(i);
-        imovelRepository.delete(i);
+    public void deletarImovelComOId(Imovel imovel) {
+        imovel.getCaracteristicas().clear();
+        imovelRepository.saveAndFlush(imovel);
+        imovelRepository.delete(imovel);
         imovelRepository.flush();
+    }
+
+    public Imovel obterPorCodigo(String codImovel) throws ImovelException.ImovelNaoExiste {
+        return imovelRepository
+                .findById(Long.valueOf(codImovel))
+                .orElseThrow(ImovelException.ImovelNaoExiste::new);
     }
 }

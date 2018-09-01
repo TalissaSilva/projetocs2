@@ -52,13 +52,14 @@ public class UsuarioController {
     }
 
     @PostMapping(path = "/cadastro/pessoa-fisica")
-    public String cadastroPessoaFisicaSubmit(@ModelAttribute PessoaFisica pessoaFisica, Model model, @RequestPart(required = false) MultipartFile foto) {
+    public String cadastroPessoaFisicaSubmit(@ModelAttribute PessoaFisica pessoaFisica,
+                                             Model model, @RequestPart(required = false) MultipartFile foto) {
         if (usuarioService.verificarSeOUsuariojaNaoEstaCadastrado(pessoaFisica)) {
-            model.addAttribute("O E-mail ou CPF já está em uso.");
+            model.addAttribute("error", "O E-mail ou CPF já está em uso.");
             model.addAttribute("pessoaFisica", pessoaFisica);
             return "cadastroFisica";
         }
-        if (foto != null) {
+        if (!foto.isEmpty()) {
             String url = storageService.store(foto);
             pessoaFisica.setFotoPerfil(new Foto(null, url));
         }

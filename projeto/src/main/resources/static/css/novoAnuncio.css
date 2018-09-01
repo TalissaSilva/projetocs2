@@ -1,0 +1,8 @@
+.tipo label,
+.tipo label span{
+    color: black !important;
+}
+
+.tipo label:nth-child(n+1) {
+    margin-right: 3ch;
+}

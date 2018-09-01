@@ -62,7 +62,6 @@ public class UsuarioService {
         return usuario;
     }
 
-    @Deprecated
     public boolean verificarSeOEmailEstaSendoUsado(String email) {
         try {
             obterUsuarioPorEmail(email);

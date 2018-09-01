@@ -1,1 +1,0 @@
-INSERT INTO atributo VALUES (1, 'Quantos'), (2, 'Banheiros'), (3, 'Garagem'), (4, 'Cozinha'), (5, 'Varanda'), (6, 'Andares');

@@ -49,12 +49,4 @@ public class PessoaFisicaRepositoryTest {
         pessoaFisicaRepository.save(usuario);
         pessoaFisicaRepository.flush();
     }
-
-    @Test
-    public void buscarPorEmailESenha() {
-        PessoaFisica p = pessoaFisicaRepository.findFirstByEmailEqualsAndSenhaEquals("user@email", "123456");
-        assertThat(p.getEmail(), is(equalTo("user@email")));
-        assertThat(p.getSenha(), is(equalTo("123456")));
-    }
-
 }

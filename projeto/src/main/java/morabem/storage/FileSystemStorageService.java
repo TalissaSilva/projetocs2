@@ -129,4 +129,13 @@ public class FileSystemStorageService implements StorageService {
         return filename;
     }
 
+    @Override
+    public void delete(String s) {
+        try {
+            FileSystemUtils.deleteRecursively(Paths.get("uploads/" + s));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

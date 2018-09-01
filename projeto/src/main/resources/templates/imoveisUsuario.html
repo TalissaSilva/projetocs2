@@ -51,7 +51,9 @@
 					<i class="material-icons tooltipped" data-tooltip="Deletar">delete_forever</i>
 				</a>
 				<i class="material-icons tooltipped" data-tooltip="Editar">edit</i>
-				<i class="material-icons tooltipped" data-tooltip="Anunciar">whatshot</i>
+				<a th:href="${'/imoveis/'+ imovel.getId() + '/anunciar'}">
+					<i class="material-icons tooltipped" data-tooltip="Anunciar">whatshot</i>
+				</a>
 			</div>
 		</div>
 	</main>

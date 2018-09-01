@@ -20,6 +20,7 @@ public class ImovelBuilder {
         imovelBuilder.imovel = new Imovel(Imovel.Tipo.CASA,200D, 400D, null, 1);
         imovelBuilder.imovel.setEndereco(EnderecoBuilder.obterUm().agora());
         imovelBuilder.imovel.setDono(UsuarioBuilder.PessoaFisica.obterUm().agora());
+        imovelBuilder.imovel.getCaracteristicas().add("foo, 2");
         return imovelBuilder;
     }
 
@@ -53,6 +54,7 @@ public class ImovelBuilder {
         values.add("endereco.uf", imovel.getEndereco().getUf());
         values.add("numero", String.valueOf(imovel.getNumero()));
         values.add("tipo", String.valueOf(imovel.getTipo()));
+        values.add("caracteristicas", String.valueOf(imovel.getCaracteristicas()));
         return values;
     }
 }
