@@ -1,5 +1,6 @@
 package morabem.services;
 
+import morabem.domain.Anuncio;
 import morabem.domain.PessoaFisica;
 import morabem.domain.PessoaJuridica;
 import morabem.domain.Usuario;
@@ -10,6 +11,11 @@ import morabem.repositories.PessoaFisicaRepository;
 import morabem.repositories.PessoaJuridicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class UsuarioService {
@@ -88,4 +94,15 @@ public class UsuarioService {
         return false;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Set<Anuncio> getAnuciosDousuario(Usuario usuario) {
+        if (usuario instanceof PessoaFisica) {
+            pessoaFisicaRepository.saveAndFlush((PessoaFisica) usuario);
+        }
+
+        if (usuario instanceof PessoaJuridica) {
+            pessoaJuridicaRepository.saveAndFlush((PessoaJuridica) usuario);
+        }
+        return usuario.getAnuncios();
+    }
 }

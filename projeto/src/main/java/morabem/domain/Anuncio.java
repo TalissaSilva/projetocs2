@@ -19,7 +19,7 @@ public class Anuncio implements Serializable {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date datadaPublicacao;
 
-	private Long valor;
+	private Double valor;
 	private String descricao;
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -30,7 +30,7 @@ public class Anuncio implements Serializable {
 
 	public Anuncio() { }
 
-	public Anuncio(String titulo, Tipo tipo, Date dataInicio, Long valor, String descricao, Usuario anunciante, Imovel imovel) {
+	public Anuncio(String titulo, Tipo tipo, Date dataInicio, Double valor, String descricao, Usuario anunciante, Imovel imovel) {
 		this.titulo = titulo;
 		this.tipo = tipo;
 		this.datadaPublicacao = dataInicio;
@@ -57,11 +57,11 @@ public class Anuncio implements Serializable {
 	}
 
 
-	public Long getValor() {
+	public Double getValor() {
 		return valor;
 	}
 
-	public void setValor(Long valor) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 
@@ -108,5 +108,18 @@ public class Anuncio implements Serializable {
 	public static enum Tipo {
 		ALUGAR,
 		VENDER
+	}
+
+	@Override
+	public String toString() {
+		return "Anuncio{" +
+				"id=" + id +
+				", titulo='" + titulo + '\'' +
+				", tipo=" + tipo +
+				", datadaPublicacao=" + datadaPublicacao +
+				", valor=" + valor +
+				", descricao='" + descricao + '\'' +
+				", imovel=" + imovel +
+				'}';
 	}
 }

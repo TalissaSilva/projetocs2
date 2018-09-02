@@ -16,6 +16,14 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Morabem</title>
 </head>
+
+<style>
+	.titulo {
+		font-size: 1.5rem;
+		margin: 0;
+		padding: 0;
+	}
+</style>
 <body>
 <div class="container">
 	<header class="flex row">
@@ -29,40 +37,32 @@
 		</div>
 	</header>
 	<main>
-		<h1>Meus Imoveis</h1>
-		<div class="imovel" th:each="imovel : ${imoveis}">
+		<h1>Meus Anúncios</h1>
+		<div class="imovel" th:each="anuncio : ${anuncios}">
 			<div class="tumb">
-				<img th:src="'/fotos/' + ${imovel.getFotos().get(0).getUrl()}" alt=" ">
+				<img th:src="'/fotos/' + ${anuncio.getImovel().getFotos().get(0).getUrl()}" alt=" ">
 			</div>
 			<div class="detalhes">
 				<div>
-					<p class="endereco" th:text="${imovel.printEndereco()}"></p>
-					<span class="chip" th:text="${imovel.tipo}"></span>
-					<span th:text="${'Area Total: ' + imovel.areaTotal + 'm², Area Construida: ' + imovel.areaConstruida} + 'm²'"></span>
+					<p class="titulo" th:text="${anuncio.getTitulo()}"></p>
+					<p th:text="${anuncio.getImovel().printEndereco()}"></p>
+					<span class="chip" th:text="${anuncio.getTipo()}"></span>
+					<span class="chip" th:text="${anuncio.getImovel().getTipo()}"></span>
 				</div>
-				<div class="qualidades">
-					<div class="chip teal lighten-2" th:each="carac : ${imovel.getCaracteristicas()}"
-						 th:text="${carac}">
-					</div>
+				<div>
+					<p th:text="'R$ ' + ${anuncio.getValor()}"></p>
 				</div>
 			</div>
 			<div class="action">
-				<a th:href="'/meus-imoveis/deletar?id=' + ${imovel.getId()}">
+				<a th:href="'/meus-anuncios/deletar?id=' + ${anuncio.getId()}">
 					<i class="material-icons tooltipped" data-tooltip="Deletar">delete_forever</i>
 				</a>
-				<i class="material-icons tooltipped" data-tooltip="Editar">edit</i>
-				<a th:href="${'/imoveis/'+ imovel.getId() + '/anunciar'}">
-					<i class="material-icons tooltipped" data-tooltip="Anunciar">whatshot</i>
+				<a th:href="'/anuncio/'+ ${anuncio.getId()} +'/editar'">
+					<i class="material-icons tooltipped" data-tooltip="Editar">edit</i>
 				</a>
 			</div>
 		</div>
 	</main>
-	
-	<div class="fixed-action-btn">
-		<a class="btn-floating btn-large deep-purple darken-1" href="/cadastro/imovel">
-			<i class="large material-icons tooltipped " data-position="left" data-tooltip="Novo Imovel">add</i>
-		</a>
-	</div>
 </div>
 
 <script src="/vendor/js/jquery.mim.js"></script>
