@@ -1,6 +1,7 @@
 package morabem.services;
 
 import morabem.domain.PessoaFisica;
+import morabem.domain.PessoaJuridica;
 import morabem.domain.Usuario;
 import morabem.exceptions.UsuarioException;
 import morabem.repositories.EnderecoRepository;
@@ -45,8 +46,13 @@ public class UsuarioService {
             fotoRepository.saveAndFlush(usuario.getFotoPerfil());
         }
         enderecoRepository.saveAndFlush(usuario.getEndereco());
+
         if (usuario instanceof PessoaFisica) {
             pessoaFisicaRepository.saveAndFlush((PessoaFisica) usuario);
+        }
+
+        if (usuario instanceof PessoaJuridica) {
+            pessoaJuridicaRepository.saveAndFlush((PessoaJuridica) usuario);
         }
     }
 

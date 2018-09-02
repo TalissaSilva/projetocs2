@@ -2,6 +2,7 @@ package morabem.controllers;
 
 import morabem.domain.Foto;
 import morabem.domain.PessoaFisica;
+import morabem.domain.PessoaJuridica;
 import morabem.domain.Usuario;
 import morabem.exceptions.UsuarioException;
 import morabem.services.UsuarioService;
@@ -49,6 +50,28 @@ public class UsuarioController {
     public String cadastroPessoaFisicaForm(Model model) {
         model.addAttribute("pessoaFisica", new PessoaFisica());
         return "cadastroFisica";
+    }
+
+    @GetMapping(path = "/cadastro/pessoa-juridica")
+    public String cadastroPessoaJuridicaForm(Model model) {
+        model.addAttribute("pessoaJuridica", new PessoaJuridica());
+        return "cadastroJuridica";
+    }
+
+    @PostMapping(path = "/cadastro/pessoa-juridica")
+    public String cadastroPessoaJuridicaSubmit(@ModelAttribute PessoaJuridica pessoaJuridica,
+                                               Model model, @RequestPart(required = false) MultipartFile foto) {
+        if (usuarioService.verificarSeOUsuariojaNaoEstaCadastrado(pessoaJuridica)) {
+            model.addAttribute("error", "O E-mail ou CPF já está em uso.");
+            model.addAttribute("pessoaJuridica", pessoaJuridica);
+            return "cadastroJuridica";
+        }
+        if (!foto.isEmpty()) {
+            String url = storageService.store(foto);
+            pessoaJuridica.setFotoPerfil(new Foto(null, url));
+        }
+        usuarioService.cadastrar(pessoaJuridica);
+        return "redirect:/login";
     }
 
     @PostMapping(path = "/cadastro/pessoa-fisica")
