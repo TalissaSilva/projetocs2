@@ -62,6 +62,27 @@ public class UsuarioService {
         }
     }
 
+    public void cadastrarAtualizar(Usuario usuario, Usuario usuarioLogado, String foto) {
+
+
+        if (usuario.getFotoPerfil() != null) {
+            fotoRepository.saveAndFlush(usuario.getFotoPerfil());
+        }
+        enderecoRepository.saveAndFlush(usuario.getEndereco());
+
+        if (usuario instanceof PessoaFisica) {
+            pessoaFisicaRepository.saveAndFlush((PessoaFisica) usuario);
+        }
+
+        if (usuario instanceof PessoaJuridica) {
+            pessoaJuridicaRepository.saveAndFlush((PessoaJuridica) usuario);
+        }
+    }
+
+    private void atualizarCadastro(Usuario usuario) {
+
+    }
+
     public Usuario obterUsuarioPorEmail(String email) throws UsuarioException.UsuarioNaoEncontrado {
         Usuario usuario = this.pessoaFisicaRepository.findFirstByEmailEquals(email);
         if(usuario == null) {
@@ -91,18 +112,26 @@ public class UsuarioService {
             return p != null;
         }
 
+        if (u instanceof PessoaJuridica) {
+            PessoaJuridica p = pessoaJuridicaRepository.
+                    findFirstByEmailOrCnpjOrCreciEquals(u.getEmail(),
+                            ((PessoaJuridica) u).getCnpj(),
+                            ((PessoaJuridica) u).getCreci());
+            return p != null;
+        }
+
         return false;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public Set<Anuncio> getAnuciosDousuario(Usuario usuario) {
+    public void deletar(Usuario usuario) {
         if (usuario instanceof PessoaFisica) {
-            pessoaFisicaRepository.saveAndFlush((PessoaFisica) usuario);
+            pessoaFisicaRepository.delete((PessoaFisica) usuario);
+            pessoaFisicaRepository.flush();
         }
 
         if (usuario instanceof PessoaJuridica) {
-            pessoaJuridicaRepository.saveAndFlush((PessoaJuridica) usuario);
+            pessoaJuridicaRepository.delete((PessoaJuridica) usuario);
+            pessoaJuridicaRepository.flush();
         }
-        return usuario.getAnuncios();
     }
 }

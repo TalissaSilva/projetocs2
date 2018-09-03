@@ -11,11 +11,37 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
 	
 	<link rel="stylesheet" href="/css/global.css">
-	<link rel="stylesheet" href="/css/novoAnuncio.css">
 	
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Morabem - Nova publicação</title>
 </head>
+<style>
+	
+	h1 {
+		font-size: 20px !important;
+		font-weight: lighter !important;
+		text-align: center;
+	}
+	
+	.tipo label,
+	.tipo label span{
+		color: black !important;
+	}
+	
+	.tipo label:nth-child(n+1) {
+		margin-right: 3ch;
+	}
+	
+	.confis {
+		margin-bottom: 5rem;
+	}
+	
+	.btn {
+		display: block;
+		margin: auto;
+		margin-top: 3rem;
+	}
+</style>
 <body>
 <div class="container">
 	
@@ -75,7 +101,7 @@
 				
 				<div class="action">
 					<input type="hidden" th:field="*{id}">
-					<button class="btn waves-effect waves-light deep-purple darken-1" type="submit">
+					<button class="btn waves-effect btn-block waves-light deep-purple darken-1" type="submit">
 						Anúnciar
 					</button>
 				</div>

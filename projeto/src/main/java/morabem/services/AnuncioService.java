@@ -33,4 +33,8 @@ public class AnuncioService {
     public void deletar(Integer id) {
         anuncioRepository.deleteById(id);
     }
+
+    public void deletar(Anuncio anuncio) {
+        anuncioRepository.delete(anuncio);
+    }
 }

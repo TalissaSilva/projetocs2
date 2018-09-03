@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -21,6 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@WebAppConfiguration
 public class ImovelControllerTest {
 
     @Autowired
@@ -30,16 +32,13 @@ public class ImovelControllerTest {
     @MockBean
     private ImovelService imovelService;
 
-/*
     @MockBean
-*/
     private StorageService storageService;
 
-    /*@Test
-    public void formSubmit() throws Exception {
+    @Test
+    public void formSubmit_sucesso() throws Exception {
 
         Mockito.doNothing().when(imovelService).salvar(Mockito.any());
-
         mockMvc.perform(RequestBuilder.postPara("/cadastro/imovel")
                 .comOsParamentros(ImovelBuilder.obterUm().comoParametros()).agora()
                 .session(SessionBuilder.obterUma().agora())
@@ -49,5 +48,7 @@ public class ImovelControllerTest {
         ).andDo(print());
 
         Mockito.verify(imovelService, Mockito.times(1)).salvar(Mockito.any());
-    }*/
+    }
+
+
 }

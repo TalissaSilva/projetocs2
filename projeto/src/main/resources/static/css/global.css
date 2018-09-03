@@ -87,7 +87,7 @@ header .user-actions a:nth-child(1){
 }
 
 .custom-input textarea {
-    border-radius: 20px;
+    border-radius: 15px;
 }
 
 .custom-input select::placeholder,

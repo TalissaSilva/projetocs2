@@ -6,7 +6,6 @@ import morabem.domain.Usuario;
 import morabem.exceptions.ImovelException;
 import morabem.services.ImovelService;
 import morabem.storage.StorageService;
-import org.apache.coyote.http2.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,7 +39,7 @@ public class ImovelController {
     }
 
     @RequestMapping(path = "/meus-imoveis")
-    public String imoveisDousuario(Model model, HttpSession session) {
+    public String imoveisDoUsuario(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
         if(usuario == null) {
             model.addAttribute("error", "Sua sessão expirou.");
@@ -54,15 +52,9 @@ public class ImovelController {
     @PostMapping(path = "/cadastro/imovel")
     public String submitPaginaDeCadastro(HttpSession session, Model model,
                                          @ModelAttribute Imovel imovel,
-                                         @RequestParam(name = "foto64[]",required = false) String[] fotos) {
+                                         @RequestParam(name = "foto64[]", required = false) String[] fotos) {
+
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
-
-/*
-        System.out.println("--------------------------");
-        Collections.list(session.getAttributeNames()).forEach(System.out::println);
-        System.out.println("--------------------------");
-*/
-
         if(usuario == null) {
             model.addAttribute("error", "Sua sessão expirou.");
             return "redirect:/login";
@@ -78,6 +70,10 @@ public class ImovelController {
         if(erros.size() > 0) {
             model.addAttribute("erros", erros);
             return "cadastroImovel";
+        }
+
+        if (fotos.length == 2 && !fotos[0].endsWith(",")) {
+            fotos = new String[] {fotos[0] +","+ fotos[1]};
         }
 
         List<Foto> fotosImovel = Arrays.stream(fotos)
@@ -104,8 +100,7 @@ public class ImovelController {
 
         Imovel imovel = imovelService.obterPorCodigo(String.valueOf(id));
         imovel.getFotos().stream().map(Foto::getUrl).forEach(storageService::delete);
-        imovelService.deletarImovelComOId(imovel);
-
+        imovelService.deletarImovel(imovel);
 
         return "redirect:/meus-imoveis";
     }

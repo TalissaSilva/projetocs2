@@ -52,7 +52,8 @@
 						
 						<div class="image-preview">
 							<div>
-								<img alt="preview da foto selecionada"
+								<img th:unless="*{fotoPerfil == null}" th:src="'/fotos/'+ *{fotoPerfil.url}">
+								<img th:if="*{fotoPerfil == null}" alt="preview da foto selecionada"
 									 src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCAyOTkuOTk3IDI5OS45OTciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDI5OS45OTcgMjk5Ljk5NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI2NHB4IiBoZWlnaHQ9IjY0cHgiPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik0xNDkuOTk2LDBDNjcuMTU3LDAsMC4wMDEsNjcuMTU4LDAuMDAxLDE0OS45OTdjMCw4Mi44MzcsNjcuMTU2LDE1MCwxNDkuOTk1LDE1MHMxNTAtNjcuMTYzLDE1MC0xNTAgICAgQzI5OS45OTYsNjcuMTU2LDIzMi44MzUsMCwxNDkuOTk2LDB6IE0xNTAuNDUzLDIyMC43NjN2LTAuMDAyaC0wLjkxNkg4NS40NjVjMC00Ni44NTYsNDEuMTUyLTQ2Ljg0NSw1MC4yODQtNTkuMDk3bDEuMDQ1LTUuNTg3ICAgIGMtMTIuODMtNi41MDItMjEuODg3LTIyLjE3OC0yMS44ODctNDAuNTEyYzAtMjQuMTU0LDE1LjcxMi00My43MzgsMzUuMDg5LTQzLjczOGMxOS4zNzcsMCwzNS4wODksMTkuNTg0LDM1LjA4OSw0My43MzggICAgYzAsMTguMTc4LTguODk2LDMzLjc1Ni0yMS41NTUsNDAuMzYxbDEuMTksNi4zNDljMTAuMDE5LDExLjY1OCw0OS44MDIsMTIuNDE4LDQ5LjgwMiw1OC40ODhIMTUwLjQ1M3oiIGZpbGw9IiNhYmFlYjAiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K"/>
 							</div>
 							<div>
@@ -114,6 +115,7 @@
 				<div class="row">
 					<div class="custom-input col s12">
 						<input th:field="*{email}" type="email"
+							   th:readonly="${pessoaFisica.id != null}"
 							   required placeholder="Email*"/>
 					</div>
 				</div>
@@ -129,9 +131,16 @@
 				</div>
 			</fieldset>
 			<div class="row">
+				<input type="hidden" th:field="*{id}">
 				<button type="submit" class="btn btn-primary btn-block deep-purple darken-1">
 					FINALIZAR CADASTRO
 				</button>
+				<a type="submit" th:unless="${pessoaFisica.id == null}"
+				   href="/usuario/deletar-conta"
+				   class="btn btn-primary btn-block purple lighten-2">
+					Deletar Conta
+				</a>
+			
 			</div>
 		</form>
 	</div>
@@ -143,8 +152,7 @@
 <script src="/vendor/js/materialize.js"></script>
 
 <script>
-	var iconeOriginal = 'data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCAyOTkuOTk3IDI5OS45OTciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDI5OS45OTcgMjk5Ljk5NzsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSI2NHB4IiBoZWlnaHQ9IjY0cHgiPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik0xNDkuOTk2LDBDNjcuMTU3LDAsMC4wMDEsNjcuMTU4LDAuMDAxLDE0OS45OTdjMCw4Mi44MzcsNjcuMTU2LDE1MCwxNDkuOTk1LDE1MHMxNTAtNjcuMTYzLDE1MC0xNTAgICAgQzI5OS45OTYsNjcuMTU2LDIzMi44MzUsMCwxNDkuOTk2LDB6IE0xNTAuNDUzLDIyMC43NjN2LTAuMDAyaC0wLjkxNkg4NS40NjVjMC00Ni44NTYsNDEuMTUyLTQ2Ljg0NSw1MC4yODQtNTkuMDk3bDEuMDQ1LTUuNTg3ICAgIGMtMTIuODMtNi41MDItMjEuODg3LTIyLjE3OC0yMS44ODctNDAuNTEyYzAtMjQuMTU0LDE1LjcxMi00My43MzgsMzUuMDg5LTQzLjczOGMxOS4zNzcsMCwzNS4wODksMTkuNTg0LDM1LjA4OSw0My43MzggICAgYzAsMTguMTc4LTguODk2LDMzLjc1Ni0yMS41NTUsNDAuMzYxbDEuMTksNi4zNDljMTAuMDE5LDExLjY1OCw0OS44MDIsMTIuNDE4LDQ5LjgwMiw1OC40ODhIMTUwLjQ1M3oiIGZpbGw9IiNhYmFlYjAiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K';
-	
+
 	$('.select-btn').click(function () {
 		$('#foto').click();
 		$('#foto').change(function (e) {

@@ -37,7 +37,7 @@ public class ImovelService {
         return imovelRepository.findAllByDonoId(id);
     }
 
-    public void deletarImovelComOId(Imovel imovel) {
+    public void deletarImovel(Imovel imovel) {
         imovel.getCaracteristicas().clear();
         imovelRepository.saveAndFlush(imovel);
         imovelRepository.delete(imovel);

@@ -9,4 +9,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface PessoaJuridicaRepository extends UsuarioRepository<PessoaJuridica> {
 
+    PessoaJuridica findFirstByEmailOrCnpjOrCreciEquals(String email, String cnpj, String creci);
 }

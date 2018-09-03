@@ -20,5 +20,6 @@ public class AnuncioControllerTest {
 
     @Test
     public void cadastroAnuncioSubmit() {
+
     }
 }
