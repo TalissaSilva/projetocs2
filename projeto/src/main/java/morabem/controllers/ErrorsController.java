@@ -1,6 +1,7 @@
 package morabem.controllers;
 
 import org.hibernate.LazyInitializationException;
+
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
