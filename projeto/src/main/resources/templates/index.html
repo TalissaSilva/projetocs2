@@ -90,7 +90,7 @@
 			<!-- fim busca -->
 			
 			<div class="col s8 anuncios flex collumn wrap">
-				<div class="anuncio" th:each="a : ${anuncios}">
+				<a class="anuncio" th:each="a : ${anuncios}" th:href="'/anuncio/' + ${a.getId()}">
 					<img class="tumb" th:src="'/fotos/' + ${a.getImovel().getFotos().get(0).url}"/>
 					<div class="footer flex row">
 						<div class="endereco w-100">
@@ -102,8 +102,7 @@
 							<p class="preco">R$ 1.5M</p>
 						</div>
 					</div>
-				</div>
-			
+				</a>
 			</div>
 		</section>
 	

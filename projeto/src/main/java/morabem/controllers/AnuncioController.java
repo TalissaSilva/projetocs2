@@ -88,4 +88,10 @@ public class AnuncioController {
 
         return "redirect:/meus-anuncios";
     }
+
+    @GetMapping(path = "/anuncio/{anuncio}")
+    public String paginaAnuncio(@PathVariable(value = "anuncio") String id, Model model) throws AnuncioException.NaoEmcontrado {
+        model.addAttribute("anuncio", this.anuncioService.getById(id));
+        return "anuncio";
+    }
 }

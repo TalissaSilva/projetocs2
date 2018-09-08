@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pr-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <!-- Materialize: css -->
+    <link rel="stylesheet" href="/vendor/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/global.css">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="'Morabem - ' + ${anuncio.getTitulo()}"></title>
+
+    <style>
+        #fotos img{
+            max-height: 70vh;
+            object-fit: cover;
+        }
+
+        .chip {
+            color: white;
+        }
+
+        .avatar img {
+            height: 40px;
+        }
+
+        .avatar .nome {
+            font-size: 1.2rem;
+            text-transform: capitalize;
+        }
+
+        #contatos a{
+            color: #252525 !important;
+        }
+
+        .preco {
+            font-size: 1.3rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="flex row">
+        <div>
+            <a href="/">
+                <img src="/logo-horizontal.png"/>
+            </a>
+        </div>
+        <div class="flex row w-100 justify-content-end">
+            <div th:replace="fragments/header :: ${session.usuarioLogado == null} ? 'sem-usuario' : 'com-usuario'"></div>
+        </div>
+    </header>
+
+    <main>
+        <section id="fotos">
+            <div class="carousel carousel-slider center">
+                <div class="carousel-fixed-item center">
+                    <div class="chip teal lighten-2 " th:each="carac : ${anuncio.getImovel().getCaracteristicas()}"
+                         th:text="${carac}">
+                    </div>
+                </div>
+                <div class="carousel-item grey darken-4 white-text" th:each="foto : ${anuncio.getImovel().getFotos()}">
+                    <img th:src="'/fotos/' + ${foto.getUrl()}">
+                </div>
+            </div>
+        </section>
+
+        <h1 th:text="${anuncio.getTitulo()}" class="center-align"></h1>
+        <div class="row">
+            <p class="flex content-center ">
+                <i class="material-icons">location_on</i>
+                <span th:text="${anuncio.getImovel().printEndereco()}"></span>
+            </p>
+            <section th:text="${anuncio.getDescricao()}" class="col s7">
+            </section>
+            <section class="col s5">
+                <div class="card-panel">
+                    <div class="flex content-center">
+                        <span class="preco left-align w-100" th:text="'R$ '+${anuncio.getValor()}"></span>
+                        <span class="chip orange darken-1" th:text="${anuncio.getTipo()}"></span>
+                        <span class="chip pink darken-1" th:text="${anuncio.getImovel().getTipo()}"></span>
+                    </div>
+                    <div>
+                        <span th:text="${'Area Total: ' + anuncio.getImovel().areaTotal + 'm², Area Construida: ' + anuncio.getImovel().areaConstruida} + 'm²'"></span>
+                    </div>
+                </div>
+                <div class="card-panel">
+                    <div class="avatar flex">
+                        <div>
+                            <img th:if="${anuncio.getAnunciante().getFotoPerfil() != null}"
+                                 th:src="'/fotos/' + ${anuncio.getAnunciante().getFotoPerfil().getUrl()}" class="circle">
+                        </div>
+                        <div class="flex content-center ml-2 ">
+                            <span class="nome m-0" th:text="${anuncio.getAnunciante().getNome()}"></span>
+                        </div>
+                    </div>
+                    <div id="contatos">
+                        <p class="flex center">
+                            <i class="material-icons">email</i>
+                            <a th:href="'tel:'+${anuncio.getAnunciante().getEmail()}"
+                               th:text="${anuncio.getAnunciante().getEmail()}" class="ml-2"></a>
+                        </p>
+                        <p class="flex center">
+                            <i class="material-icons">local_phone</i>
+                            <a th:href="'tel:'+${anuncio.getAnunciante().getTelefone01()}"
+                               th:text="${anuncio.getAnunciante().getTelefone01()}" class="ml-2"></a>
+                            <a th:href="'tel:'+${anuncio.getAnunciante().getTelefone02()}"
+                               th:text="${anuncio.getAnunciante().getTelefone02()}" class="ml-2"></a>
+                        </p>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+</div>
+
+<script src="/vendor/js/jquery.mim.js"></script>
+<script src="/vendor/js/hammer.js"></script>
+<script src="/vendor/js/materialize.js"></script>
+
+<script>
+    $('.dropdown-trigger').dropdown();
+    $('.carousel.carousel-slider').carousel({
+        fullWidth: true,
+        indicators: true
+    });
+
+    $(document).ready(function(){
+        $('.materialboxed').materialbox();
+    });
+</script>
+</body>
+</html>

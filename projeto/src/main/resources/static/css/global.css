@@ -192,3 +192,11 @@ form .image-preview img {
 form .image-preview button {
     margin: auto;
 }
+
+.m-0 {
+    margin: 0;
+}
+
+.ml-2 {
+    margin-left: 2ch;
+}
