@@ -1,6 +1,7 @@
 package morabem.controllers;
 
 import morabem.domain.Anuncio;
+
 import morabem.domain.Usuario;
 import morabem.exceptions.AnuncioException;
 import morabem.exceptions.ImovelException;
