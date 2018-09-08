@@ -6,25 +6,13 @@ import morabem.exceptions.AnuncioException;
 import morabem.exceptions.ImovelException;
 import morabem.services.AnuncioService;
 import morabem.services.ImovelService;
-import morabem.services.UsuarioService;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.provider.HibernateUtils;
-import org.springframework.session.jdbc.config.annotation.SpringSessionDataSource;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.servlet.http.HttpSession;
-import javax.transaction.TransactionScoped;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 @Controller
 public class AnuncioController {

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,11 +73,9 @@ public class ImovelController {
             return "cadastroImovel";
         }
 
-        if (fotos.length == 2 && !fotos[0].endsWith(",")) {
-            fotos = new String[] {fotos[0] +","+ fotos[1]};
-        }
-
         List<Foto> fotosImovel = Arrays.stream(fotos)
+                .map(Base64.getDecoder()::decode)
+                .map(String::new)
                 .map(storageService::saveBase64Image)
                 .map(url -> new Foto(null, url))
                 .collect(Collectors.toList());

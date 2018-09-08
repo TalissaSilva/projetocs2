@@ -68,7 +68,7 @@ function fotoPreview(event) {
 			$(`
 				<li>
 					<img src="${result}">
-					<input type="text" name="foto64[]" value="${result}" style="display: none">
+					<input type="text" name="foto64[]" value="${btoa(result)}" style="display: none">
 				</li>
 			`).append(spanRemove).insertAfter($('.fotos li:first-child'))
 		};

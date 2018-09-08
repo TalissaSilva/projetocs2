@@ -1,5 +1,6 @@
 package morabem.domain;
 
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -20,6 +21,8 @@ public class Anuncio implements Serializable {
 	private Date datadaPublicacao;
 
 	private Double valor;
+
+	@Type(type = "text")
 	private String descricao;
 
 	@ManyToOne(fetch = FetchType.EAGER)

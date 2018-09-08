@@ -142,4 +142,19 @@ public class Imovel implements Serializable {
                 " - " + this.endereco.getBairro() + ", " + this.endereco.getCidade() +
                 " - " + this.endereco.getCidade() + ", " + this.endereco.getUf();
     }
+
+    @Override
+    public String toString() {
+        return "Imovel{" +
+                "id=" + id +
+                ", tipo=" + tipo +
+                ", areaConstruida=" + areaConstruida +
+                ", areaTotal=" + areaTotal +
+                ", numero=" + numero +
+                ", caracteristicas=" + caracteristicas +
+                ", endereco=" + endereco +
+                ", dono=" + dono +
+                ", fotos=" + fotos +
+                '}';
+    }
 }
