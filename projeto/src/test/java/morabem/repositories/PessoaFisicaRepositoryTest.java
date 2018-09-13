@@ -1,6 +1,7 @@
 package morabem.repositories;
 
 import builders.EnderecoBuilder;
+
 import builders.ImovelBuilder;
 import builders.UsuarioBuilder;
 import morabem.domain.Endereco;
@@ -8,6 +9,7 @@ import morabem.domain.Imovel;
 import morabem.domain.PessoaFisica;
 import morabem.services.UsuarioService;
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 
@@ -48,5 +50,23 @@ public class PessoaFisicaRepositoryTest {
         enderecoRepository.flush();
         pessoaFisicaRepository.save(usuario);
         pessoaFisicaRepository.flush();
+    }
+    
+
+    @Test
+    public void crud() {
+    	PessoaFisica pessoafisica = UsuarioBuilder.PessoaFisica.obterUm().agora();
+    	
+    	enderecoRepository.saveAndFlush(pessoafisica.getEndereco());
+        PessoaFisica pessoafisicaSalva = pessoaFisicaRepository.saveAndFlush(pessoafisica);
+        
+        assertThat(pessoafisica, is(equalTo(pessoafisicaSalva)));
+        assertThat(pessoafisica.getId(), is(notNullValue()));
+        
+        
+        pessoafisica.setNome("Novo nome");
+        pessoaFisicaRepository.saveAndFlush(pessoafisica);
+        assertThat(pessoafisica.getNome(), is(equalTo("Novo nome")));
+    	
     }
 }

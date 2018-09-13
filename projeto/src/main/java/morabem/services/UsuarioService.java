@@ -79,9 +79,6 @@ public class UsuarioService {
         }
     }
 
-    private void atualizarCadastro(Usuario usuario) {
-
-    }
 
     public Usuario obterUsuarioPorEmail(String email) throws UsuarioException.UsuarioNaoEncontrado {
         Usuario usuario = this.pessoaFisicaRepository.findFirstByEmailEquals(email);
