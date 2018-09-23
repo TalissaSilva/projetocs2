@@ -9,6 +9,8 @@ import morabem.services.AnuncioService;
 import morabem.services.ImovelService;
 import morabem.utils.BuscaData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -97,10 +99,10 @@ public class AnuncioController {
     }
 
     @GetMapping(path = "/busca")
-    public String buscarAnuncio(@ModelAttribute BuscaData data, Model model) {
+    public String buscarAnuncio(@ModelAttribute BuscaData data, Model model, @PageableDefault(value=10, page=0) Pageable pageable) {
         anuncioService.getMaiorPreco();
         model.addAttribute("busca", data);
-        model.addAttribute("anuncios", new Object[] {});
+        model.addAttribute("anuncios", anuncioService.buscarAnuncio(data, pageable));
         return "resultadoBusca";
     }
 }

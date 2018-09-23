@@ -22,11 +22,17 @@ public interface AnuncioRepository extends JpaRepository<Anuncio, Integer> {
 
     @Query("SELECT DISTINCT anu " +
             "FROM Anuncio anu INNER JOIN anu.imovel imv WHERE " +
-            "anu.titulo like %:titulo% OR " +
-            "anu.descricao like %:descricao%")
+            "anu.titulo LIKE %:titulo% OR " +
+            "anu.descricao LIKE %:descricao% OR " +
+            "imv.endereco.logradouro LIKE %:logradouro% OR " +
+            "imv.endereco.bairro LIKE %:bairro% OR " +
+            "imv.endereco.cidade LIKE %:cidade%")
     Page<Anuncio> buscar(
             @Param("titulo") String titulo,
             @Param("descricao") String descricao,
+            @Param("logradouro") String logradouro,
+            @Param("bairro") String bairro,
+            @Param("cidade") String cidade,
             Pageable pageable
     );
 }

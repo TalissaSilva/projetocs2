@@ -1,31 +1,42 @@
 package builders;
 import morabem.domain.Anuncio;
+import morabem.domain.Usuario;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
+
 public class AnuncioBuilder {
-	
-	private AnuncioBuilder() {
 
+    private Anuncio anuncio;
+
+	private AnuncioBuilder() { }
+
+	public static AnuncioBuilder obterUm() {
+        AnuncioBuilder builder = new AnuncioBuilder();
+		builder.anuncio = new morabem.domain.Anuncio();
+		builder.anuncio.setAnunciante(UsuarioBuilder.PessoaJuridica.obterUm().agora());
+		builder.anuncio.setImovel(ImovelBuilder.obterUm().agora());
+		return builder;
 	}
-	public static class Anuncio{
 
-		private morabem.domain.Anuncio anuncio;
+    public AnuncioBuilder comOtitulo(String s) {
+        anuncio.setTitulo(s);
+        return this;
+    }
 
-		private Anuncio() {}
+    public AnuncioBuilder comADescricao(String s) {
+        anuncio.setDescricao(s);
+        return this;
+    }
 
-		public static Anuncio obterUm() {
-			Anuncio builder = new Anuncio();
-			builder.anuncio = new morabem.domain.Anuncio();
-			builder.anuncio.setAnunciante(UsuarioBuilder.PessoaJuridica.obterUm().agora());
-			builder.anuncio.setImovel(ImovelBuilder.obterUm().agora());
-			return builder;
-		}
-
-		public morabem.domain.Anuncio agora() {
-			return anuncio;
-		}
+    public AnuncioBuilder comOAnunciante(Usuario s) {
+        anuncio.setAnunciante(s);
+        return this;
+    }
+	public Anuncio agora() {
+		return anuncio;
 	}
 }
