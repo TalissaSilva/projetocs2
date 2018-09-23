@@ -9,6 +9,7 @@ import morabem.services.AnuncioService;
 import morabem.services.ImovelService;
 import morabem.utils.BuscaData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 public class AnuncioController {
@@ -99,10 +104,21 @@ public class AnuncioController {
     }
 
     @GetMapping(path = "/busca")
-    public String buscarAnuncio(@ModelAttribute BuscaData data, Model model, @PageableDefault(value=10, page=0) Pageable pageable) {
+    public String buscarAnuncio(@ModelAttribute BuscaData data, Model model, @PageableDefault(value=1, page=0) Pageable pageable) {
         anuncioService.getMaiorPreco();
         model.addAttribute("busca", data);
-        model.addAttribute("anuncios", anuncioService.buscarAnuncio(data, pageable));
+        Page<Anuncio> anuncios = anuncioService.buscarAnuncio(data, pageable);
+
+        model.addAttribute("anuncios", anuncios);
+
+        anuncios.map(Anuncio::getId).forEach(System.out::println);
+        if (anuncios.getTotalPages() > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(0, anuncios.getTotalPages() - 1)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
         return "resultadoBusca";
     }
 }

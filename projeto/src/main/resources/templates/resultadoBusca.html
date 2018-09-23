@@ -17,8 +17,17 @@
     <title>Morabem</title>
 
     <style>
+
+        .anuncios {
+            justify-content: space-between;
+            justify-items: center;
+            margin-top: 40px;
+        }
+
         .anuncio {
-            width: 30%;
+            width: 32%;
+            margin: 0;
+
         }
     </style>
 </head>
@@ -145,6 +154,13 @@
                 </div>
             </a>
         </div>
+        <ul class="pagination w-100" th:if="${anuncios.totalPages > 0}"
+             th:with="currentUrl=(${@currentUrlWithoutParam.apply('page')})">
+            <li th:each="pageNumber : ${pageNumbers}"
+                th:class="${pageNumber == anuncios.number} ? active" class="waves-effect">
+                <a th:text="${pageNumber + 1}"  th:href="@{${currentUrl}(page=${pageNumber})}"></a>
+            </li>
+        </ul>
     </main>
 </div>
 
