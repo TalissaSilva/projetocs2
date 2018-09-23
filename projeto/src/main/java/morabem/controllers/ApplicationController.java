@@ -1,6 +1,7 @@
 package morabem.controllers;
 
 import morabem.services.AnuncioService;
+import morabem.utils.BuscaData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ public class ApplicationController {
     @GetMapping(path = "/")
     public String index(Model model) {
         model.addAttribute("anuncios", anuncioService.getDestaques());
+        model.addAttribute("busca", new BuscaData());
         return "index";
     }
 

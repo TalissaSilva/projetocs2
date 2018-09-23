@@ -7,6 +7,7 @@ import morabem.exceptions.AnuncioException;
 import morabem.exceptions.ImovelException;
 import morabem.services.AnuncioService;
 import morabem.services.ImovelService;
+import morabem.utils.BuscaData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -93,5 +94,11 @@ public class AnuncioController {
     public String paginaAnuncio(@PathVariable(value = "anuncio") String id, Model model) throws AnuncioException.NaoEmcontrado {
         model.addAttribute("anuncio", this.anuncioService.getById(id));
         return "anuncio";
+    }
+
+    @GetMapping(path = "/busca")
+    @ResponseBody
+    public String buscarAnuncio(@ModelAttribute BuscaData data) {
+        return data.toString();
     }
 }

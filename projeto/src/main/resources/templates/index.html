@@ -36,18 +36,22 @@
 			<aside class="col s4" id="form-busca">
 				<h2>Buscar</h2>
 				
-				<form>
+				<form th:object="${busca}" action="/busca" method="get">
 					<fieldset>
 						<div class="custom-input">
+							<label for="logradouro">Bairro</label>
+							<input th:field="*{imovel.endereco.logradouro}" name="logradouro" id="logradouro" type="text" placeholder="Logradouro">
+						</div>
+						<div class="custom-input">
 							<label for="bairro">Bairro</label>
-							<input name="bairro" id="bairro" type="text" placeholder="Bairro">
+							<input th:field="*{imovel.endereco.bairro}" name="bairro" id="bairro" type="text" placeholder="Bairro">
 						</div>
 						<div class="custom-input posppend">
 							<label for="cidade">Cidade</label>
-							<input name="bairro" id="cidade" type="text" placeholder="Cidade">
+							<input  th:field="*{imovel.endereco.cidade}" name="bairro" id="cidade" type="text" placeholder="Cidade">
 							<div class="posppend">
 								<label for="uf">UF</label>
-								<select name="uf" id="uf">
+								<select  th:field="*{imovel.endereco.estado}" name="uf" id="uf">
 									<option value="ms">MS</option>
 								</select>
 							</div>
@@ -58,31 +62,21 @@
 					</fieldset>
 					<fieldset>
 						<legend>Tipo de imovel</legend>
-						<label>
-							<input type="checkbox" class="filled-in" checked="checked"/>
-							<span>Casa</span>
-						</label><br/>
-						<label>
-							<input type="checkbox" class="filled-in"/>
-							<span>Apartamento</span>
-						</label><br/>
-						<label>
-							<input type="checkbox" class="filled-in"/>
-							<span>Terreno</span>
-						</label><br/>
+						<label th:each="tipoImovel : ${T(morabem.domain.Imovel.Tipo).values()}">
+							<input type="radio" class="filled-in" th:field="*{imovel.tipo}" th:value="${tipoImovel}"/>
+							<span th:text="${tipoImovel}"></span>
+						<br/>
+						</label>
 					</fieldset>
 					<fieldset>
 						<legend>Finalidade</legend>
-						<label>
-							<input type="checkbox" class="filled-in" checked="checked"/>
-							<span>Comprar</span>
-						</label><br/>
-						<label>
-							<input type="checkbox" class="filled-in"/>
-							<span>Alugar</span>
-						</label><br/>
+						<label th:each="tipoAnuncio : ${T(morabem.domain.Anuncio.Tipo).values()}">
+							<input type="radio" class="filled-in" th:field="*{tipo}" th:value="${tipoAnuncio}"/>
+							<span th:text="${tipoAnuncio}"></span>
+						<br/>
+						</label>
 					</fieldset>
-					<button class="btn waves-effect waves-light deep-purple darken-1" type="submit" name="action">
+					<button class="btn waves-effect waves-light deep-purple darken-1" type="submit">
 						Buscar
 					</button>
 				</form>

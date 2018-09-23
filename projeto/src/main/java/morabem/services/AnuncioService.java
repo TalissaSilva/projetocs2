@@ -4,8 +4,10 @@ import morabem.domain.Anuncio;
 import morabem.domain.Usuario;
 import morabem.exceptions.AnuncioException;
 import morabem.repositories.AnuncioRepository;
+import morabem.utils.BuscaData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
@@ -37,4 +39,9 @@ public class AnuncioService {
     public void deletar(Anuncio anuncio) {
         anuncioRepository.delete(anuncio);
     }
+
+    public void buscarAnuncio(BuscaData data) {
+
+    }
+
 }
