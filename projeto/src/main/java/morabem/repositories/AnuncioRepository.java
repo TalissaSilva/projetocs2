@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface AnuncioRepository extends JpaRepository<Anuncio, Integer> {
 
-    List<Anuncio> getAllByOrderByDatadaPublicacaoAsc();
+    Page<Anuncio> getAllByOrderByDatadaPublicacaoAsc(Pageable pageable);
 
     List<Anuncio> getAllByAnunciante(Usuario usuario);
 

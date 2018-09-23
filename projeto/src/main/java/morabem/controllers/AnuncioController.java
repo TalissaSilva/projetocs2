@@ -111,7 +111,6 @@ public class AnuncioController {
 
         model.addAttribute("anuncios", anuncios);
 
-        anuncios.map(Anuncio::getId).forEach(System.out::println);
         if (anuncios.getTotalPages() > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(0, anuncios.getTotalPages() - 1)
                     .boxed()

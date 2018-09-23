@@ -107,9 +107,15 @@
 						</div>
 					</div>
 				</a>
+				<ul class="pagination w-100" th:if="${anuncios.totalPages > 0}"
+					th:with="currentUrl=(${@currentUrlWithoutParam.apply('page')})">
+					<li th:each="pageNumber : ${pageNumbers}"
+						th:class="${pageNumber == anuncios.number} ? active" class="waves-effect">
+						<a th:text="${pageNumber + 1}"  th:href="@{${currentUrl}(page=${pageNumber})}"></a>
+					</li>
+				</ul>
 			</div>
 		</section>
-	
 	</main>
 </div>
 <script src="/vendor/js/jquery.mim.js"></script>

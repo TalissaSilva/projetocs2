@@ -24,8 +24,8 @@ public class AnuncioService {
         this.anuncioRepository.saveAndFlush(anuncio);
     }
 
-    public List<Anuncio> getDestaques() {
-        return anuncioRepository.getAllByOrderByDatadaPublicacaoAsc();
+    public Page<Anuncio> getDestaques(Pageable pageable) {
+        return anuncioRepository.getAllByOrderByDatadaPublicacaoAsc(pageable);
     }
 
     public List<Anuncio> getAnunciosDoUsuario(Usuario u) { return anuncioRepository.getAllByAnunciante(u); }
