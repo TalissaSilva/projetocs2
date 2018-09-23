@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <!-- Materialize: css -->
+    <link rel="stylesheet" href="/vendor/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/resultaBusca.css">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Morabem</title>
+</head>
+<body>
+<div class="container">
+    <header class="flex row">
+        <div>
+            <a href="/">
+                <img src="/logo-horizontal.png"/>
+            </a>
+        </div>
+        <div class="flex row w-100 justify-content-end">
+            <div th:replace="fragments/header :: ${session.usuarioLogado == null} ? 'sem-usuario' : 'com-usuario'"></div>
+        </div>
+    </header>
+    <form id="busca" th:object="${busca}">
+        <ul class="collapsible z-depth-1" style="border: none">
+            <li>
+                <div class="flex column align-center p-1">
+                    <div class="custom-input m-0 w-50">
+                        <label for="titulo">Titulo</label>
+                        <input th:field="*{titulo}"
+                               th:value="*{titulo}"
+                               name="titulo" id="titulo" type="text" placeholder="Titulo">
+                    </div>
+                    <div class="custom-input m-0 ml-2 w-50">
+                        <label for="descricao">Descrição</label>
+                        <input th:field="*{descricao}"
+                               th:value="*{descricao}"
+                               name="descricao" id="descricao" type="text" placeholder="Descrição">
+                    </div>
+                    <fieldset style="display: inline-block" class="w-100 ml-2">
+                        <label style="display: inline-block" th:each="tipoAnuncio : ${T(morabem.domain.Anuncio.Tipo).values()}">
+                            <input type="radio" style="display: inline-block" class="filled-in" th:field="*{tipo}" th:value="${tipoAnuncio}"/>
+                            <span th:text="${tipoAnuncio}" style="display: inline-block"></span>
+                        </label>
+                    </fieldset>
+                    <a class="waves-effect waves-teal btn-flat" id="toggle-filter"><i class="material-icons">filter_list</i></a>
+                    <button class="btn waves-effect waves-light deep-purple darken-1  ml-2" style="width: 150px" type="submit">
+                        Buscar
+                    </button>
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-body p-2">
+                    <hr>
+                    <div class="row">
+                        <div class="col s6">
+                            <fieldset>
+                                <legend>Endereço</legend>
+                                <div class="custom-input">
+                                    <label for="logradouro">Titulo</label>
+                                    <input th:field="*{imovel.endereco.logradouro}"
+                                           th:value="*{imovel.endereco.logradouro}"
+                                           name="logradouro" id="logradouro" type="text" placeholder="Logradouro">
+                                </div>
+                                <div class="custom-input ">
+                                    <label for="bairro">Bairro</label>
+                                    <input th:field="*{imovel.endereco.bairro}"
+                                           th:value="*{imovel.endereco.bairro}"
+                                           name="bairro" id="bairro" type="text" placeholder="Bairro">
+                                </div>
+                                <div class="custom-input posppend">
+                                    <label for="cidade">Cidade</label>
+                                    <input th:field="*{imovel.endereco.cidade}"
+                                           th:value="*{imovel.endereco.cidade}"
+                                           name="bairro" id="cidade" type="text" placeholder="Cidade">
+                                    <div class="posppend">
+                                        <label for="uf">UF</label>
+                                        <select  th:field="*{imovel.endereco.estado}" name="uf" id="uf">
+                                            <option value="ms">MS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col s6">
+                            <fieldset>
+                                <legend>Tipo de imovel</legend>
+                                <label th:each="tipoImovel : ${T(morabem.domain.Imovel.Tipo).values()}">
+                                    <input type="radio" class="filled-in"
+                                           th:field="*{imovel.tipo}" th:value="${tipoImovel}"/>
+                                    <span th:text="${tipoImovel}"></span>
+                                    <br/>
+                                </label>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                            <fieldset>
+                                <legend>Preço</legend>
+                                <div class="flex row" style="margin: 0">
+                                    <div class="custom-input">
+                                        <label for="menor-preco">Menor preço</label>
+                                        <input th:field="*{preco.min}" th:value="*{preco.min}" name="menor-preco" id="menor-preco" type="number" min="1" placeholder="Menor">
+                                    </div>
+                                    <div class="custom-input">
+                                        <label for="maior-preco">Maior Preco</label>
+                                        <input th:field="*{preco.max}" th:value="*{preco.max}" name="maior-preco" id="maior-preco" type="number" min="1" placeholder="maior">
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+    </form>
+    <main>
+        <div class="col s8 anuncios flex collumn wrap">
+            <a class="anuncio" th:each="a : ${anuncios}" th:href="'/anuncio/' + ${a.getId()}">
+                <img class="tumb" th:src="'/fotos/' + ${a.getImovel().getFotos().get(0).url}"/>
+                <div class="footer flex row">
+                    <div class="endereco w-100">
+                        <p class="bairro" th:text="${a.getImovel().getEndereco().bairro}"></p>
+                        <p class="cidade" th:text="${a.getImovel().getEndereco().cidade} + ', ' + ${a.getImovel().getEndereco().uf}"></p>
+                    </div>
+                    <div class="infos">
+                        <p class="alugar" th:text="${a.getTipo()}"></p>
+                        <p class="preco">R$ 1.5M</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </main>
+</div>
+
+
+<script src="/vendor/js/jquery.mim.js"></script>
+<script src="/vendor/js/hammer.js"></script>
+<script src="/vendor/js/materialize.js"></script>
+
+<script>
+    $('.dropdown-trigger').dropdown();
+
+    $(document).ready(function(){
+        $('.collapsible').collapsible();
+    });
+
+    $('#toggle-filter').click(function () {
+        var collapsible = $('.collapsible');
+        if (collapsible.hasClass('activated')) {
+            collapsible.collapsible('close');
+        } else {
+            collapsible.collapsible('open');
+        }
+        collapsible.toggleClass('activated');
+    });
+</script>
+</body>
+</html>

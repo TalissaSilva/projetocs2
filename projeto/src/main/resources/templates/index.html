@@ -48,7 +48,7 @@
 						</div>
 						<div class="custom-input posppend">
 							<label for="cidade">Cidade</label>
-							<input  th:field="*{imovel.endereco.cidade}" name="bairro" id="cidade" type="text" placeholder="Cidade">
+							<input  th:field="*{imovel.endereco.cidade}" name="cidade" id="cidade" type="text" placeholder="Cidade">
 							<div class="posppend">
 								<label for="uf">UF</label>
 								<select  th:field="*{imovel.endereco.estado}" name="uf" id="uf">
@@ -58,7 +58,17 @@
 						</div>
 					</fieldset>
 					<fieldset>
-						<div id="preco-slider"></div>
+						<legend>Preço</legend>
+						<div class="flex row" style="margin: 0">
+							<div class="custom-input">
+								<label for="menor-preco">Menor preço</label>
+								<input th:field="*{preco.min}" name="menor-preco" id="menor-preco" type="number" min="1" placeholder="Menor">
+							</div>
+							<div class="custom-input">
+								<label for="maior-preco">Maior Preco</label>
+								<input th:field="*{preco.max}" name="maior-preco" id="maior-preco" type="number" min="1" placeholder="maior">
+							</div>
+						</div>
 					</fieldset>
 					<fieldset>
 						<legend>Tipo de imovel</legend>
@@ -102,13 +112,18 @@
 	
 	</main>
 </div>
-
 <script src="/vendor/js/jquery.mim.js"></script>
 <script src="/vendor/js/hammer.js"></script>
 <script src="/vendor/js/materialize.js"></script>
 
 <script>
 	$('.dropdown-trigger').dropdown();
+
+	$('#menor-preco').change(function () {
+		$('#maior-preco').attr('min', $('#menor-preco').val());
+    })
 </script>
+
+
 </body>
 </html>

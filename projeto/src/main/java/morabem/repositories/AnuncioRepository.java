@@ -18,6 +18,8 @@ public interface AnuncioRepository extends JpaRepository<Anuncio, Integer> {
 
     List<Anuncio> getAllByAnunciante(Usuario usuario);
 
+    Anuncio findTopByOrderByValorDesc();
+
     @Query("SELECT DISTINCT anu " +
             "FROM Anuncio anu INNER JOIN anu.imovel imv WHERE " +
             "anu.titulo like %:titulo% OR " +

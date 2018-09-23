@@ -1,3 +1,4 @@
+
 :root {
     --primary: #75019E;
     --text-color: #707070;
@@ -199,4 +200,15 @@ form .image-preview button {
 
 .ml-2 {
     margin-left: 2ch;
+}
+
+.p-1 {
+    padding: 1ch;
+}
+.p-2 {
+    padding: 2ch;
+}
+
+.w-50 {
+    width: 50%;
 }

@@ -97,8 +97,10 @@ public class AnuncioController {
     }
 
     @GetMapping(path = "/busca")
-    @ResponseBody
-    public String buscarAnuncio(@ModelAttribute BuscaData data) {
-        return data.toString();
+    public String buscarAnuncio(@ModelAttribute BuscaData data, Model model) {
+        anuncioService.getMaiorPreco();
+        model.addAttribute("busca", data);
+        model.addAttribute("anuncios", new Object[] {});
+        return "resultadoBusca";
     }
 }

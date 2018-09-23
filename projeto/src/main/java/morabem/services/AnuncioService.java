@@ -44,4 +44,7 @@ public class AnuncioService {
 
     }
 
+    public Double getMaiorPreco() {
+        return anuncioRepository.findTopByOrderByValorDesc().getValor();
+    }
 }

@@ -10,25 +10,25 @@ import java.util.List;
 public class BuscaData {
 
     public String titulo;
-    public String destricao;
+    public String descricao;
     public Anuncio.Tipo tipo;
 
     public Object preco = new Object() {
-        public Integer min, max;
+        public Double min, max;
 
-        public Integer getMin() {
+        public Double getMin() {
             return min;
         }
 
-        public void setMin(Integer min) {
+        public void setMin(Double min) {
             this.min = min;
         }
 
-        public Integer getMax() {
+        public Double getMax() {
             return max;
         }
 
-        public void setMax(Integer max) {
+        public void setMax(Double max) {
             this.max = max;
         }
 
@@ -153,12 +153,12 @@ public class BuscaData {
         this.titulo = titulo;
     }
 
-    public String getDestricao() {
-        return destricao;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDestricao(String destricao) {
-        this.destricao = destricao;
+    public void setDescricao(String destricao) {
+        this.descricao = destricao;
     }
 
     public Anuncio.Tipo getTipo() {
@@ -189,7 +189,7 @@ public class BuscaData {
     public String toString() {
         return "BuscaData{" +
                 "titulo='" + titulo + '\'' +
-                ", destricao='" + destricao + '\'' +
+                ", descricao='" + descricao + '\'' +
                 ", tipo=" + tipo +
                 ", preco=" + preco +
                 ", imovel=" + imovel +
