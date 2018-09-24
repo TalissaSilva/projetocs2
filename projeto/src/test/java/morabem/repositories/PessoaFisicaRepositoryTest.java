@@ -54,7 +54,7 @@ public class PessoaFisicaRepositoryTest {
     
 
     @Test
-    public void crud() {
+    public void cadastrarDiferente() {
     	PessoaFisica pessoafisica = UsuarioBuilder.PessoaFisica.obterUm().agora();
     	
     	enderecoRepository.saveAndFlush(pessoafisica.getEndereco());
@@ -63,7 +63,12 @@ public class PessoaFisicaRepositoryTest {
         assertThat(pessoafisica, is(equalTo(pessoafisicaSalva)));
         assertThat(pessoafisica.getId(), is(notNullValue()));
         
-        
+    }
+    
+    @Test
+    public void alterar() {
+    	PessoaFisica pessoafisica = UsuarioBuilder.PessoaFisica.obterUm().agora();
+    	
         pessoafisica.setNome("Novo nome");
         pessoaFisicaRepository.saveAndFlush(pessoafisica);
         assertThat(pessoafisica.getNome(), is(equalTo("Novo nome")));
