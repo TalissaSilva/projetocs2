@@ -25,11 +25,12 @@ public class AnuncioRepositoryTest {
 	@Autowired
 	private AnuncioRepository anuncioRepository;
 
-	@Autowired
-	private ImovelRepository imovelRepository;
+
+    @Autowired
+    private PessoaFisicaRepository pessoaFisicaRepository;
 
 	@Autowired
-	private PessoaFisicaRepository pessoaFisicaRepository;
+	private ImovelRepository imovelRepository;
 
 	@Test
 	public void buscar_titulo() {
@@ -69,25 +70,5 @@ public class AnuncioRepositoryTest {
 		list.forEach((a) -> {
 			assertThat(a.getImovel().getEndereco().getCidade().toLowerCase().contains("campo"), is(true));
 		});
-	}
-
-	@Test
-	public void salvarAnuncio() {
-		morabem.domain.Anuncio anuncio;
-		anuncio = AnuncioBuilder.obterUm().agora();
-		anuncioRepository.save(anuncio);
-		anuncioRepository.flush();
-	}
-
-	@Test
-	public void crud() {
-		morabem.domain.Anuncio anuncio;
-		anuncio = AnuncioBuilder.obterUm().agora();
-
-		morabem.domain.Anuncio outroanuncio ;
-		outroanuncio = anuncioRepository.saveAndFlush(anuncio);
-
-		assertThat(anuncio, is(equalTo(outroanuncio)));
-		assertThat(anuncio.getId(), is(notNullValue()));
 	}
 }
