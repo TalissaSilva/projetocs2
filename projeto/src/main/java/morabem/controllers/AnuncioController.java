@@ -105,7 +105,6 @@ public class AnuncioController {
 
     @GetMapping(path = "/busca")
     public String buscarAnuncio(@ModelAttribute BuscaData data, Model model, @PageableDefault(value=1, page=0) Pageable pageable) {
-        anuncioService.getMaiorPreco();
         model.addAttribute("busca", data);
         Page<Anuncio> anuncios = anuncioService.buscarAnuncio(data, pageable);
 

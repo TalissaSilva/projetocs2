@@ -18,15 +18,12 @@ public interface AnuncioRepository extends JpaRepository<Anuncio, Integer> {
 
     List<Anuncio> getAllByAnunciante(Usuario usuario);
 
-    Anuncio findTopByOrderByValorDesc();
-
-    @Query("SELECT DISTINCT anu " +
-            "FROM Anuncio anu INNER JOIN anu.imovel imv WHERE " +
-            "anu.titulo LIKE %:titulo% OR " +
-            "anu.descricao LIKE %:descricao% OR " +
-            "imv.endereco.logradouro LIKE %:logradouro% OR " +
-            "imv.endereco.bairro LIKE %:bairro% OR " +
-            "imv.endereco.cidade LIKE %:cidade%")
+    @Query("SELECT anu FROM Anuncio anu INNER JOIN anu.imovel imv WHERE " +
+            "(:titulo is null OR :titulo='' OR lower(anu.titulo) LIKE %:titulo%) AND " +
+            "(:descricao is null OR :descricao='' OR lower(anu.descricao) LIKE %:descricao%) AND " +
+            "(:logradouro is null OR :logradouro='' OR lower(imv.endereco.logradouro) LIKE %:logradouro%) AND " +
+            "(:bairro is null OR :bairro='' OR lower(imv.endereco.bairro) LIKE %:bairro%) AND " +
+            "(:cidade is null OR :cidade='' OR lower(imv.endereco.cidade) LIKE %:cidade%)")
     Page<Anuncio> buscar(
             @Param("titulo") String titulo,
             @Param("descricao") String descricao,

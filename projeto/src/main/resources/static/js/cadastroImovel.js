@@ -12,7 +12,7 @@ function novoChipNode(id, qt, label) {
 		<div class="chip teal lighten-2 waves-effect waves-light">
 			${label}, ${qt}
 			<input type="hidden" name="caracteristicas" value="${id}, ${qt}">
-			<i class="close material-icons" onclick="removerAtributo(${id})">close</i>
+			<i class="close material-icons" onclick="removerAtributo('${id}')">close</i>
 		</div>
 	`);
 }

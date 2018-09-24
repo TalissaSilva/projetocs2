@@ -26,9 +26,9 @@ public class AnuncioRepositoryTest {
 
     @Test
     public void buscar_titulo() {
-        Page<Anuncio> list = anuncioRepository.buscar("titu", null,  null, null, null, null);
+        Page<Anuncio> list = anuncioRepository.buscar("casa", null,  null, null, null, null);
         list.forEach((a) -> {
-            assertThat(a.getTitulo().contains("titu"), is(true));
+            assertThat(a.getTitulo().toLowerCase().contains("casa"), is(true));
         });
     }
 
@@ -44,7 +44,7 @@ public class AnuncioRepositoryTest {
     public void buscar_Logradouro() {
         Page<Anuncio> list = anuncioRepository.buscar(null, null, "coronel", null, null, null);
         list.forEach((a) -> {
-            assertThat(a.getImovel().getEndereco().getLogradouro().contains("coronel"), is(true));
+            assertThat(a.getImovel().getEndereco().getLogradouro().toLowerCase().contains("coronel"), is(true));
         });
     }
 
@@ -52,7 +52,7 @@ public class AnuncioRepositoryTest {
     public void buscar_bairro() {
         Page<Anuncio> list = anuncioRepository.buscar(null, null, null, "coronel", null, null);
         list.forEach((a) -> {
-            assertThat(a.getImovel().getEndereco().getBairro().contains("coronel"), is(true));
+            assertThat(a.getImovel().getEndereco().getBairro().toLowerCase().contains("coronel"), is(true));
         });
     }
 
@@ -60,15 +60,8 @@ public class AnuncioRepositoryTest {
     public void buscar_cidade() {
         Page<Anuncio> list = anuncioRepository.buscar(null, null, null, null, "campo", null);
         list.forEach((a) -> {
-            assertThat(a.getImovel().getEndereco().getCidade().contains("campo"), is(true));
+            assertThat(a.getImovel().getEndereco().getCidade().toLowerCase().contains("campo"), is(true));
         });
-    }
-
-    @Test
-    public void obterAnuncioDeMaiorValor() {
-       Anuncio anucioMaisCaro = anuncioRepository.findTopByOrderByValorDesc();
-       assertThat(anucioMaisCaro, is(notNullValue()));
-       assertThat(anucioMaisCaro.getValor(), is(equalTo(1500000.0D)));
     }
 
 }
