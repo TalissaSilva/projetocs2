@@ -67,8 +67,8 @@ public class PessoaFisicaRepositoryTest {
     
     @Test
     public void alterar() {
-    	PessoaFisica pessoafisica = UsuarioBuilder.PessoaFisica.obterUm().agora();
-    	
+    	PessoaFisica pessoafisica = pessoaFisicaRepository.findById(1L).get();
+
         pessoafisica.setNome("Novo nome");
         pessoaFisicaRepository.saveAndFlush(pessoafisica);
         assertThat(pessoafisica.getNome(), is(equalTo("Novo nome")));
