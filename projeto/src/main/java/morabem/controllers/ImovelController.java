@@ -1,5 +1,6 @@
 package morabem.controllers;
 
+import morabem.domain.Anuncio;
 import morabem.domain.Foto;
 import morabem.domain.Imovel;
 import morabem.domain.Usuario;
@@ -7,6 +8,9 @@ import morabem.exceptions.ImovelException;
 import morabem.services.ImovelService;
 import morabem.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +21,7 @@ import java.util.Base64;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 public class ImovelController {
@@ -40,13 +45,24 @@ public class ImovelController {
     }
 
     @RequestMapping(path = "/meus-imoveis")
-    public String imoveisDoUsuario(Model model, HttpSession session) {
+    public String imoveisDoUsuario(Model model, HttpSession session, @PageableDefault(value=1, page=0) Pageable pageable) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
         if(usuario == null) {
             model.addAttribute("error", "Sua sessão expirou.");
             return "redirect:/login";
         }
-        model.addAttribute("imoveis", imovelService.obterImoveisDoDono(usuario.getId()));
+        Page<Imovel> imoveis = imovelService.obterImoveisDoDono(usuario.getId(), pageable);
+        model.addAttribute("imoveis", imoveis);
+
+
+        if (imoveis.getTotalPages() > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(0, imoveis.getTotalPages() - 1)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+
         return "imoveisUsuario";
     }
 

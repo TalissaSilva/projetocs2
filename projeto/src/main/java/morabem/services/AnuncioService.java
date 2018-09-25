@@ -40,7 +40,7 @@ public class AnuncioService {
         return anuncioRepository.getAllByOrderByDatadaPublicacaoAsc(pageable);
     }
 
-    public List<Anuncio> getAnunciosDoUsuario(Usuario u) { return anuncioRepository.getAllByAnunciante(u); }
+    public Page<Anuncio> getAnunciosDoUsuario(Usuario u, Pageable pageable) { return anuncioRepository.getAllByAnunciante(u, pageable); }
 
     public Anuncio getById(String cod) throws AnuncioException.NaoEmcontrado {
         return anuncioRepository.findById(Integer.valueOf(cod)).orElseThrow(AnuncioException.NaoEmcontrado::new);

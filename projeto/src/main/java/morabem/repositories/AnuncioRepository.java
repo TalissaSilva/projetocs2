@@ -16,7 +16,7 @@ public interface AnuncioRepository extends JpaRepository<Anuncio, Integer> {
 
     Page<Anuncio> getAllByOrderByDatadaPublicacaoAsc(Pageable pageable);
 
-    List<Anuncio> getAllByAnunciante(Usuario usuario);
+    Page<Anuncio> getAllByAnunciante(Usuario usuario, Pageable p);
 
     @Query("SELECT anu FROM Anuncio anu INNER JOIN anu.imovel imv WHERE " +
             "(:titulo is null OR :titulo='' OR lower(anu.titulo) LIKE %:titulo%) AND " +

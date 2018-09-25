@@ -59,14 +59,23 @@ public class AnuncioController {
     }
 
     @GetMapping(path = "/meus-anuncios")
-    public String anunciosDoUsuario(Model model, HttpSession session) {
+    public String anunciosDoUsuario(Model model, HttpSession session, @PageableDefault(value=1, page=0) Pageable pageable) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
         if (usuario == null) {
             model.addAttribute("error", "Sua sessão expirou.");
             return "redirect:/login";
         }
 
-        model.addAttribute("anuncios", anuncioService.getAnunciosDoUsuario(usuario));
+        Page<Anuncio> anuncios = anuncioService.getAnunciosDoUsuario(usuario, pageable);
+        model.addAttribute("anuncios", anuncios);
+
+        if (anuncios.getTotalPages() > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(0, anuncios.getTotalPages() - 1)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
         return "anunciosUsuario";
     }
 

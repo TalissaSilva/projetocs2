@@ -6,6 +6,8 @@ import morabem.repositories.EnderecoRepository;
 import morabem.repositories.FotoRepository;
 import morabem.repositories.ImovelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -33,8 +35,8 @@ public class ImovelService {
         imovelRepository.saveAndFlush(imovel);
     }
 
-    public Set<Imovel> obterImoveisDoDono(Long id) {
-        return imovelRepository.findAllByDonoId(id);
+    public Page<Imovel> obterImoveisDoDono(Long id, Pageable pageable) {
+        return imovelRepository.findAllByDonoId(id, pageable);
     }
 
     public void deletarImovel(Imovel imovel) {

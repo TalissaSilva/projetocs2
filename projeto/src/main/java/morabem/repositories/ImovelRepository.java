@@ -1,6 +1,8 @@
 package morabem.repositories;
 
 import morabem.domain.Imovel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
@@ -16,6 +18,6 @@ import java.util.Set;
 public interface ImovelRepository extends JpaRepository<Imovel, Long> {
 
     @EntityGraph(value = "Usuario.imoveis", type = EntityGraph.EntityGraphType.LOAD)
-    Set<Imovel> findAllByDonoId(Long donoId);
+    Page<Imovel> findAllByDonoId(Long donoId, Pageable p);
 
 }

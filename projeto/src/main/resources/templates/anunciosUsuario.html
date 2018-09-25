@@ -38,7 +38,7 @@
 	</header>
 	<main>
 		<h1>Meus Anúncios</h1>
-		<div class="imovel" th:each="anuncio : ${anuncios}" th:href="'/anuncio/' + ${a.getId()}">
+		<div class="imovel" th:each="anuncio : ${anuncios}">
 			<div class="tumb">
 				<img th:src="'/fotos/' + ${anuncio.getImovel().getFotos().get(0).getUrl()}" alt=" ">
 			</div>
@@ -63,15 +63,15 @@
 				<a th:href="'/anuncio/' + ${anuncio.getId()}">
 					<i class="material-icons tooltipped" data-tooltip="Ver Anúncio">visibility</i>
 				</a>
-				<ul class="pagination w-100" th:if="${anuncios.totalPages > 0}"
-					th:with="currentUrl=(${@currentUrlWithoutParam.apply('page')})">
-					<li th:each="pageNumber : ${pageNumbers}"
-						th:class="${pageNumber == anuncios.number} ? active" class="waves-effect">
-						<a th:text="${pageNumber + 1}"  th:href="@{${currentUrl}(page=${pageNumber})}"></a>
-					</li>
-				</ul>
 			</div>
 		</div>
+		<ul class="pagination w-100" th:if="${anuncios.totalPages > 0}"
+			th:with="currentUrl=(${@currentUrlWithoutParam.apply('page')})">
+			<li th:each="pageNumber : ${pageNumbers}"
+				th:class="${pageNumber == anuncios.number} ? active" class="waves-effect">
+				<a th:text="${pageNumber + 1}"  th:href="@{${currentUrl}(page=${pageNumber})}"></a>
+			</li>
+		</ul>
 	</main>
 </div>
 
