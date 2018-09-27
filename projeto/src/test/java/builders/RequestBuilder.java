@@ -19,6 +19,17 @@ public class RequestBuilder {
         return r;
     }
 
+    public static RequestBuilder getPara(String s) {
+        RequestBuilder r = new RequestBuilder();
+        r.reqb = MockMvcRequestBuilders.get(s);
+        return r;
+    }
+
+    public RequestBuilder comOParamentroGET(String param, String data) {
+        reqb.param(param, data);
+        return this;
+    }
+
     public RequestBuilder comOsParamentros(MultiValueMap<String, String> params) {
         reqb = reqb.params(params);
         return this;
