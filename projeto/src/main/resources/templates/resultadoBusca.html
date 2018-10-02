@@ -51,12 +51,14 @@
                         <label for="titulo">Titulo</label>
                         <input th:field="*{titulo}"
                                th:value="*{titulo}"
+                               class="typeahead"
                                name="titulo" id="titulo" type="text" placeholder="Titulo">
                     </div>
                     <div class="custom-input m-0 ml-2 w-50">
                         <label for="descricao">Descrição</label>
                         <input th:field="*{descricao}"
                                th:value="*{descricao}"
+                               class="typeahead"
                                name="descricao" id="descricao" type="text" placeholder="Descrição">
                     </div>
                     <fieldset style="display: inline-block" class="w-100 ml-2">
@@ -82,18 +84,21 @@
                                     <label for="logradouro">Titulo</label>
                                     <input th:field="*{imovel.endereco.logradouro}"
                                            th:value="*{imovel.endereco.logradouro}"
+                                           class="typeahead"
                                            name="logradouro" id="logradouro" type="text" placeholder="Logradouro">
                                 </div>
                                 <div class="custom-input ">
                                     <label for="bairro">Bairro</label>
                                     <input th:field="*{imovel.endereco.bairro}"
                                            th:value="*{imovel.endereco.bairro}"
+                                           class="typeahead"
                                            name="bairro" id="bairro" type="text" placeholder="Bairro">
                                 </div>
                                 <div class="custom-input posppend">
                                     <label for="cidade">Cidade</label>
                                     <input th:field="*{imovel.endereco.cidade}"
                                            th:value="*{imovel.endereco.cidade}"
+                                           class="typeahead"
                                            name="bairro" id="cidade" type="text" placeholder="Cidade">
                                     <div class="posppend">
                                         <label for="uf">UF</label>
@@ -168,6 +173,7 @@
 <script src="/vendor/js/jquery.mim.js"></script>
 <script src="/vendor/js/hammer.js"></script>
 <script src="/vendor/js/materialize.js"></script>
+<script src="/vendor/js/typeahead.js"></script>
 
 <script>
     $('.dropdown-trigger').dropdown();
@@ -186,5 +192,25 @@
         collapsible.toggleClass('activated');
     });
 </script>
+<script>
+    var countries = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: '../data/films/queries/%QUERY',
+            wildcard: '%QUERY',
+            prepare: function (query, setting) {
+                setting.url = encodeURI(`/api/search?campo=${$('.tt-input:focus').attr('name')}&termo=${query}`)
+                return setting
+            }
+        }
+    })
+
+    $('.typeahead').typeahead(null, {
+        name: 'countries',
+        source: countries
+    });
+</script>
+
 </body>
 </html>

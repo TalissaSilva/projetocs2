@@ -281,3 +281,22 @@ form .image-preview button {
 .anuncio .footer .infos .preco {
     margin-top: 1ch;
 }
+
+.tt-menu {
+    background-color: white;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.32);
+    width: 100%;
+    padding: .2ch;
+    border-radius: 3px;
+}
+
+.tt-suggestion {
+    font-size: 14px;
+    padding: .8ch;
+}
+
+.tt-suggestion:hover {
+    background-color: #ee6e73;
+    cursor: pointer;
+    color: white;
+}

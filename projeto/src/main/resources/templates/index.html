@@ -9,7 +9,6 @@
 	<link rel="stylesheet" href="/vendor/css/materialize.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-	
 	<link rel="stylesheet" href="/css/global.css">
 	<link rel="stylesheet" href="/css/index.css">
 	
@@ -40,15 +39,15 @@
 					<fieldset>
 						<div class="custom-input">
 							<label for="logradouro">Bairro</label>
-							<input th:field="*{imovel.endereco.logradouro}" name="logradouro" id="logradouro" type="text" placeholder="Logradouro">
+							<input th:field="*{imovel.endereco.logradouro}" name="logradouro" id="logradouro" type="text" placeholder="Logradouro" class="typeahead">
 						</div>
 						<div class="custom-input">
 							<label for="bairro">Bairro</label>
-							<input th:field="*{imovel.endereco.bairro}" name="bairro" id="bairro" type="text" placeholder="Bairro">
+							<input th:field="*{imovel.endereco.bairro}" name="bairro" id="bairro" type="text" placeholder="Bairro" class="typeahead">
 						</div>
 						<div class="custom-input posppend">
 							<label for="cidade">Cidade</label>
-							<input  th:field="*{imovel.endereco.cidade}" name="cidade" id="cidade" type="text" placeholder="Cidade">
+							<input  th:field="*{imovel.endereco.cidade}" name="cidade" id="cidade" type="text" placeholder="Cidade" class="typeahead">
 							<div class="posppend">
 								<label for="uf">UF</label>
 								<select  th:field="*{imovel.endereco.estado}" name="uf" id="uf">
@@ -121,6 +120,7 @@
 <script src="/vendor/js/jquery.mim.js"></script>
 <script src="/vendor/js/hammer.js"></script>
 <script src="/vendor/js/materialize.js"></script>
+<script src="/vendor/js/typeahead.js"></script>
 
 <script>
 	$('.dropdown-trigger').dropdown();
@@ -130,6 +130,25 @@
     })
 </script>
 
+<script>
+    var countries = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: '../data/films/queries/%QUERY',
+            wildcard: '%QUERY',
+			prepare: function (query, setting) {
+				setting.url = encodeURI(`/api/search?campo=${$('.tt-input:focus').attr('name')}&termo=${query}`)
+				return setting
+            }
+        }
+    })
+
+    $('.typeahead').typeahead(null, {
+        name: 'countries',
+        source: countries
+    });
+</script>
 
 </body>
 </html>
