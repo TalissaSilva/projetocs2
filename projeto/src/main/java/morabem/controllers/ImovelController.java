@@ -45,7 +45,7 @@ public class ImovelController {
     }
 
     @RequestMapping(path = "/meus-imoveis")
-    public String imoveisDoUsuario(Model model, HttpSession session, @PageableDefault(value=1, page=0) Pageable pageable) {
+    public String imoveisDoUsuario(Model model, HttpSession session, @PageableDefault(value=10, page=0) Pageable pageable) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
         if(usuario == null) {
             model.addAttribute("error", "Sua sessão expirou.");

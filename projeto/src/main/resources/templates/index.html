@@ -135,7 +135,7 @@
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         remote: {
-            url: '../data/films/queries/%QUERY',
+            url: '/api/search?',
             wildcard: '%QUERY',
 			prepare: function (query, setting) {
 				setting.url = encodeURI(`/api/search?campo=${$('.tt-input:focus').attr('name')}&termo=${query}`)

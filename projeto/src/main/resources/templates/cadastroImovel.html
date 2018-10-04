@@ -65,16 +65,16 @@
 				<legend>Endereco</legend>
 				<div class="row">
 					<div class="custom-input col s6">
-						<input th:field="*{endereco.cep}" type="text"
+						<input th:field="*{endereco.cep}" type="text" id="cep"
 							   placeholder="CEP*" required minlength="9" maxlength="9"
 							   data-mask="00000-000"/>
 					</div>
 					<div class="custom-input posppend col s6">
 						<input th:field="*{endereco.logradouro}" type="text"
-							   required placeholder="Logradouro*"/>
+							   required placeholder="Logradouro*" id="logradouro"/>
 						<div class="posppend">
 							<input th:field="*{numero}" type="number"
-								   min="1" required
+								   min="1" required id="numero"
 								   placeholder="n°*"/>
 						</div>
 					</div>
@@ -82,7 +82,7 @@
 				<div class="row">
 					<div class="custom-input col s6">
 						<input th:field="*{endereco.bairro}" type="text"
-							   required placeholder="Bairro*"/>
+							   required placeholder="Bairro*" id="bairro"/>
 					</div>
 					<div class="custom-input posppend col s6">
 						<label for="cidade">Cidade</label>
@@ -170,6 +170,15 @@
 	$(document).ready(function () {
 		$('.modal').modal();
 	});
+</script>
+
+<script>
+    $('#cep').autocompleteAddress({
+        city: '#cidade',
+        address: '#logradouro',
+        neighborhood: '#bairro',
+        publicAPI: 'https://viacep.com.br/ws/{{cep}}/json/',
+    });
 </script>
 </body>
 </html>
