@@ -1,0 +1,91 @@
+ <!doctype html>
+<html lang="pr-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<!-- Materialize: css -->
+	<link rel="stylesheet" href="/vendor/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+	<link
+	href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+	rel="stylesheet">
+	<link rel="stylesheet" href="/css/global.css">
+	<link rel="stylesheet" href="/css/imoveisUsuario.css">
+
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Morabem - Relatório</title>
+</head>
+
+<style>
+	.titulo {
+	font-size: 1.5rem;
+	margin: 0;
+	padding: 0;
+	}
+
+	.table, .th, .td {
+    	border: 1px solid black;
+    	border-collapse: collapse;
+	}
+	.th, .td {
+    	padding: 5px;
+    	text-align: left;    
+	}
+
+</style>
+
+<body>	
+	<header class="flex row">
+		<div> 
+			<a href="/">
+				<img src="/logo-horizontal.png"/>
+				</a>
+			</div>
+			<div class="flex row w-100 justify-content-end">
+				<div th:replace="fragments/header :: 'com-usuario'"></div>
+	</header>
+	<main>
+		<table>
+			<tr>
+				<th colspan="2">
+					<div class=cabecalho>
+						<h1>Relatório de Anúncios de Venda</h1>
+						<h1>Anunciante
+							<p th:text=${usuario.getNome}></p>
+						</h1>
+					</div>
+				</th>
+			</tr>
+			<tr>
+				<div class=imoveis th:each="anuncio : ${anuncios}||${anuncio.getTipo}=='venda'">// ou deve ser th:if="${anuncio.getTipo == venda'} 
+					<div>
+						<p class="titulo" th:text="${anuncio.getTitulo()}"></p>
+					</div>
+					<div>
+						<p th:text="'R$ ' + ${anuncio.getValor()}"></p>
+					</div>
+				</div>
+			</tr>
+			<tr>
+				<div class=rodape>
+					<p th:text="Valor total = + usuario.precoAnunciosVenda(usuario)"></p>
+				</div>
+			</tr>
+		</table>	
+	</main>
+
+<script src="/vendor/js/jquery.mim.js"></script>
+<script src="/vendor/js/hammer.js"></script>
+<script src="/vendor/js/materialize.js"></script>
+<script>
+	$('.dropdown-trigger').dropdown();
+	
+	$(document).ready(function(){
+		$('.tooltipped').tooltip();
+	});
+</script>
+</body>
+</html>
+

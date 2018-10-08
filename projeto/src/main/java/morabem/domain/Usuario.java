@@ -1,6 +1,7 @@
 package morabem.domain;
 
 import org.hibernate.Hibernate;
+
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.context.annotation.Lazy;

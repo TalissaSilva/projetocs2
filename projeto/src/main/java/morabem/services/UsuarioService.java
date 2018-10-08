@@ -131,4 +131,21 @@ public class UsuarioService {
             pessoaJuridicaRepository.flush();
         }
     }
+    
+
+    public double precoAnunciosVenda(Usuario usuario){
+	double soma;
+	where(usuario.anuncios.anuncio.getTipo=='venda'){
+		soma += anuncio.getValor();
+	}
+	return soma;
+    }
+
+    public double precoAnunciosAluguel(Usuario usuario){
+	double soma;
+	where(usuario.anuncios.anuncio.getTipo=='aluguel'){
+		soma += anuncio.getValor();
+	}
+	return soma;
+    }
 }
