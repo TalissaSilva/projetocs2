@@ -9,6 +9,7 @@ import morabem.repositories.EnderecoRepository;
 import morabem.repositories.FotoRepository;
 import morabem.repositories.PessoaFisicaRepository;
 import morabem.repositories.PessoaJuridicaRepository;
+import morabem.utils.RelatorioData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -32,6 +33,8 @@ public class UsuarioService {
     @Autowired
     public FotoRepository fotoRepository;
 
+    @Autowired
+    public AnuncioService anuncioService;
 
     public Usuario login(String email, String senha) throws UsuarioException.UsuarioNaoEncontrado {
 
@@ -133,19 +136,11 @@ public class UsuarioService {
     }
     
 
-    public double precoAnunciosVenda(Usuario usuario){
-	double soma;
-	where(usuario.anuncios.anuncio.getTipo=='venda'){
-		soma += anuncio.getValor();
-	}
-	return soma;
+    public RelatorioData relatorioDeVendas(Usuario usuario){
+	    return new RelatorioData(anuncioService.getAnunciosDoUsuarioDoTipo(usuario, Anuncio.Tipo.VENDER));
     }
 
-    public double precoAnunciosAluguel(Usuario usuario){
-	double soma;
-	where(usuario.anuncios.anuncio.getTipo=='aluguel'){
-		soma += anuncio.getValor();
-	}
-	return soma;
+    public RelatorioData relatorioDeAlugueis(Usuario usuario){
+        return new RelatorioData(anuncioService.getAnunciosDoUsuarioDoTipo(usuario, Anuncio.Tipo.ALUGAR));
     }
 }

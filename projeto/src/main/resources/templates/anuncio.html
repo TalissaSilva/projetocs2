@@ -81,7 +81,7 @@
             <section class="col s5">
                 <div class="card-panel">
                     <div class="flex content-center">
-                        <span class="preco left-align w-100" th:text="'R$ '+${anuncio.getValor()}"></span>
+                        <span class="preco left-align w-100" th:text="${#numbers.formatCurrency(anuncio.getValor())}"></span>
                         <span class="chip orange darken-1" th:text="${anuncio.getTipo()}"></span>
                         <span class="chip pink darken-1" th:text="${anuncio.getImovel().getTipo()}"></span>
                     </div>

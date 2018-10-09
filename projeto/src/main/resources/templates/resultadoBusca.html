@@ -154,7 +154,7 @@
                     </div>
                     <div class="infos">
                         <p class="alugar" th:text="${a.getTipo()}"></p>
-                        <p class="preco">R$ 1.5M</p>
+                        <p class="preco" th:text="${#numbers.formatCurrency(a.getValor())}"></p>
                     </div>
                 </div>
             </a>

@@ -72,7 +72,9 @@ public class Anuncio implements Serializable {
 	public String getDescricao() {
 		return descricao;
 	}
-
+	public String getDescricaoResulmida() {
+		return descricao.length() > 30 ? descricao.substring(0, 30) : descricao;
+	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}

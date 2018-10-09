@@ -65,4 +65,7 @@ public class AnuncioService {
         );
     }
 
+    public List<Anuncio> getAnunciosDoUsuarioDoTipo(Usuario usuario, Anuncio.Tipo tipo) {
+        return anuncioRepository.getAllByTipoEqualsAndAnuncianteEquals(tipo, usuario);
+    }
 }

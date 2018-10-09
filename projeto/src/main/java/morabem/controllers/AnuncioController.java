@@ -7,7 +7,9 @@ import morabem.exceptions.AnuncioException;
 import morabem.exceptions.ImovelException;
 import morabem.services.AnuncioService;
 import morabem.services.ImovelService;
+import morabem.services.UsuarioService;
 import morabem.utils.BuscaData;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +33,10 @@ public class AnuncioController {
 
     @Autowired
     private AnuncioService anuncioService;
+
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     @GetMapping(path = "/imoveis/{imovel}/anunciar")
     public String cadastroAnuncioForm(@PathVariable(value = "imovel") String codImovel, Model model) throws ImovelException.ImovelNaoExiste {
@@ -125,7 +131,19 @@ public class AnuncioController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
-
         return "resultadoBusca";
+    }
+
+    @GetMapping(path = "/relatorios")
+    public String relatorios(Model model, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
+        if (usuario == null) {
+            model.addAttribute("error", "Sua sessão expirou.");
+            return "redirect:/login";
+        }
+
+        model.addAttribute("relatorioDeVendas", usuarioService.relatorioDeVendas(usuario));
+        model.addAttribute("relatorioDeAlugueis", usuarioService.relatorioDeAlugueis(usuario));
+        return "relatorio";
     }
 }

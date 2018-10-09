@@ -23,6 +23,9 @@
 		margin: 0;
 		padding: 0;
 	}
+	.flex.row::after {
+		content: unset !important;
+	}
 </style>
 <body>
 <div class="container">
@@ -37,7 +40,10 @@
 		</div>
 	</header>
 	<main>
-		<h1>Meus Anúncios</h1>
+		<div class="flex row align-center justify-content-between" style="margin-bottom: 5ch">
+			<h1 style="margin: 0">Meus Anúncios</h1>
+			<a class="waves-effect waves-teal btn-flat relatorios" style="font-size: 12px" href="/relatorios">Relatórios</a>
+		</div>
 		<div class="imovel" th:each="anuncio : ${anuncios}">
 			<div class="tumb">
 				<img th:src="'/fotos/' + ${anuncio.getImovel().getFotos().get(0).getUrl()}" alt=" ">
@@ -50,7 +56,7 @@
 					<span class="chip" th:text="${anuncio.getImovel().getTipo()}"></span>
 				</div>
 				<div>
-					<p th:text="'R$ ' + ${anuncio.getValor()}"></p>
+					<p class="preco" th:text="${#numbers.formatCurrency(anuncio.getValor())}"></p>
 				</div>
 			</div>
 			<div class="action">
