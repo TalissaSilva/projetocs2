@@ -32,7 +32,6 @@ public class AnuncioService {
     private EntityManager entityManager;
 
     public void salvarAnuncio(Anuncio anuncio) {
-        System.out.println(anuncio);
         this.anuncioRepository.saveAndFlush(anuncio);
     }
 

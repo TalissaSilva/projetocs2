@@ -4,6 +4,7 @@ import morabem.domain.Anuncio;
 import morabem.domain.Endereco;
 import morabem.domain.PessoaFisica;
 
+import morabem.domain.Usuario;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ import builders.UsuarioBuilder;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 import morabem.repositories.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -70,5 +74,27 @@ public class AnuncioRepositoryTest {
 		list.forEach((a) -> {
 			assertThat(a.getImovel().getEndereco().getCidade().toLowerCase().contains("campo"), is(true));
 		});
+	}
+
+	@Test
+	public void obterAnucniosDoTipoVendaDoUsuario() {
+		PessoaFisica u = pessoaFisicaRepository.findById(1L).get();
+		Boolean result = anuncioRepository.getAllByTipoEqualsAndAnuncianteEquals(Anuncio.Tipo.VENDER, u)
+			.stream()
+			.map(Anuncio::getTipo)
+			.allMatch((Anuncio.Tipo t) -> t == Anuncio.Tipo.VENDER );
+
+		assertThat(result, equalTo(true));
+	}
+
+	@Test
+	public void obterAnucniosDoTipoAluguelDoUsuario() {
+		PessoaFisica u = pessoaFisicaRepository.findById(1L).get();
+		Boolean result = anuncioRepository.getAllByTipoEqualsAndAnuncianteEquals(Anuncio.Tipo.ALUGAR, u)
+				.stream()
+				.map(Anuncio::getTipo)
+				.allMatch((Anuncio.Tipo t) -> t == Anuncio.Tipo.ALUGAR );
+
+		assertThat(result, equalTo(true));
 	}
 }
