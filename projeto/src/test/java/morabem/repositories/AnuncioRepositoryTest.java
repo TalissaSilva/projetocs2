@@ -77,7 +77,7 @@ public class AnuncioRepositoryTest {
 	}
 
 	@Test
-	public void obterAnucniosDoTipoVendaDoUsuario() {
+	public void obterAnunciosDoTipoVendaDoUsuario() {
 		PessoaFisica u = pessoaFisicaRepository.findById(1L).get();
 		Boolean result = anuncioRepository.getAllByTipoEqualsAndAnuncianteEquals(Anuncio.Tipo.VENDER, u)
 			.stream()
@@ -88,7 +88,7 @@ public class AnuncioRepositoryTest {
 	}
 
 	@Test
-	public void obterAnucniosDoTipoAluguelDoUsuario() {
+	public void obterAnunciosDoTipoAluguelDoUsuario() {
 		PessoaFisica u = pessoaFisicaRepository.findById(1L).get();
 		Boolean result = anuncioRepository.getAllByTipoEqualsAndAnuncianteEquals(Anuncio.Tipo.ALUGAR, u)
 				.stream()
