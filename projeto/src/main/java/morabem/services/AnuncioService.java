@@ -63,8 +63,4 @@ public class AnuncioService {
                 pageable
         );
     }
-
-    public List<Anuncio> getAnunciosDoUsuarioDoTipo(Usuario usuario, Anuncio.Tipo tipo) {
-        return anuncioRepository.getAllByTipoEqualsAndAnuncianteEquals(tipo, usuario);
-    }
 }

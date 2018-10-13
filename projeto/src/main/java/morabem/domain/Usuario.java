@@ -1,18 +1,12 @@
 package morabem.domain;
 
-import org.hibernate.Hibernate;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.springframework.context.annotation.Lazy;
+import morabem.domain.relatorio.Relatorio;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "usuario")
@@ -113,8 +107,7 @@ public abstract class Usuario implements Serializable {
         this.endereco = endereco;
     }
 
-
-    /*@Override
+    @Override
     public String toString() {
         return "Usuario{" +
                 "id=" + id +
@@ -129,8 +122,7 @@ public abstract class Usuario implements Serializable {
                 ", fotoPerfil=" + fotoPerfil +
                 ", anuncios=" + anuncios +
                 '}';
-    }*/
-
+    }
 
     public void setFotoPerfil(Foto fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
@@ -161,5 +153,19 @@ public abstract class Usuario implements Serializable {
 
     public void setImoveis(Set<Imovel> imoveis) {
         this.imoveis = imoveis;
+    }
+
+    @Transactional()
+    public Relatorio getRelatorioDeVendas() {
+        return new Relatorio(this.getAnuncios().stream()
+                .filter((a) -> a.getTipo() == Anuncio.Tipo.VENDER)
+                .collect(Collectors.toList()), Anuncio.Tipo.ALUGAR, this);
+    }
+
+    @Transactional()
+    public Relatorio getRelatorioDeAlugueis() {
+        return new Relatorio(this.getAnuncios().stream()
+                .filter((a) -> a.getTipo() == Anuncio.Tipo.ALUGAR)
+                .collect(Collectors.toList()), Anuncio.Tipo.ALUGAR, this);
     }
 }

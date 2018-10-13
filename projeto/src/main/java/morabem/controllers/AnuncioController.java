@@ -9,6 +9,7 @@ import morabem.services.AnuncioService;
 import morabem.services.ImovelService;
 import morabem.services.UsuarioService;
 import morabem.utils.BuscaData;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,10 +19,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -37,6 +41,9 @@ public class AnuncioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @GetMapping(path = "/imoveis/{imovel}/anunciar")
     public String cadastroAnuncioForm(@PathVariable(value = "imovel") String codImovel, Model model) throws ImovelException.ImovelNaoExiste {
@@ -134,6 +141,8 @@ public class AnuncioController {
         return "resultadoBusca";
     }
 
+    @Transactional
+    @org.springframework.transaction.annotation.Transactional
     @GetMapping(path = "/relatorios")
     public String relatorios(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
@@ -141,9 +150,10 @@ public class AnuncioController {
             model.addAttribute("error", "Sua sessão expirou.");
             return "redirect:/login";
         }
+        Usuario u = entityManager.merge(usuario);
 
-        model.addAttribute("relatorioDeVendas", usuarioService.relatorioDeVendas(usuario));
-        model.addAttribute("relatorioDeAlugueis", usuarioService.relatorioDeAlugueis(usuario));
+        model.addAttribute("relatorioDeVendas", u.getRelatorioDeVendas());
+        model.addAttribute("relatorioDeAlugueis", u.getRelatorioDeAlugueis());
         return "relatorio";
     }
 }

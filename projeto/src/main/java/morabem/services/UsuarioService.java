@@ -9,14 +9,9 @@ import morabem.repositories.EnderecoRepository;
 import morabem.repositories.FotoRepository;
 import morabem.repositories.PessoaFisicaRepository;
 import morabem.repositories.PessoaJuridicaRepository;
-import morabem.utils.RelatorioData;
+import morabem.domain.relatorio.Relatorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Set;
 
 @Service
 public class UsuarioService {
@@ -133,14 +128,5 @@ public class UsuarioService {
             pessoaJuridicaRepository.delete((PessoaJuridica) usuario);
             pessoaJuridicaRepository.flush();
         }
-    }
-    
-
-    public RelatorioData relatorioDeVendas(Usuario usuario){
-	    return new RelatorioData(anuncioService.getAnunciosDoUsuarioDoTipo(usuario, Anuncio.Tipo.VENDER));
-    }
-
-    public RelatorioData relatorioDeAlugueis(Usuario usuario){
-        return new RelatorioData(anuncioService.getAnunciosDoUsuarioDoTipo(usuario, Anuncio.Tipo.ALUGAR));
     }
 }

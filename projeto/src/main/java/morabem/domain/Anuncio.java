@@ -1,5 +1,6 @@
 package morabem.domain;
 
+import morabem.domain.relatorio.Exportavel;
 import org.hibernate.annotations.Type;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -44,6 +45,7 @@ public class Anuncio implements Serializable {
 		this.imovel = imovel;
 	}
 
+	@Exportavel(titulo = "Titulo")
 	public String getTitulo() {
 		return titulo;
 	}
@@ -52,6 +54,7 @@ public class Anuncio implements Serializable {
 		this.titulo = titulo;
 	}
 
+	@Exportavel(titulo = "Tipo")
 	public Tipo getTipo() {
 		return tipo;
 	}
@@ -60,7 +63,7 @@ public class Anuncio implements Serializable {
 		this.tipo = tipo;
 	}
 
-
+	@Exportavel(titulo = "Valor")
 	public Double getValor() {
 		return valor;
 	}
@@ -72,9 +75,12 @@ public class Anuncio implements Serializable {
 	public String getDescricao() {
 		return descricao;
 	}
-	public String getDescricaoResulmida() {
+
+	@Exportavel(titulo = "Descrição")
+	public String getDescricaoResumida() {
 		return descricao.length() > 30 ? descricao.substring(0, 30) : descricao;
 	}
+
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
@@ -87,6 +93,7 @@ public class Anuncio implements Serializable {
 		this.id = id;
 	}
 
+	@Exportavel(titulo = "Imovel", object = true)
 	public Imovel getImovel() {
 		return imovel;
 	}
@@ -103,6 +110,7 @@ public class Anuncio implements Serializable {
 		this.anunciante = anunciante;
 	}
 
+	@Exportavel(titulo = "Data de Publicação")
 	public Date getDatadaPublicacao() {
 		return datadaPublicacao;
 	}

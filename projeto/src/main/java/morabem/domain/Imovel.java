@@ -1,5 +1,6 @@
 package morabem.domain;
 
+import morabem.domain.relatorio.Exportavel;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -44,6 +45,7 @@ public class Imovel implements Serializable {
         this.numero = numero;
     }
 
+    @Exportavel(titulo = "área Total Contruida")
     public Double getAreaConstruida() {
         return areaConstruida;
     }
@@ -76,6 +78,7 @@ public class Imovel implements Serializable {
         this.dono = dono;
     }
 
+    @Exportavel(titulo = "Tipo do Imovel")
     public Tipo getTipo() {
         return tipo;
     }
@@ -122,6 +125,7 @@ public class Imovel implements Serializable {
         this.id = id;
     }
 
+    @Exportavel(titulo = "Caracteristicas")
     public List<String> getCaracteristicas() {
         return caracteristicas;
     }
@@ -137,6 +141,7 @@ public class Imovel implements Serializable {
         FAZENDA
     }
 
+    @Exportavel(titulo = "Endreço")
     public String printEndereco() {
         return this.endereco.getLogradouro() + ", " + this.numero +
                 " - " + this.endereco.getBairro() + ", " + this.endereco.getCidade() +
