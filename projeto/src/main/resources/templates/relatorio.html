@@ -35,6 +35,10 @@
 	padding: 5px;
 	text-align: left;
 }
+.exportar-wrapper{
+	display:inline-block;
+	margin-left:auto;
+}
 </style>
 
 <body class="container">
@@ -57,8 +61,20 @@
 			</ul>
 		</div>
 		<div id="vendas" class="col s12">
-			<h3>Relatório: Aluguel</h3>
+			<h3>Relatório: Vendas</h3>
 			<h4 th:text="${'Anunciante: ' + session.usuarioLogado.getNome()}"></h4>
+			<div class="exportar-wrapper">
+				<a class="btn-flat dropdown-trigger align-center"
+					data-target="venda-export"> exportar </a>
+
+				<ul id="venda-export" class="dropdown-content">
+					<li
+						th:each="tipo : ${T(morabem.domain.relatorio.ExportarStrategy.Formato)">
+						<a th:href="${'/exportar/vendas?tipo='+tipo}" th:text="${tipo}"></a>
+					</li>
+				</ul>
+			</div>
+			
 			<table>
 				<thead>
 					<tr>
@@ -88,12 +104,25 @@
 								th:text="${#numbers.formatCurrency(relatorioDeVendas.getTotal())}"></p>
 						</td>
 					</tr>
+
 				</tbody>
 			</table>
 		</div>
 		<div id="alugueis" class="col s12">
 			<h3>Relatório: Aluguel</h3>
 			<h4 th:text="${'Anunciante: ' + session.usuarioLogado.getNome()}"></h4>
+			<div class="exportar-wrapper">
+				<a class="btn-flat dropdown-trigger align-center"
+					data-target="aluguel-export"> exportar </a>
+
+				<ul id="aluguel-export" class="dropdown-content">
+					<li
+						th:each="tipo : ${T(morabem.domain.relatorio.ExportarStrategy.Formato)">
+						<a th:href="${'/exportar/aluguel?tipo='+tipo}" th:text="${tipo}"></a>
+					</li>
+				</ul>
+			</div>
+			
 			<table>
 				<thead>
 					<tr>
@@ -132,15 +161,16 @@
 	<script src="/vendor/js/hammer.js"></script>
 	<script src="/vendor/js/materialize.js"></script>
 	<script>
-	$('.dropdown-trigger').dropdown();
-	
-	$(document).ready(function(){
-		$('.tooltipped').tooltip();
-	});
-    $(document).ready(function(){
-        $('.tabs').tabs();
-    });
-</script>
+		$('.dropdown-trigger').dropdown();
+
+		$(document).ready(function() {
+			$('.tooltipped').tooltip();
+		});
+		$(document).ready(function() {
+			$('.tabs').tabs();
+		});
+	</script>
+
 </body>
 </html>
 
