@@ -141,7 +141,7 @@ public class Imovel implements Serializable {
         FAZENDA
     }
 
-    @Exportavel(titulo = "Endreço")
+    @Exportavel(titulo = "Endereco")
     public String printEndereco() {
         return this.endereco.getLogradouro() + ", " + this.numero +
                 " - " + this.endereco.getBairro() + ", " + this.endereco.getCidade() +

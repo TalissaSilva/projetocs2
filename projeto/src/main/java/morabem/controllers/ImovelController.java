@@ -14,6 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
@@ -51,9 +52,9 @@ public class ImovelController {
             model.addAttribute("error", "Sua sessão expirou.");
             return "redirect:/login";
         }
+
         Page<Imovel> imoveis = imovelService.obterImoveisDoDono(usuario.getId(), pageable);
         model.addAttribute("imoveis", imoveis);
-
 
         if (imoveis.getTotalPages() > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(0, imoveis.getTotalPages() - 1)
@@ -62,14 +63,13 @@ public class ImovelController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-
         return "imoveisUsuario";
     }
 
     @PostMapping(path = "/cadastro/imovel")
     public String submitPaginaDeCadastro(HttpSession session, Model model,
                                          @ModelAttribute Imovel imovel,
-                                         @RequestParam(name = "foto64[]", required = false) String[] fotos) {
+                                         @RequestParam(name = "fotos-upload", required = false) MultipartFile[] fotos) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
         if(usuario == null) {
@@ -90,9 +90,7 @@ public class ImovelController {
         }
 
         List<Foto> fotosImovel = Arrays.stream(fotos)
-                .map(Base64.getDecoder()::decode)
-                .map(String::new)
-                .map(storageService::saveBase64Image)
+                .map(storageService::store)
                 .map(url -> new Foto(null, url))
                 .collect(Collectors.toList());
 

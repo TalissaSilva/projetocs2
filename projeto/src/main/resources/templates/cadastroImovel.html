@@ -15,6 +15,12 @@
 	
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Morabem - Cadastrar imovel</title>
+	
+	<style>
+		.qualidades label {
+			margin-left: 2ch;
+		}
+	</style>
 </head>
 <body>
 <div class="container">
@@ -35,7 +41,7 @@
 			<li th:each="error : ${erros}" th:text="${error}"></li>
 		</ul>
 		
-		<form th:object="${imovel}" th:action="@{/cadastro/imovel}" method="post">
+		<form th:object="${imovel}" th:action="@{/cadastro/imovel}" method="post" enctype="multipart/form-data">
 			<fieldset>
 				<legend>Tipo do Imovel</legend>
 				<p>
@@ -102,7 +108,7 @@
 				<div class="fotos">
 					<ul>
 						<li>
-							<input id="fotos-input" type="file" multiple accept="image/*" style="display: none">
+							<input id="fotos-input" name="fotos-upload" type="file" multiple accept="image/*" style="display: none">
 							<a class="btn-floating btn-large waves-effect waves-light deep-purple darken-1"><i
 									class="material-icons">add</i></a>
 						</li>
@@ -110,15 +116,32 @@
 				</div>
 			
 			</fieldset>
-			<fieldset>
+			<fieldset class="qualidades">
 				<legend>Qualidades do Imovel</legend>
-				<div class="atributos" id="attr-list">
-					<div class="chip add deep-purple darken-1 waves-effect waves-light">
-						<a class="modal-trigger" href="#add-atributo">
-							<i class="material-icons">add</i>
-						</a>
-					</div>
-				</div>
+				<label>
+					<input type="checkbox" name="caracteristicas" value="Banheiro">
+					<span>Banheiros</span>
+				</label>
+				<label>
+					<input type="checkbox" name="caracteristicas" value="Quarto">
+					<span>Quantos</span>
+				</label>
+				<label>
+					<input type="checkbox" name="caracteristicas" value="Varanda">
+					<span>Varandas</span>
+				</label>
+				<label>
+					<input type="checkbox" name="caracteristicas" value="Sacada">
+					<span>Sacadas</span>
+				</label>
+				<label>
+					<input type="checkbox" name="caracteristicas" value="Cozinha">
+					<span>Cozinhas</span>
+				</label>
+				<label>
+					<input type="checkbox" name="caracteristicas" value="Garagem">
+					<span>Garages</span>
+				</label>
 			</fieldset>
 			
 			<div class="action">
@@ -128,34 +151,6 @@
 			</div>
 		</form>
 	</main>
-	<aside>
-		<div id="add-atributo" class="modal">
-			<div class="modal-content">
-				<h4>Adicionar Qualidade</h4>
-				<div class="col s4">
-					<div class="custom-input posppend">
-						<select id="id-atributo">
-							<option value="">Escolha uma</option>
-							<option value="Banheiro">Banheiros</option>
-							<option value="Quarto">Quantos</option>
-							<option value="Varanda">Varandas</option>
-							<option value="Sacada">Sacadas</option>
-							<option value="Cozinha">Cozinhas</option>
-							<option value="Garagem">Garages</option>
-						</select>
-						<div class="posppend">
-							<label>Quantidade</label>
-							<input id="quantidade-atributo" type="number" min="1" required placeholder="Quantidade">
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<a class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
-				<button type="button" id="btn-add-attr" class="waves-effect waves-green btn-flat">adicionar</button>
-			</div>
-		</div>
-	</aside>
 </div>
 
 <script src="/vendor/js/jquery.mim.js"></script>
@@ -167,9 +162,6 @@
 <script>
 	$('.dropdown-trigger').dropdown();
 	
-	$(document).ready(function () {
-		$('.modal').modal();
-	});
 </script>
 
 <script>

@@ -15,7 +15,7 @@ public class RequestBuilder {
 
     public static RequestBuilder postPara(String url) {
         RequestBuilder r = new RequestBuilder();
-        r.reqb = MockMvcRequestBuilders.post(url);
+        r.reqb = MockMvcRequestBuilders.fileUpload(url);
         return r;
     }
 

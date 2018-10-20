@@ -1,0 +1,20 @@
+version: '3.1'
+services:
+  morabem-postgres:
+    image: postgres:9.6
+    restart: always
+    container_name: morabem-postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=morabem
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  morabem-redis:
+    image: redis:4.0
+    restart: always
+    container_name: morabem-redis
+    ports:
+      - 6379:6379

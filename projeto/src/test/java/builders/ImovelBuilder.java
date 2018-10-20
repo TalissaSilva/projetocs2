@@ -4,10 +4,7 @@ import morabem.domain.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 public class ImovelBuilder {
 
@@ -54,7 +51,7 @@ public class ImovelBuilder {
         values.add("endereco.uf", imovel.getEndereco().getUf());
         values.add("numero", String.valueOf(imovel.getNumero()));
         values.add("tipo", String.valueOf(imovel.getTipo()));
-        values.add("caracteristicas", String.valueOf(imovel.getCaracteristicas()));
+        values.add("caracteristicas", imovel.getCaracteristicas().stream().reduce("", (a, i) -> a.concat(", " + i)));
         return values;
     }
 }
