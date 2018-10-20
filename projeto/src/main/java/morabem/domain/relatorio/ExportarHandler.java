@@ -15,6 +15,7 @@ public interface ExportarHandler<T, R> {
     Set<String> titulos = new HashSet<>();
 
     R gerar();
+
     String formatarItem(Map<String, Object> item);
 
     default ExportarHandler<T, R> adicionarCabecalho(Map<String, Object> c) {
@@ -26,7 +27,6 @@ public interface ExportarHandler<T, R> {
         this.rodapes.putAll(c);
         return this;
     }
-
 
     default ExportarHandler<T, R> exportar(List<T> dados) {
         obterDados(dados);
