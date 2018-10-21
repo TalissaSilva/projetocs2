@@ -248,13 +248,14 @@ form .image-preview button {
     cursor: pointer;
     border-radius: 5px;
 }
-.anuncio:nth-child(odd) {
-    margin: 0 8px 8px 0;
+.anuncio {
+    margin: 4px;
 }
 
 .anuncio img {
-    max-height: 270px;
     object-fit: cover;
+    height: 100%;
+    width: 100%;
 }
 
 .anuncio:hover .footer {
@@ -304,6 +305,7 @@ form .image-preview button {
 
 .anuncio .footer .infos .preco {
     margin-top: 1ch;
+    white-space: nowrap;
 }
 
 .tt-menu {

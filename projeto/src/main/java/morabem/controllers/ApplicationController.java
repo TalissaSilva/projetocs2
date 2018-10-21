@@ -23,7 +23,7 @@ public class ApplicationController {
     private AnuncioService anuncioService;
 
     @GetMapping(path = "/")
-    public String index(Model model, @PageableDefault(value=1, page=0) Pageable pageable) {
+    public String index(Model model, @PageableDefault(value=20, page=0) Pageable pageable) {
         Page<Anuncio> anuncios = anuncioService.getDestaques(pageable);
 
         model.addAttribute("anuncios", anuncios);

@@ -33,11 +33,6 @@ public class ExpartarHandler_mapearValorTest {
             public String gerar() {
                 return null;
             }
-
-            @Override
-            public String formatarItem(Map<String, Object> item) {
-                return null;
-            }
         };
     }
 

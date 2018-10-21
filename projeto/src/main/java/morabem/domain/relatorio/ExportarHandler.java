@@ -8,15 +8,11 @@ import java.util.stream.Collectors;
 public interface ExportarHandler<T, R> {
 
     List<Map<String, Object>> dados = new LinkedList<>();
-
     Map<String, Object> cabecalhos = new HashMap<>();
     Map<String, Object> rodapes = new HashMap<>();
-
     Set<String> titulos = new HashSet<>();
 
     R gerar();
-
-    String formatarItem(Map<String, Object> item);
 
     default ExportarHandler<T, R> adicionarCabecalho(Map<String, Object> c) {
         this.cabecalhos.putAll(c);
@@ -66,9 +62,5 @@ public interface ExportarHandler<T, R> {
             }
         }
         return attr;
-    }
-
-    default List<Map<String, Object>> getDados() {
-        return this.dados;
     }
 }

@@ -9,6 +9,7 @@ public final class ExportarAnunciosStrategy extends ExportarStrategy<Anuncio, by
     ExportarAnunciosStrategy(List<Anuncio> anuncios) {
         super(anuncios);
         super.sethandler(Formato.CSV, new ExportarHandlerCSVBytesArray<Anuncio>())
-                .sethandler(Formato.JSON, new ExportarhandlerJSONBytesArray<Anuncio>());
+                .sethandler(Formato.JSON, new ExportarhandlerJSONBytesArray<Anuncio>())
+                .sethandler(Formato.TXT, new ExportarHandlerCSVBytesArray<Anuncio>());
     }
 }

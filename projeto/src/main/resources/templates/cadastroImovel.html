@@ -118,30 +118,6 @@
 			</fieldset>
 			<fieldset class="qualidades">
 				<legend>Qualidades do Imovel</legend>
-				<label>
-					<input type="checkbox" name="caracteristicas" value="Banheiro">
-					<span>Banheiros</span>
-				</label>
-				<label>
-					<input type="checkbox" name="caracteristicas" value="Quarto">
-					<span>Quantos</span>
-				</label>
-				<label>
-					<input type="checkbox" name="caracteristicas" value="Varanda">
-					<span>Varandas</span>
-				</label>
-				<label>
-					<input type="checkbox" name="caracteristicas" value="Sacada">
-					<span>Sacadas</span>
-				</label>
-				<label>
-					<input type="checkbox" name="caracteristicas" value="Cozinha">
-					<span>Cozinhas</span>
-				</label>
-				<label>
-					<input type="checkbox" name="caracteristicas" value="Garagem">
-					<span>Garages</span>
-				</label>
 			</fieldset>
 			
 			<div class="action">
@@ -161,16 +137,54 @@
 
 <script>
 	$('.dropdown-trigger').dropdown();
-	
+
 </script>
 
 <script>
-    $('#cep').autocompleteAddress({
-        city: '#cidade',
-        address: '#logradouro',
-        neighborhood: '#bairro',
-        publicAPI: 'https://viacep.com.br/ws/{{cep}}/json/',
-    });
+	$('#cep').autocompleteAddress({
+		city: '#cidade',
+		address: '#logradouro',
+		neighborhood: '#bairro',
+		publicAPI: 'https://viacep.com.br/ws/{{cep}}/json/',
+	});
+	
+	Array.from([
+				'Garagem',
+				'1 Quarto',
+				'2 Quartos',
+				'2+ Quartos',
+				'Cozinha',
+				'Cozinha Americana',
+				'Varanda',
+				'Portão elétrico',
+				'jardim',
+				'Área de serviço',
+				'Play-ground',
+				'Esgoto',
+				'Asfalto',
+				'Lavanderia',
+				'Portaria',
+				'Piscina',
+				'Churrasqueira',
+				'Sala de jantar',
+				'Aquecedor solar',
+				'Lavabo',
+				'Muro',
+				'Portaria',
+				'Calçada',
+			]
+			.sort()
+			.reduce((acc, item) => acc.add(item), new Set()))
+			.map(item =>
+					$(`<label>
+					<input type="checkbox" name="caracteristicas" value="${item}">
+					<span>${item}</span>
+				</label>`)
+			)
+			.forEach(item => $('.qualidades').append(item))
+
+
+
 </script>
 </body>
 </html>

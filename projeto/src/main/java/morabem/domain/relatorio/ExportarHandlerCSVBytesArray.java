@@ -6,7 +6,6 @@ import java.util.*;
 
 public class ExportarHandlerCSVBytesArray<T> implements ExportarHandler<T, byte[]> {
 
-    @Override
     public String formatarItem(Map<String, Object> item) {
         List<String> list = new LinkedList<>();
 

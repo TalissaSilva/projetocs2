@@ -36,8 +36,8 @@
 	text-align: left;
 }
 .exportar-wrapper {
-	display:inline-block;
-	margin-right:auto;
+	display: flex;
+	flex-direction: row-reverse;
 }
 </style>
 
@@ -69,8 +69,8 @@
 
 				<ul id="venda-export" class="dropdown-content">
 					<li
-						th:each="tipo : ${T(morabem.domain.relatorio.ExportarStrategy.Formato).values()}">
-						<a th:href="${'/exportar/vendas?tipo='+tipo}" th:text="${tipo}"></a>
+						th:each="formato : ${T(morabem.domain.relatorio.ExportarStrategy.Formato).values()}">
+						<a th:href="${'/relatorios/exportar?tipo=VENDER&formato='+formato}" th:text="${formato}"></a>
 					</li>
 				</ul>
 			</div>
@@ -117,8 +117,8 @@
 
 				<ul id="aluguel-export" class="dropdown-content">
 					<li
-						th:each="tipo : ${T(morabem.domain.relatorio.ExportarStrategy.Formato).values()}">
-						<a th:href="${'/exportar/aluguel?tipo='+tipo}" th:text="${tipo}"></a>
+						th:each="formato : ${T(morabem.domain.relatorio.ExportarStrategy.Formato).values()}">
+						<a th:href="${'/relatorios/exportar?tipo=ALUGAR&formato='+formato}" th:text="${formato}"></a>
 					</li>
 				</ul>
 			</div>

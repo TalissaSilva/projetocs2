@@ -47,9 +47,19 @@ public abstract class ExportarStrategy<T, R> {
     }
 
     public static enum Formato {
-        CSV,
-        JSON,
-        TXT
+        CSV(true),
+        JSON(true),
+        TXT(false);
+
+        private boolean download;
+
+        Formato(boolean download) {
+            this.download = download;
+        }
+
+        public boolean forDownload() {
+            return download;
+        }
     }
 
 }
