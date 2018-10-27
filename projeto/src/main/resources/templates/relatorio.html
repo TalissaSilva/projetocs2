@@ -79,7 +79,7 @@
 
 					<ul id="venda-export" class="dropdown-content">
 						<li
-							th:each="formato : ${T(morabem.domain.relatorio.ExportarStrategy.Formato).values()}">
+							th:each="formato : ${T(morabem.domain.relatorio.Exportar.Formato).values()}">
 							<a
 							th:href="${'/relatorios/exportar?tipo=VENDER&formato='+formato}"
 							th:text="${formato}"></a>
@@ -139,7 +139,7 @@
 
 					<ul id="aluguel-export" class="dropdown-content">
 						<li
-							th:each="formato : ${T(morabem.domain.relatorio.ExportarStrategy.Formato).values()}">
+							th:each="formato : ${T(morabem.domain.relatorio.Exportar.Formato).values()}">
 							<a
 							th:href="${'/relatorios/exportar?tipo=ALUGAR&formato='+formato}"
 							th:text="${formato}"></a>
@@ -203,7 +203,7 @@
 		//$(document).ready(function(){
 			//$("#ordem").click(function(){
 		//});
-		})
+		
 	</script>
 
 </body>

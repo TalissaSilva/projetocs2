@@ -3,8 +3,11 @@ package morabem.domain.relatorio;
 import morabem.domain.Anuncio;
 import morabem.domain.Usuario;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import static morabem.domain.relatorio.Exportar.Componente.*;
 public class Relatorio {
 
     private List<Anuncio> anuncios;
@@ -35,10 +38,17 @@ public class Relatorio {
         this.total = total;
     }
 
-    public ExportarStrategy<Anuncio, byte[]> exportar() {
-        return new ExportarAnunciosStrategy(this.anuncios)
-                .adicionarCabecalho("usuario", usuario.getNome())
-                .adicionarCabecalho("Tipo dos anuncios", tipo.toString())
-                .adicionarRodape("Total", String.valueOf(this.total));
+    public ExportarStrategy exportar() {
+
+        Map<String, String> cabecalho = new HashMap<>();
+        cabecalho.put("Tipo dos anuncios", tipo.toString());
+        cabecalho.put("usuario", this.usuario.getNome());
+        Map<String, String> rodape = new HashMap<>();
+        rodape.put("Total", String.valueOf(this.total));
+
+        return new ExportarAnunciosStrategy()
+                .adicionar(DADOS, this.anuncios)
+                .adicionar(CABECALHO, cabecalho)
+                .adicionar(RODAPE, rodape);
     }
 }

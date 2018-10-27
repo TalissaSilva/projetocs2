@@ -1,53 +1,67 @@
 package morabem.domain.relatorio;
 
+import com.opencsv.CSVWriter;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ExportarHandlerCSVBytesArray<T> implements ExportarHandler<T, byte[]> {
 
-    public String formatarItem(Map<String, Object> item) {
-        List<String> list = new LinkedList<>();
-
-        for (String titulo : titulos) {
-            list.add(String.valueOf(item.get(titulo)));
+    private CSVWriter csvWriter;
+    private StringWriter stringWriter;
+    @Override
+    public byte[] gerar() {
+        try {
+            csvWriter.close();
+            return new String(stringWriter.getBuffer()).getBytes();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao gerar os dados.", e);
         }
-
-        return String.join(";", list);
     }
 
     @Override
-    public byte[] gerar() {
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream ();
-        try {
-            List<String> list = new LinkedList<>();
-            for (Map.Entry entry : cabecalhos.entrySet()) {
-                list.add(String.format("%s:%s", entry.getKey(), entry.getValue()));
-            }
-            buffer.write(String.join(";", list).concat("\r\n").getBytes());
-            buffer.write(String.join(";", titulos).concat("\r\n").getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void start() {
+        this.stringWriter = new StringWriter();
+        this.csvWriter = new CSVWriter(stringWriter);
+    }
+
+    @Override
+    public void inserir(Exportar.Componente componente) {
+        List<String[]> rows = new LinkedList<>();
+
+        if (componentes.get(componente) instanceof Map) {
+
+        } else if (componentes.get(componente) instanceof List) {
+
         }
-        dados.stream()
-                .map(i -> this.formatarItem(i) + "\r\n" )
-                .map(String::getBytes)
-                .forEach(bytes -> {
-                    try {
-                        buffer.write(bytes);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-        try {
-            List<String> list = new LinkedList<>();
-            for (Map.Entry entry : rodapes.entrySet()) {
-                list.add(String.format("%s:%s", entry.getKey(), entry.getValue()));
+
+        if (componente == Exportar.Componente.DADOS) {
+            List<Map<String, Object>> dados = (List<Map<String, Object>>) componentes.get(componente);
+            String[] titulos = this.titulos.toArray(new String[]{});
+            rows.add(titulos);
+
+            for(Map<String, Object> dado : dados) {
+                List<String> row = new LinkedList();
+                for (String titulo : titulos) {
+                    row.add(String.valueOf(dado.get(titulo)));
+                }
+                rows.add(row.toArray(new String[]{}));
             }
-            buffer.write(String.join(";", list).concat("\r\n").getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+            csvWriter.writeAll(rows);
+        } else {
+            Map<String, Object> dado = (Map<String, Object>) componentes.get(componente);
+            List<String> row = new LinkedList();
+            dado.entrySet().stream()
+                    .map(entry -> {
+                        return String.valueOf(entry.getKey()).concat(":").concat(String.valueOf(entry.getValue()));
+                    })
+                    .forEach(row::add);
+
+            csvWriter.writeNext(row.toArray(new String[]{}));
         }
-        return buffer.toByteArray();
     }
 }

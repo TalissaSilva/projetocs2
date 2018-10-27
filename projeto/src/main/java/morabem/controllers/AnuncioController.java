@@ -3,6 +3,7 @@ package morabem.controllers;
 import morabem.domain.Anuncio;
 
 import morabem.domain.Usuario;
+import morabem.domain.relatorio.Exportar;
 import morabem.domain.relatorio.ExportarStrategy;
 import morabem.domain.relatorio.Relatorio;
 import morabem.exceptions.AnuncioException;
@@ -164,8 +165,9 @@ public class AnuncioController {
     @ResponseBody
     @GetMapping(path = "/relatorios/exportar")
     public String exportarRelatorio(Model model, HttpSession session, HttpServletResponse response,
-                                    @RequestParam(value = "formato") ExportarStrategy.Formato formato,
-                                    @RequestParam(value = "tipo") Anuncio.Tipo tipo
+                                    @RequestParam(value = "formato") Exportar.Formato formato,
+                                    @RequestParam(value = "tipo") Anuncio.Tipo tipo,
+                                    @RequestParam(value = "template") List<Exportar.Componente> template
                                     ) throws IOException {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogado");
         if (usuario == null) {
@@ -187,7 +189,7 @@ public class AnuncioController {
                 return "Error: informe o 'tipo' de anuncios";
         }
 
-        byte[] bytes = relatorio.exportar().para(formato);
+        byte[] bytes = (byte[]) relatorio.exportar().para(formato, template);
 
         if (formato.forDownload()) {
             response.setContentType("application/force-download;charset=UTF-8");

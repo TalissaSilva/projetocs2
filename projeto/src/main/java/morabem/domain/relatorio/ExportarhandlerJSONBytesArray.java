@@ -6,13 +6,22 @@ import java.util.Map;
 
 public class ExportarhandlerJSONBytesArray<T> implements ExportarHandler<T, byte[]> {
 
+    private Gson gson;
+    Map<String, Object> paylaod;
+
+    @Override
+    public void start() {
+        this.paylaod = new HashMap<>();
+        this.gson = new Gson();
+    }
+
+    @Override
+    public void inserir(Exportar.Componente componente) {
+        paylaod.put(componente.name(), componentes.get(componente));
+    }
+
     @Override
     public byte[] gerar() {
-        Gson gson = new Gson();
-        Map<String, Object> paylaod = new HashMap<>();
-        paylaod.put("cabecalho", cabecalhos);
-        paylaod.put("data", dados);
-        paylaod.put("rodape", rodapes);
         return gson.toJson(paylaod).getBytes();
     }
 

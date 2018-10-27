@@ -1,65 +1,32 @@
 package morabem.domain.relatorio;
 
-import morabem.domain.Anuncio;
-
+import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Handler;
 
 public abstract class ExportarStrategy<T, R> {
 
-    protected List<T> itens;
-    private Map<Formato, ExportarHandler<T, R>> handlers = new HashMap<>();
-    protected Map<String, Object> cabecalho = new HashMap<>();
-    protected Map<String, Object> rodape = new HashMap<>();
+    private Map<Exportar.Formato, ExportarHandler<T, R>> handlers = new HashMap<>();
+    Map<Exportar.Componente, Object> componentes = new HashMap<>();
 
-
-    ExportarStrategy(List<T> itens) {
-        this.itens = itens;
-    }
-
-    protected ExportarStrategy<T, R> sethandler(Formato formato, ExportarHandler<T, R> handler) {
+    ExportarStrategy<T, R> sethandler(Exportar.Formato formato, ExportarHandler<T, R> handler) {
         this.handlers.put(formato, handler);
         return this;
     }
 
-    public ExportarStrategy adicionarCabecalho(String key, String value) {
-        cabecalho.put(key, value);
+    ExportarStrategy adicionar(Exportar.Componente c, Object d) {
+        componentes.put(c, d);
         return this;
     }
 
-    public ExportarStrategy adicionarRodape(String key, String value) {
-        rodape.put(key, value);
-        return this;
-    }
-
-    public R para(Formato formato) {
+    public R para(Exportar.Formato formato, List<Exportar.Componente> componentes) {
         if (this.handlers.containsKey(formato)) {
-                return this.handlers.get(formato)
-                        .adicionarCabecalho(cabecalho)
-                        .adicionarRodape(rodape)
-                        .exportar(this.itens)
-                        .gerar();
+            return this.handlers.get(formato)
+                    .setComponentes(this.componentes)
+                    .exportar(componentes);
         } else {
             throw new RuntimeException("Formato não suportado.");
         }
     }
-
-    public static enum Formato {
-        CSV(true),
-        JSON(true),
-        TXT(false);
-
-        private boolean download;
-
-        Formato(boolean download) {
-            this.download = download;
-        }
-
-        public boolean forDownload() {
-            return download;
-        }
-    }
-
 }

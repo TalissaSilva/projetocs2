@@ -6,10 +6,9 @@ import java.util.List;
 
 public final class ExportarAnunciosStrategy extends ExportarStrategy<Anuncio, byte[]> {
 
-    ExportarAnunciosStrategy(List<Anuncio> anuncios) {
-        super(anuncios);
-        super.sethandler(Formato.CSV, new ExportarHandlerCSVBytesArray<Anuncio>())
-                .sethandler(Formato.JSON, new ExportarhandlerJSONBytesArray<Anuncio>())
-                .sethandler(Formato.TXT, new ExportarHandlerCSVBytesArray<Anuncio>());
+    ExportarAnunciosStrategy() {
+        super.sethandler(Exportar.Formato.CSV, new ExportarHandlerCSVBytesArray<Anuncio>())
+                .sethandler(Exportar.Formato.JSON, new ExportarhandlerJSONBytesArray<Anuncio>())
+                .sethandler(Exportar.Formato.TXT, new ExportarHandlerCSVBytesArray<Anuncio>());
     }
 }

@@ -29,9 +29,20 @@ public class ExpartarHandler_mapearValorTest {
     @Before
     public void setup() {
         handler = new ExportarHandler<String, String>() {
+
             @Override
             public String gerar() {
                 return null;
+            }
+
+            @Override
+            public void start() {
+
+            }
+
+            @Override
+            public void inserir(Exportar.Componente componente) {
+
             }
         };
     }
