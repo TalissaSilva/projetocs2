@@ -35,13 +35,17 @@
 	padding: 5px;
 	text-align: left;
 }
+
 .exportar-wrapper {
 	display: flex;
 	flex-direction: row-reverse;
 }
 </style>
 
+
+
 <body class="container">
+
 	<header class="flex row">
 		<div>
 			<a href="/"> <img src="/logo-horizontal.png" />
@@ -51,7 +55,11 @@
 			<div th:replace="fragments/header :: 'com-usuario'"></div>
 		</div>
 	</header>
-	<main>
+	<main> <input type="button" id="ordem" value="Exibir"> <select
+		name="templates">
+		<option value="criterio 1">Critério 1</option>
+		<option value="criterio 2">Critério 2</option>
+	</select>
 
 	<div class="row">
 		<div class="col s12">
@@ -61,40 +69,52 @@
 			</ul>
 		</div>
 		<div id="vendas" class="col s12">
-			<h3>Relatório: Vendas</h3>
-			<h4 th:text="${'Anunciante: ' + session.usuarioLogado.getNome()}"></h4>
-			<div class="exportar-wrapper">
-				<a class="btn-flat dropdown-trigger align-center"
-					data-target="venda-export"> exportar </a>
 
-				<ul id="venda-export" class="dropdown-content">
-					<li
-						th:each="formato : ${T(morabem.domain.relatorio.ExportarStrategy.Formato).values()}">
-						<a th:href="${'/relatorios/exportar?tipo=VENDER&formato='+formato}" th:text="${formato}"></a>
-					</li>
-				</ul>
+			<div id="cabecalho">
+				<h3>Relatório: Vendas</h3>
+				<h4 th:text="${'Anunciante: ' + session.usuarioLogado.getNome()}"></h4>
+				<div class="exportar-wrapper">
+					<a class="btn-flat dropdown-trigger align-center"
+						data-target="venda-export"> exportar </a>
+
+					<ul id="venda-export" class="dropdown-content">
+						<li
+							th:each="formato : ${T(morabem.domain.relatorio.ExportarStrategy.Formato).values()}">
+							<a
+							th:href="${'/relatorios/exportar?tipo=VENDER&formato='+formato}"
+							th:text="${formato}"></a>
+						</li>
+					</ul>
+				</div>
 			</div>
-			
-			<table>
-				<thead>
-					<tr>
-						<th>Anuncio</th>
-						<th>Preço</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="item : ${relatorioDeVendas.getAnuncios()}">
-						<td><a th:href="'/anuncio/' + ${item.getId()}">
-								<p class="no-padding no-margin" th:text="${item.getTitulo()}"></p>
-						</a>
-							<p class="no-padding no-margin"
-								th:text="${item.getDescricaoResumida()}"></p></td>
-						<td>
-							<p class="no-padding no-margin font-black"
-								th:text="${#numbers.formatCurrency(item.getValor())}"></p>
 
-						</td>
-					</tr>
+			<div id="corpo">
+				<table>
+					<thead>
+						<tr>
+							<th>Anuncio</th>
+							<th>Preço</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item : ${relatorioDeVendas.getAnuncios()}">
+							<td><a th:href="'/anuncio/' + ${item.getId()}">
+									<p class="no-padding no-margin" th:text="${item.getTitulo()}"></p>
+							</a>
+								<p class="no-padding no-margin"
+									th:text="${item.getDescricaoResumida()}"></p></td>
+							<td>
+								<p class="no-padding no-margin font-black"
+									th:text="${#numbers.formatCurrency(item.getValor())}"></p>
+
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div id="rodape">
+				<table>
 					<tr>
 						<td>
 							<p class="bolder">Total</p>
@@ -104,55 +124,65 @@
 								th:text="${#numbers.formatCurrency(relatorioDeVendas.getTotal())}"></p>
 						</td>
 					</tr>
-
-				</tbody>
-			</table>
-		</div>
-		<div id="alugueis" class="col s12">
-			<h3>Relatório: Aluguel</h3>
-			<h4 th:text="${'Anunciante: ' + session.usuarioLogado.getNome()}"></h4>
-			<div class="exportar-wrapper">
-				<a class="btn-flat dropdown-trigger align-center"
-					data-target="aluguel-export"> exportar </a>
-
-				<ul id="aluguel-export" class="dropdown-content">
-					<li
-						th:each="formato : ${T(morabem.domain.relatorio.ExportarStrategy.Formato).values()}">
-						<a th:href="${'/relatorios/exportar?tipo=ALUGAR&formato='+formato}" th:text="${formato}"></a>
-					</li>
-				</ul>
+				</table>
 			</div>
-			
-			<table>
-				<thead>
-					<tr>
-						<th>Anuncio</th>
-						<th>Preço</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="item : ${relatorioDeAlugueis.getAnuncios()}">
-						<td><a th:href="'/anuncio/' + ${item.getId()}">
-								<p class="no-padding no-margin" th:text="${item.getTitulo()}"></p>
-						</a>
-							<p class="no-padding no-margin"
-								th:text="${item.getDescricaoResumida()}"></p></td>
-						<td>
-							<p class="no-padding no-margin font-black"
-								th:text="${#numbers.formatCurrency(item.getValor())}"></p>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<p class="bolder">Total</p>
-						</td>
-						<td>
-							<p class="bolder"
-								th:text="${#numbers.formatCurrency(relatorioDeAlugueis.getTotal())}"></p>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+		</div>
+
+		<div id="alugueis" class="col s12">
+
+			<div id="cabecalho">
+				<h3>Relatório: Aluguel</h3>
+				<h4 th:text="${'Anunciante: ' + session.usuarioLogado.getNome()}"></h4>
+				<div class="exportar-wrapper">
+					<a class="btn-flat dropdown-trigger align-center"
+						data-target="aluguel-export"> exportar </a>
+
+					<ul id="aluguel-export" class="dropdown-content">
+						<li
+							th:each="formato : ${T(morabem.domain.relatorio.ExportarStrategy.Formato).values()}">
+							<a
+							th:href="${'/relatorios/exportar?tipo=ALUGAR&formato='+formato}"
+							th:text="${formato}"></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div id="corpo">
+				<table>
+					<thead>
+						<tr>
+							<th>Anuncio</th>
+							<th>Preço</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item : ${relatorioDeAlugueis.getAnuncios()}">
+							<td><a th:href="'/anuncio/' + ${item.getId()}">
+									<p class="no-padding no-margin" th:text="${item.getTitulo()}"></p>
+							</a>
+								<p class="no-padding no-margin"
+									th:text="${item.getDescricaoResumida()}"></p></td>
+							<td>
+								<p class="no-padding no-margin font-black"
+									th:text="${#numbers.formatCurrency(item.getValor())}"></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div id="rodape">
+				<tr>
+					<td>
+						<p class="bolder">Total</p>
+					</td>
+					<td>
+						<p class="bolder"
+							th:text="${#numbers.formatCurrency(relatorioDeAlugueis.getTotal())}"></p>
+					</td>
+				</tr>
+			</div>
 		</div>
 	</div>
 	</main>
@@ -169,6 +199,11 @@
 		$(document).ready(function() {
 			$('.tabs').tabs();
 		});
+	
+		//$(document).ready(function(){
+			//$("#ordem").click(function(){
+		//});
+		})
 	</script>
 
 </body>
