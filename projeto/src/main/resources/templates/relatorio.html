@@ -2,220 +2,231 @@
 <!doctype html>
 <html lang="pr-br" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<!-- Materialize: css -->
-<link rel="stylesheet" href="/vendor/css/materialize.min.css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
-	rel="stylesheet">
-<link rel="stylesheet" href="/css/global.css">
-<link rel="stylesheet" href="/css/imoveisUsuario.css">
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Morabem - Relatório</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <!-- Materialize: css -->
+    <link rel="stylesheet" href="/vendor/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+            rel="stylesheet">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/imoveisUsuario.css">
+    <link rel="stylesheet"
+          href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Morabem - Relatório</title>
 </head>
 
 <style>
-.titulo {
-	font-size: 1.5rem;
-	margin: 0;
-	padding: 0;
-}
+    .titulo {
+        font-size: 1.5rem;
+        margin: 0;
+        padding: 0;
+    }
 
-.table, .th, .td {
-	border: 1px solid black;
-	border-collapse: collapse;
-}
+    .table, .th, .td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
 
-.th, .td {
-	padding: 5px;
-	text-align: left;
-}
+    .th, .td {
+        padding: 5px;
+        text-align: left;
+    }
 
-.exportar-wrapper {
-	display: flex;
-	flex-direction: row-reverse;
-}
+    .exportar-wrapper {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    .sortable-placeholder {
+        height: 3ch;
+        border: 1px lightslategray dotted;
+    }
+
+    #sortable {
+        margin-right: 2ch;
+    }
+
+    #sortable li {
+        width: 200px;
+        height: 3ch;
+    }
 </style>
 
 
 
 <body class="container">
 
-	<header class="flex row">
-		<div>
-			<a href="/"> <img src="/logo-horizontal.png" />
-			</a>
-		</div>
-		<div class="flex row w-100 justify-content-end">
-			<div th:replace="fragments/header :: 'com-usuario'"></div>
-		</div>
-	</header>
-	<main>
-	<div class="row">
-		<div class="col s12">
-			<ul class="tabs">
-				<li class="tab col s3"><a href="#vendas">Vendas</a></li>
-				<li class="tab col s3"><a class="active" href="#alugueis">Alugueis</a></li>
-			</ul>
-		</div>
+<header class="flex row">
+    <div>
+        <a href="/"> <img src="/logo-horizontal.png" />
+        </a>
+    </div>
+    <div class="flex row w-100 justify-content-end">
+        <div th:replace="fragments/header :: 'com-usuario'"></div>
+    </div>
+</header>
+<main>
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s3"><a class="active" href="#vendas">Vendas</a></li>
+                <li class="tab col s3"><a  href="#alugueis">Alugueis</a></li>
+            </ul>
+        </div>
+        <div id="vendas" class="col s12">
+            <h3>Relatório: Vendas</h3>
+            <h4 th:text="${'Anunciante: ' + session.usuarioLogado.getNome()}"></h4>
 
-		<div id="vendas" class="col s12">
-			<h3>Relatório: Vendas</h3>
-			<h4 th:text="${'Anunciante: ' + session.usuarioLogado.getNome()}"></h4>
+            <div class="exportar-wrapper">
+                <button class="btn-flat align-center" onclick="modal('VENDER')">exportar</button>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>Anuncio</th>
+                    <th>Preço</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${relatorioDeVendas.getAnuncios()}">
+                    <td><a th:href="'/anuncio/' + ${item.getId()}">
+                        <p class="no-padding no-margin" th:text="${item.getTitulo()}"></p>
+                    </a>
+                        <p class="no-padding no-margin"
+                           th:text="${item.getDescricaoResumida()}"></p></td>
+                    <td>
+                        <p class="no-padding no-margin font-black"
+                           th:text="${#numbers.formatCurrency(item.getValor())}"></p>
 
-			<div class="exportar-wrapper">
-				<a class="btn-flat dropdown-trigger align-center"
-					data-target="venda-export"> exportar </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="bolder">Total</p>
+                    </td>
+                    <td>
+                        <p class="bolder"
+                           th:text="${#numbers.formatCurrency(relatorioDeVendas.getTotal())}"></p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="alugueis" class="col s12">
+            <h3>Relatório: Aluguel</h3>
+            <h4 th:text="${'Anunciante: ' + session.usuarioLogado.getNome()}"></h4>
+            <div class="exportar-wrapper">
+                <button class="btn-flat align-center" onclick="modal('ALUGAR')">exportar</button>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>Anuncio</th>
+                    <th>Preço</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${relatorioDeAlugueis.getAnuncios()}">
+                    <td><a th:href="'/anuncio/' + ${item.getId()}">
+                        <p class="no-padding no-margin" th:text="${item.getTitulo()}"></p>
+                    </a>
+                        <p class="no-padding no-margin"
+                           th:text="${item.getDescricaoResumida()}"></p></td>
+                    <td>
+                        <p class="no-padding no-margin font-black"
+                           th:text="${#numbers.formatCurrency(item.getValor())}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p class="bolder">Total</p>
+                    </td>
+                    <td>
+                        <p class="bolder"
+                           th:text="${#numbers.formatCurrency(relatorioDeAlugueis.getTotal())}"></p>
+                    </td>
+                </tr>
 
-				<ul id="venda-export" class="dropdown-content">
-					<li
-						th:each="formato : ${T(morabem.domain.relatorio.Exportar.Formato).values()}">
-						<a
-						th:href="${'/relatorios/exportar?tipo=VENDER&formato='+formato}"
-						th:text="${formato}"></a>
-					</li>
-				</ul>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
 
-				<table>
-					<thead>
-						<tr>
-							<th>Anuncio</th>
-							<th>Preço</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="item : ${relatorioDeVendas.getAnuncios()}">
-							<td><a th:href="'/anuncio/' + ${item.getId()}">
-									<p class="no-padding no-margin" th:text="${item.getTitulo()}"></p>
-							</a>
-								<p class="no-padding no-margin"
-									th:text="${item.getDescricaoResumida()}"></p></td>
-							<td>
-								<p class="no-padding no-margin font-black"
-									th:text="${#numbers.formatCurrency(item.getValor())}"></p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<p class="bolder">Total</p>
-							</td>
-							<td>
-								<p class="bolder"
-									th:text="${#numbers.formatCurrency(relatorioDeVendas.getTotal())}"></p>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+<div id="modal1" class="modal">
+    <form>
+        <div class="modal-content">
+            <h6>Template de exportação</h6>
+            <small>Ordene os itens e marque os que de deja exportar.</small>
+            <fieldset class="checkbox-group required">
+                <ul id="sortable" >
+                    <li th:each="componente : ${T(morabem.domain.relatorio.Exportar.Componente).values()}">
+                        <label>
+                            <input name="template-compoment" type="checkbox" th:value="${componente}">
+                            <span th:text="${componente}"></span>
+                        </label>
+                    </li>
+                </ul>
+            </fieldset>
+            <h6>Formato</h6>
+            <small>Selecione o formato do documento de exportação.</small>
+            <div>
+                <ul>
+                    <li th:each="formato : ${T(morabem.domain.relatorio.Exportar.Formato).values()}">
+                        <label>
+                            <input name="formato" required type="radio" th:value="${formato}">
+                            <span th:text="${formato}"></span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="waves-effect waves-green btn-flat" type="submit">Exportar</button>
+        </div>
+    </form>
+</div>
 
-			</div>
-		</div>
 
-		<div id="alugueis" class="col s12">
-			<h3>Relatório: Aluguel</h3>
-			<h4 th:text="${'Anunciante: ' + session.usuarioLogado.getNome()}"></h4>
-			<div class="exportar-wrapper">
-				<a class="btn-flat dropdown-trigger align-center"
-					data-target="aluguel-export"> exportar </a>
-				<ul id="aluguel-export" class="dropdown-content">
-					<li
-						th:each="formato : ${T(morabem.domain.relatorio.ExportarStrategy.Formato).values()}">
-						<a
-						th:href="${'/relatorios/exportar?tipo=ALUGAR&formato='+formato}"
-						th:text="${formato}"></a>
-					</li>
-				</ul>
+<script src="/vendor/js/jquery.mim.js"></script>
+<script src="/vendor/js/hammer.js"></script>
+<script src="/vendor/js/materialize.js"></script>
 
-			</div>
+<script>
+    $(document).ready(function(){
+        $('#sortable').sortable();
+        $('.tooltipped').tooltip();
+        $('.tabs').tabs();
+        $('.dropdown-trigger').dropdown();
+        $('.modal').modal();
+    });
 
-			<table>
-				<thead>
-					<tr>
-						<th>Anuncio</th>
-						<th>Preço</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="item : ${relatorioDeAlugueis.getAnuncios()}">
-						<td><a th:href="'/anuncio/' + ${item.getId()}">
-								<p class="no-padding no-margin" th:text="${item.getTitulo()}"></p>
-						</a>
-							<p class="no-padding no-margin"
-								th:text="${item.getDescricaoResumida()}"></p></td>
-						<td>
-							<p class="no-padding no-margin font-black"
-								th:text="${#numbers.formatCurrency(item.getValor())}"></p>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<p class="bolder">Total</p>
-						</td>
-						<td>
-							<p class="bolder"
-								th:text="${#numbers.formatCurrency(relatorioDeAlugueis.getTotal())}"></p>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	</main>
+    var tipo = '';
+    var baseUrl = '/relatorios/exportar?tipo=';
 
-	<div id="modal1" class="modal">
-		<div class="modal-content">
-			<h4>Selecione o template</h4>
-			<p></p>
-			<div>
+    function modal(t) {
+        tipo = t;
+        $('.modal').modal('open');
+    };
 
-				<div class="collection" id="template">
-
-					<label
-						th:each="componente : ${T(morabem.domain.relatorio.Exportar.Componente).values()}">
-						<input type="checkbox" th:value="${componente}"> <span
-						th:text="${componente}"></span>
-					</label>
-
-				</div>
-
-			</div>
-		</div>
-
-		<div class="modal-footer">
-			<a href="#!" class="modal-close waves-effect waves-green btn-flat">Exportar</a>
-		</div>
-	</div>
-
-	<script src="/vendor/js/jquery.mim.js"></script>
-	<script src="/vendor/js/hammer.js"></script>
-	<script src="/vendor/js/materialize.js"></script>
-
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-	<script>
-		$('.dropdown-trigger').dropdown();
-
-		$(document).ready(function() {
-			$('.tooltipped').tooltip();
-		});
-		$(document).ready(function() {
-			$('.tabs').tabs();
-		});
-
-	    $( "#template" ).sortable();
-	    $( "#template" ).disableSelection();
-
-	    function abrirModal(formato){
-			$('#modal1').modal()
-		};
-		
-	</script>
+    $('#modal1 form').submit((event) => {
+        event.preventDefault();
+        if ($('.checkbox-group.required :checkbox:checked').length == 0) {
+            return;
+        }
+        let template = [];
+        $("input[type=checkbox]:checked").each(function() {
+            template.push($(this).val());
+        });
+        let formato = $('input[type=radio]:checked').val();
+        window.location.href = `${baseUrl}${tipo}&template=${template.join(',')}&formato=${formato}`;
+    });
+</script>
 
 </body>
 </html>

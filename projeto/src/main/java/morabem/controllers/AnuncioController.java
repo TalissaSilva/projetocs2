@@ -191,7 +191,7 @@ public class AnuncioController {
 
         byte[] bytes = (byte[]) relatorio.exportar().para(formato, template);
 
-        if (formato.forDownload()) {
+        if (!formato.forDownload()) {
             response.setContentType("application/force-download;charset=UTF-8");
             response.setHeader("Content-Transfer-Encoding", "binary");
             response.setHeader("Content-Length", String.valueOf(bytes.length));
